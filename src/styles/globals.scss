@@ -1,0 +1,62 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {//definindo cores do site
+  --background-color: #F4E6DF;
+  --background-color-light: #FCF9F7;
+  --background-not-used: #E8CDBF;
+  --navbar: #D9CB9E;
+  
+  --brown: #382014;
+  --light-brown: #663a24;
+  --black: #000000;
+  
+  --green: #8CF467;
+  --navy-blue: #142C38;
+}
+
+html { 
+  // Adaptando a interface de acordo com a tela do usuário
+  height: 100%;
+  
+  @media (min-width: 1080px) {
+    font-size: 93.75%; // 15px
+    
+  }
+  @media (min-width: 720px) {
+    font-size: 87.5%; // 14px
+  }
+}
+
+div#root {
+  height:100vh;
+}
+body {
+  background: var(--background-color);
+  -webkit-font-smoothing: antialiased;
+  height: 100%;
+
+}
+
+body, input, textarea {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6, strong, button, a ,ul, li{
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--black);
+}
+
+button, a {
+  cursor: pointer;
+}
+
+[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
