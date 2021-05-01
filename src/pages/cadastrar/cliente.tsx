@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import VMasker from 'vanilla-masker';
 import { NavMenu } from '../../components/NavBar';
 import styles from './styles.module.scss';
+import Link from 'next/link';
 
 interface Endereco {
   logradouro: string;
@@ -129,7 +130,7 @@ export default function Cadastrar() {
             <input className={styles.complemento} name="complemento" />
 
             <div className={styles.buttons}>
-              <button>Cancelar</button>
+              <button type="button"><Link href="/"> Cancelar</Link></button>
               <button className="salvar" type="submit" >Salvar</button>
             </div>
 

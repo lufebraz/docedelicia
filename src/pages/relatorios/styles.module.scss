@@ -3,8 +3,11 @@
   padding: 0.3rem;
   border-radius: 5px;
   max-width: 900px;
-  overflow-y: scroll;
-
+  .lista {
+    height: 50vh;
+    overflow-y: scroll;
+    scroll-behavior: auto;
+  }
   input {
     padding: 0.5rem;
     width: 75%;
@@ -32,7 +35,7 @@
     }
   }
   @media (min-width: 700px) {
-    margin: 8rem auto;
+    margin: 5rem auto;
     border-radius: 15px;
     h3 {
       margin: 10px;

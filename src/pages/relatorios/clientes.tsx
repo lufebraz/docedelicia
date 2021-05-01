@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../utils/RepositoryClient';
 import Link from 'next/link';
-import { NavMenu } from '../../components/NavBar';
+
 
 interface Clientes {
   nomeCliente: string;
@@ -19,6 +19,14 @@ export default function ConsultarCliente() {
       .then(data => setClientes(data))
   }, []);
 
+  const [buscaCliente, setBuscaCliente ] = useState('')
+
+  // useEffect(() => {
+    
+  //   fetch(`https://localhost:3333/clients/${buscaCliente}/`)
+  //     .then(response => response.json())
+  //     .then(data => setBuscaCliente(data))
+  // }, [buscaCliente]);
 
   return (
     <div>
@@ -26,9 +34,9 @@ export default function ConsultarCliente() {
       <div className={styles.div}>
         <div className={styles.buscarcliente}>
           <label>Buscar Cliente:</label> <br />
-          <input name="nomeCliente" placeholder="Jose da Silva" ></input>
+          <input name="nomeCliente" placeholder="Jose da Silva" onChange={e => setBuscaCliente(e.target.value)}></input>
           <div>
-            <strong>nome buscado</strong>
+            <strong>{buscaCliente}</strong>
             <div>
               <p>telefone: 61999872372</p>
               <Link href="">Visualizar</Link>
@@ -36,7 +44,7 @@ export default function ConsultarCliente() {
           </div>
         </div>
         <hr />
-        <div className="clients-list">
+        <div className={styles.lista}>
           <h3>Lista de Clientes:</h3>
 
           <ul>
