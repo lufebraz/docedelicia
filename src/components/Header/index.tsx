@@ -24,7 +24,7 @@ export function Header() {
                 <li><Link href={`/cadastrar/cliente`}>Entregador</Link></li>
               </ul>
             </li>
-            <li><Link href={`/cadastrar/cliente`}>Consultar</Link>
+            <li><Link href={`/relatorios/clientes`}>Consultar</Link>
               <ul>
                 <li><Link href={`/cadastrar/cliente`}>Clientes</Link></li>
                 <li><Link href={`/cadastrar/cliente`}>Pedidos</Link></li>

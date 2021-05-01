@@ -14,13 +14,13 @@ interface Endereco {
 
 export default function Cadastrar() {
   // Auto incrementando endereço ao colocar o cep
-  // const [cep, setCep] = useState('71691019');
+  const [cep, setCep] = useState('71691019');
   const [endereco, setEndereco] = useState<Endereco>({} as Endereco);
-  // useEffect(() => {
-  //   fetch(`https://viacep.com.br/ws/${cep}/json/`)
-  //     .then(response => response.json())
-  //     .then(data => setEndereco(data))
-  // }, [cep]);
+  useEffect(() => {
+    fetch(`https://viacep.com.br/ws/${cep}/json/`)
+      .then(response => response.json())
+      .then(data => setEndereco(data))
+  }, [cep]);
 
   // Mascarando campos telefone, cpf, cep
   const [cep1, setCep1] = useState('');
@@ -45,45 +45,31 @@ export default function Cadastrar() {
   return (
     <main>
       <NavMenu />
-      <form action="" className={styles.form}>
+      <form action="http://localhost:3333/clients" className={styles.form} method="post">
         <div className={styles.dadosCliente}>
           <div>
-
             <h3>Dados do Cliente:</h3>
-
             <label> Nome:  </label><br />
             <input name="nomeCliente" placeholder="Jose da Silva" required /> <br />
-
-
 
             <label>e-mail: </label><br />
             <input name="email" type="email" placeholder="josesilva@exemplo.com" required /><br />
 
-
-
             <label>data de nascimento:</label> <br />
             <input className={styles.inputCurto} name="dtNasc" type="date" placeholder="dd/mm/aaaa" max="2003-12-31" /><br />
-
-
           </div>
 
 
           <div>
             <br />
             <div>
-
-
               <label>Telefone celular:  <br />
                 <input className={styles.inputCurto} name="tcelular" placeholder="(00) 12345-6789" onChange={e => setTel(e.target.value)} value={tel} required /><br />
               </label>
-
-
               <label>Telefone fixo:<br />
                 <input className={styles.inputCurto} name="tfixo" placeholder="(00) 1234-5678" onChange={e => setTelfixo(e.target.value)} value={telfixo} /><br />
               </label>
             </div>
-
-
 
             <label>CPF: </label><br />
             <input className={styles.inputCurto} name="cpf" placeholder="123.456.789-12" required onChange={e => setCpf(e.target.value)} value={cpf} /><br />
@@ -106,24 +92,29 @@ export default function Cadastrar() {
             <h3>Endereço do cliente:</h3>
 
             <label> Nome do endereço:  </label><br />
-            <input className="nomeEndereco" name="nomeEndereco" placeholder="Casa / Trabalho" /> <br />
+            <input  name="nomeEndereco" placeholder="Casa / Trabalho" /> <br />
 
-            <label> Logradouro: </label><br />
-            <input className="logradouro" name="logradouro" placeholder="Av. Principal" value={endereco.logradouro} /> <br />
+            <div>
 
-            <label> CEP:</label> <br />
-            <input className={styles.inputCurto} name="cep" placeholder="12345-678" onChange={e => setCep1(e.target.value)} value={cep1} /> <br />
+              <label> Logradouro: <br />
+                <input className={styles.inputCurto} name="logradouro" placeholder="Av. Principal" value={endereco.logradouro} /> <br />
+              </label>
+              <label> CEP: <br />
+                <input className={styles.tamanhoMedio} name="cep" placeholder="12345-678" onChange={e => setCep1(e.target.value)} value={cep1} /> <br />
+              </label>
+              <label> Num: <br />
+                <input className={styles.inputMtCurto} name="numero" placeholder="201" maxLength={10} /> <br />
+              </label>
+            </div>
             {/* onBlur={e => setCep(e.target.value)} */}
 
-            <label> Número: </label><br />
-            <input className={styles.inputMtCurto} name="numero" placeholder="201" maxLength={10} /> <br />
-            
+
             <div >
               <label >Cidade: <br />
                 <input className={styles.inputCurto} name="cidade" placeholder="Brasília" value={endereco.localidade} /><br />
               </label>
               <label >Bairro: <br />
-                <input className={styles.inputCurto} name="bairro" placeholder="Asa Norte" value={endereco.bairro} /><br />
+                <input className={styles.tamanhoMedio} name="bairro" placeholder="Asa Norte" value={endereco.bairro} /><br />
               </label >
               <label >UF: <br />
                 <input className={styles.inputMtCurto} name="uf" placeholder="DF" maxLength={2} value={endereco.uf} />
@@ -135,8 +126,7 @@ export default function Cadastrar() {
           <div>
 
             <br /><label >Complemento:</label> <br />
-            <input name="complemento" />
-
+            <input className={styles.complemento} name="complemento" />
 
             <div className={styles.buttons}>
               <button>Cancelar</button>

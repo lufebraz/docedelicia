@@ -1,5 +1,5 @@
 .div {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 4rem 0rem 0rem 0rem;
   display: flex;
@@ -20,7 +20,7 @@
     }
   }
   
-  @media (max-width: 699px) {
+  @media (max-width: 720px) {
     padding: 0;
     justify-content: space-between;
     display: grid;

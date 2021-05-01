@@ -1,0 +1,32 @@
+.div {
+  padding: 1rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: var(--black);
+  margin-bottom: 0.1rem;
+  list-style: none;
+  div{
+    padding-right: 1rem;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    
+    a{
+      border-style: solid;
+      border-width: 2px;
+      border-color: var(--black);
+      border-radius: 5px;
+      text-decoration: none;
+      padding: 0.1rem;
+      background: var(--background-not-used);
+      
+    }
+  }
+  @media (min-width: 700px) {
+    display:grid;
+    grid-template-columns: 0.75fr 1fr;
+    align-items:center;
+    margin: 0.1rem 0.8rem;
+    
+  }
+}
