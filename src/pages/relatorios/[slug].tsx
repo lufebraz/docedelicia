@@ -1,21 +1,20 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { api } from '../../services/api';
 import styles from '../cadastrar/styles.module.scss';
-import { useEffect, useState } from 'react';
-import VMasker from 'vanilla-masker';
 import Link from 'next/link';
+import axios from 'axios';
+import { useForm } from 'react-hook-form';
 
 type Cliente = {
   id: number,
-  active: boolean,
   nomeCliente: string,
   email: string,
-  dt_nasc: string,
+  dtNasc: string,
   tcelular: string,
   tfixo: string,
   cpf: string,
-  gender: string,
-  address: {
+  genero: string,
+  endereco: {
     nomeEndereco: string,
     cep: string,
     logradouro: string,
@@ -30,58 +29,32 @@ type ClienteProps = {
   cliente: Cliente;
 }
 
-interface Endereco {
-  logradouro: string;
-  localidade: string;
-  bairro: string;
-  uf: string;
-}
-
 
 export default function Cliente({ cliente }: ClienteProps) {
-
-  const [cep, setCep] = useState('71691019');
-  const [endereco, setEndereco] = useState<Endereco>({} as Endereco);
-  useEffect(() => {
-    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-      .then(response => response.json())
-      .then(data => setEndereco(data))
-  }, [cep]);
-  const [cep1, setCep1] = useState('');
-  useEffect(() => {
-    setCep1(VMasker.toPattern(cep1, "99999-999"));
-  }, [cep1]);
-
-  const [cpf, setCpf] = useState('');
-  useEffect(() => {
-    setCpf(VMasker.toPattern(cpf, "999.999.999-99"));
-  }, [cpf]);
-
-  const [tel, setTel] = useState('');
-  useEffect(() => {
-    setTel(VMasker.toPattern(tel, "(99) 9 9999-9999"));
-  }, [tel]);
-
-  const [telfixo, setTelfixo] = useState('');
-  useEffect(() => {
-    setTelfixo(VMasker.toPattern(telfixo, "(99) 9999-9999"));
-  }, [telfixo]);
-
+  const {register, handleSubmit } = useForm<Cliente>();
+  const onSubmit =  handleSubmit(async (values) =>{    
+    await axios({
+      method:'PUT',      
+      url: `http://localhost:3333/clients/${cliente.id}`,
+      headers: {'Cliente': 'dados do cliente'},
+      data: values
+    })
+  })
   return (
     <main>
       
-      <form action={`http://localhost:3333/clients/${cliente.id}`} className={styles.form} method="update">
+      <form onSubmit={onSubmit} className={styles.form} >
         <div className={styles.dadosCliente}>
           <div>
             <h3>Dados do Cliente:</h3>
             <label> Nome:  </label><br />
-            <input name="nomeCliente" defaultValue={cliente.nomeCliente} required /> <br />
+            <input name="nomeCliente" defaultValue={cliente.nomeCliente} required {...register("nomeCliente")}/> <br />
 
             <label>e-mail: </label><br />
-            <input name="email" type="email"  defaultValue={cliente.email} required /><br />
+            <input name="email" type="email"  defaultValue={cliente.email} required  {...register("email")}/><br />
 
             <label>data de nascimento:</label> <br />
-            <input className={styles.inputCurto} name="dtNasc" type="date" defaultValue={cliente.dt_nasc} max="2003-12-31" /><br />
+            <input className={styles.inputCurto} name="dtNasc" type="date" defaultValue={cliente.dtNasc} max="2003-12-31" {...register("dtNasc")}/><br />
           </div>
 
 
@@ -89,19 +62,19 @@ export default function Cliente({ cliente }: ClienteProps) {
             <br />
             <div>
               <label>Telefone celular:  <br />
-                <input className={styles.inputCurto} name="tcelular" defaultValue={cliente?.tcelular} onChange={e => setTel(e.target.value)} required /><br />
+                <input className={styles.inputCurto} name="tcelular" defaultValue={cliente?.tcelular} maxLength={11}{...register("tcelular")} required /><br />
               </label>
               <label>Telefone fixo:<br />
-                <input className={styles.inputCurto} name="tfixo" defaultValue={cliente?.tfixo} onChange={e => setTelfixo(e.target.value)}  /><br />
+                <input className={styles.inputCurto} name="tfixo" defaultValue={cliente?.tfixo} maxLength={10} {...register("tfixo")}/><br />
               </label>
             </div>
 
             <label>CPF: </label><br />
-            <input className={styles.inputCurto} name="cpf" defaultValue={cliente.cpf} required onChange={e => setCpf(e.target.value)}  /><br />
+            <input className={styles.inputCurto} name="cpf" value={cliente.cpf} required maxLength={11} {...register("cpf")}/><br />
 
             <label>gênero: </label><br />
-            <select name="genero" className={styles.inputCurto}>
-              <option value="">{cliente.gender}</option>
+            <select name="genero" className={styles.inputCurto} {...register("genero")}>
+              <option value="">{cliente.genero}</option>
               <option value="N">Não Especificado</option>
               <option value="M">Masculino</option>
               <option value="F">Feminino</option>
@@ -117,52 +90,44 @@ export default function Cliente({ cliente }: ClienteProps) {
             <h3>Endereço do cliente:</h3>
 
             <label> Nome do endereço:  </label><br />
-            <input name="nomeEndereco" defaultValue={cliente.address.nomeEndereco}/> <br />
-
+            <input name="nomeEndereco" defaultValue={cliente.endereco?.nomeEndereco} {...register("endereco.nomeEndereco")} /> <br />
             <div>
               <label> Logradouro: <br />
-                <input className={styles.inputCurto} name="logradouro" defaultValue={cliente.address.logradouro} /> <br />
+                <input className={styles.inputCurto} name="logradouro" defaultValue={cliente.endereco?.logradouro} {...register("endereco.logradouro")} /> <br />
               </label>
               <label> CEP: <br />
-                <input className={styles.tamanhoMedio} name="cep" defaultValue={cliente.address.cep} onChange={e => setCep1(e.target.value)}  /> <br />
+                <input className={styles.tamanhoMedio} name="cep" defaultValue={cliente.endereco?.cep} {...register("endereco.cep")} /> <br />
               </label>
               <label> Num: <br />
-                <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.address.numero} maxLength={10} /> <br />
+                <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.endereco?.numero} maxLength={10} {...register("endereco.numero")}/> <br />
               </label>
             </div>
-            {/* onBlur={e => setCep(e.target.value)} */}
-
-
             <div >
               <label >Cidade: <br />
-                <input className={styles.inputCurto} name="cidade" defaultValue={cliente.address.cidade} /><br />
+                <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco?.cidade} {...register("endereco.cidade")}/><br />
               </label>
               <label >Bairro: <br />
-                <input className={styles.tamanhoMedio} name="bairro" defaultValue={cliente.address.bairro} /><br />
+                <input className={styles.tamanhoMedio} name="bairro" defaultValue={cliente.endereco?.bairro} {...register("endereco.bairro")}/><br />
               </label >
               <label >UF: <br />
-                <input className={styles.inputMtCurto} name="uf" maxLength={2} defaultValue={cliente.address.uf} />
+                <input className={styles.inputMtCurto} name="uf" maxLength={2} defaultValue={cliente.endereco?.uf} {...register("endereco.uf")} />
               </label>
             </div>
-
           </div>
 
           <div>
-
             <br /><label >Complemento:</label> <br />
-            <input className={styles.complemento} name="complemento" defaultValue={cliente.address.complemento}/>
+            <input className={styles.complemento} name="complemento" defaultValue={cliente.endereco?.complemento} {...register("endereco.complemento")}/>
             <br/><label> Cliente ativo? </label> <br/>
             <select className={styles.inputCurto} id="">
               <option value="">Sim</option>
               <option value="">Não</option>
             </select>
             <div className={styles.buttons}>
-              <button type="button"><Link href="/"> Cancelar</Link></button>
-              <button className="salvar" type="submit" >Salvar</button>
+              <button type="button"><Link href={`clientes`}> Cancelar</Link></button>
+              <button className="salvar" type="submit">Atualizar</button>
             </div>
-
           </div>
-
         </div>
       </form>
     </main>
@@ -183,22 +148,22 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const cliente = {
     id: data.id,
-    active: data.active,
     nomeCliente: data.nomeCliente,
     email: data.email,
-    dtnasc: data.dt_nasc,
+    dtNasc: data.dtNasc,
     tcelular: data.tcelular,
+    tfixo:data.tfixo,
     cpf: data.cpf,
-    gender: data.gender,
-    address: {
-      nomeEndereco: data.address.nomeEndereco,
-      cep: data.address.cep,
-      logradouro: data.address.logradouro,
-      numero: data.address.numero,
-      cidade: data.address.cidade,
-      bairro: data.address.bairro,
-      uf: data.address.uf,
-      complemento: data.address.complemento
+    genero: data.genero,
+    endereco: {
+      nomeEndereco: data.endereco.nomeEndereco,
+      cep: data.endereco.cep,
+      logradouro: data.endereco.logradouro,
+      numero: data.endereco.numero,
+      cidade: data.endereco.cidade,
+      bairro: data.endereco.bairro,
+      uf: data.endereco.uf,
+      complemento: data.endereco.complemento
     }
   };
 

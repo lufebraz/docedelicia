@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../utils/RepositoryClient';
 import Link from 'next/link';
+import { GetStaticProps } from 'next';
+import { api } from '../../services/api';
 
 
 interface Clientes {
@@ -9,24 +11,11 @@ interface Clientes {
   tcelular: string;
   id: number;
 }
-
-export default function ConsultarCliente() {
-  const [clientes, setClientes] = useState<Clientes[]>([]);
-
-  useEffect(() => {
-    fetch('http://localhost:3333/clients')
-      .then(response => response.json())
-      .then(data => setClientes(data))
-  }, []);
-
-  const [buscaCliente, setBuscaCliente ] = useState('')
-
-  // useEffect(() => {
-    
-  //   fetch(`https://localhost:3333/clients/${buscaCliente}/`)
-  //     .then(response => response.json())
-  //     .then(data => setBuscaCliente(data))
-  // }, [buscaCliente]);
+type HomeProps = {
+  clients: Clientes[];
+}
+export default function ConsultarCliente({ clients }: HomeProps) {
+  const clientesList = [...clients]
 
   return (
     <div>
@@ -34,12 +23,12 @@ export default function ConsultarCliente() {
       <div className={styles.div}>
         <div className={styles.buscarcliente}>
           <label>Buscar Cliente:</label> <br />
-          <input name="nomeCliente" placeholder="Jose da Silva" onChange={e => setBuscaCliente(e.target.value)}></input>
+          <input name="nomeCliente" placeholder="Jose da Silva" ></input>
           <div>
-            <strong>{buscaCliente}</strong>
+            <strong>joaozinho</strong>
             <div>
               <p>telefone: 61999872372</p>
-              <Link href="">Visualizar</Link>
+              <Link href={`/`}>Visualizar</Link>
             </div>
           </div>
         </div>
@@ -48,7 +37,7 @@ export default function ConsultarCliente() {
           <h3>Lista de Clientes:</h3>
 
           <ul>
-            {clientes.map(clientes => {
+            {clientesList.map(clientes => {
               return (<RepositoryClient key={clientes.id} pessoa={clientes} />)
             })}
           </ul>
@@ -57,4 +46,23 @@ export default function ConsultarCliente() {
     </div>
 
   )
+}
+
+
+export const getStaticProps: GetStaticProps = async () => {
+  const { data } = await api.get('clients')
+
+  const clients = data.map(clients => {
+    return {
+      nomeCliente: clients.nomeCliente,
+      tcelular: clients.tcelular,
+      id: clients.id,
+    }
+  })
+
+  return {
+    props: {
+      clients
+    }
+  }
 }
