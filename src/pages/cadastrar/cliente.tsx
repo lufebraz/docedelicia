@@ -91,24 +91,23 @@ export default function Cadastrar() {
               <label> Logradouro: <br />
                 <input className={styles.inputCurto} name="logradouro" placeholder="Av. Principal" {...register("endereco.logradouro")}/> <br />
               </label>
-              <label> CEP: <br />
-                <input className={styles.tamanhoMedio} name="cep" placeholder="12345-678" maxLength={8} {...register("endereco.cep")}/> <br /> 
-                
-              </label>
               <label> Num: <br />
                 <input className={styles.inputMtCurto} name="numero" placeholder="201" maxLength={6} {...register("endereco.numero")}/> <br />
+              </label>
+              <label> CEP: <br />
+                <input className={styles.tamanhoMedio} name="cep" placeholder="12345-678" maxLength={8} {...register("endereco.cep")}/> <br /> 
               </label>
             </div>
             
 
 
             <div >
-              <label >Cidade: <br />
-                <input className={styles.inputCurto} name="cidade" placeholder="Brasília" {...register("endereco.cidade")}/><br />
-              </label>
               <label >Bairro: <br />
                 <input className={styles.tamanhoMedio} name="bairro" placeholder="Asa Norte" {...register("endereco.bairro")}/><br />
               </label >
+              <label >Cidade: <br />
+                <input className={styles.inputCurto} name="cidade" placeholder="Brasília" {...register("endereco.cidade")}/><br />
+              </label>
               <label >UF: <br />
                 <input className={styles.inputMtCurto} name="uf" placeholder="DF" maxLength={2} {...register("endereco.uf")} />
               </label>
@@ -122,7 +121,7 @@ export default function Cadastrar() {
             <input className={styles.complemento} name="complemento" maxLength={40} {...register("endereco.complemento")} />
 
             <div className={styles.buttons}>
-              <button type="button"><Link href="/"> Cancelar</Link></button>
+              <button type="button"><Link href="/">Cancelar</Link></button>
               <button className="salvar" type="submit">Salvar</button>
             </div>
 

@@ -33,9 +33,10 @@ export default function ConsultarCliente({ clients }: HomeProps) {
           </div>
         </div>
         <hr />
-        <div className={styles.lista}>
-          <h3>Lista de Clientes:</h3>
 
+        <h3>Lista de Clientes:</h3>
+        
+        <div className={styles.lista}>
           <ul>
             {clientesList.map(clientes => {
               return (<RepositoryClient key={clientes.id} pessoa={clientes} />)

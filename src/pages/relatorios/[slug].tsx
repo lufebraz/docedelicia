@@ -95,20 +95,20 @@ export default function Cliente({ cliente }: ClienteProps) {
               <label> Logradouro: <br />
                 <input className={styles.inputCurto} name="logradouro" defaultValue={cliente.endereco?.logradouro} {...register("endereco.logradouro")} /> <br />
               </label>
-              <label> CEP: <br />
-                <input className={styles.tamanhoMedio} name="cep" defaultValue={cliente.endereco?.cep} {...register("endereco.cep")} /> <br />
-              </label>
               <label> Num: <br />
                 <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.endereco?.numero} maxLength={10} {...register("endereco.numero")}/> <br />
               </label>
+              <label> CEP: <br />
+                <input className={styles.tamanhoMedio} name="cep" defaultValue={cliente.endereco?.cep} maxLength={8} {...register("endereco.cep")} /> <br />
+              </label>
             </div>
             <div >
-              <label >Cidade: <br />
-                <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco?.cidade} {...register("endereco.cidade")}/><br />
-              </label>
               <label >Bairro: <br />
                 <input className={styles.tamanhoMedio} name="bairro" defaultValue={cliente.endereco?.bairro} {...register("endereco.bairro")}/><br />
               </label >
+              <label >Cidade: <br />
+                <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco?.cidade} {...register("endereco.cidade")}/><br />
+              </label>
               <label >UF: <br />
                 <input className={styles.inputMtCurto} name="uf" maxLength={2} defaultValue={cliente.endereco?.uf} {...register("endereco.uf")} />
               </label>
@@ -124,8 +124,9 @@ export default function Cliente({ cliente }: ClienteProps) {
               <option value="">Não</option>
             </select>
             <div className={styles.buttons}>
-              <button type="button"><Link href={`clientes`}> Cancelar</Link></button>
               <button className="salvar" type="submit">Atualizar</button>
+              <button>Desativar</button>
+              <button type="button"><Link  href={`clientes`}>Cancelar</Link></button>
             </div>
           </div>
         </div>

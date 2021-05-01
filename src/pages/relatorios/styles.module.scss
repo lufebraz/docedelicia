@@ -5,8 +5,8 @@
   max-width: 900px;
   .lista {
     height: 50vh;
+    scroll-behavior: smooth;
     overflow-y: scroll;
-    scroll-behavior: auto;
   }
   input {
     padding: 0.5rem;
