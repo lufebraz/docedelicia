@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../utils/RepositoryClient';
 import Link from 'next/link';
@@ -24,6 +23,7 @@ export default function ConsultarCliente({ clients }: HomeProps) {
         <div className={styles.buscarcliente}>
           <label>Buscar Cliente:</label> <br />
           <input name="nomeCliente" placeholder="Jose da Silva" ></input>
+          <button>pesquisar</button>
           <div>
             <strong>joaozinho</strong>
             <div>
@@ -49,9 +49,14 @@ export default function ConsultarCliente({ clients }: HomeProps) {
   )
 }
 
-
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('clients')
+  const { data } = await api.get('clients', {
+    params: {           
+ 
+      _sort: 'nomeCliente',
+      _order: 'asc',
+    }
+  })
 
   const clients = data.map(clients => {
     return {
@@ -59,7 +64,7 @@ export const getStaticProps: GetStaticProps = async () => {
       tcelular: clients.tcelular,
       id: clients.id,
     }
-  })
+  });
 
   return {
     props: {

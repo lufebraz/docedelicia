@@ -1,9 +1,10 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { api } from '../../services/api';
-import styles from '../cadastrar/styles.module.scss';
+import { api } from '../../../services/api';
+import styles from './styles.module.scss';
 import Link from 'next/link';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import Router from 'next/router'
 
 type Cliente = {
   id: number,
@@ -39,6 +40,7 @@ export default function Cliente({ cliente }: ClienteProps) {
       headers: {'Cliente': 'dados do cliente'},
       data: values
     })
+    Router.push(`/relatorios/clientes`)
   })
   return (
     <main>
@@ -126,7 +128,7 @@ export default function Cliente({ cliente }: ClienteProps) {
             <div className={styles.buttons}>
               <button className="salvar" type="submit">Atualizar</button>
               <button>Desativar</button>
-              <button type="button"><Link  href={`clientes`}>Cancelar</Link></button>
+              <button type="button"><Link  href={`../clientes`}>Voltar</Link></button>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ export function RepositoryClient(props: RepositoryClientProps) {
     <div>
 
       <p>telefone: {props.pessoa.tcelular}</p>
-      <Link href={`${id}`}>Visualizar</Link>
+      <Link href={`cliente/${id}`}>Visualizar</Link>
     </div>
 
   </div>

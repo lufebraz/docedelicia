@@ -3,6 +3,7 @@ import styles from './styles.module.scss';
 import Link from 'next/link';
 import {useForm} from 'react-hook-form';
 import axios from 'axios';
+import Router from 'next/router'
 
 type Cliente = {
   nomeCliente: string;
@@ -32,12 +33,13 @@ export default function Cadastrar() {
       headers: {'Cliente': 'dados do cliente'},
       data: values
     })
+    Router.push(`/relatorios/clientes`)
   })
 
   return (
     <main>
       <NavMenu />
-      <form onSubmit={onSubmit} className={styles.form}>
+      <form onSubmit={onSubmit} className={styles.form} >
         <div className={styles.dadosCliente}>
           <div>
             <h3>Dados do Cliente:</h3>
@@ -122,7 +124,7 @@ export default function Cadastrar() {
 
             <div className={styles.buttons}>
               <button type="button"><Link href="/">Cancelar</Link></button>
-              <button className="salvar" type="submit">Salvar</button>
+              <button className="salvar" type="submit" >Salvar</button>
             </div>
 
           </div>

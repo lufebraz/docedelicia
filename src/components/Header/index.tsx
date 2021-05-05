@@ -26,10 +26,10 @@ export function Header() {
             </li>
             <li><Link href={`/relatorios/clientes`}>Consultar</Link>
               <ul>
-                <li><Link href={`/cadastrar/cliente`}>Clientes</Link></li>
-                <li><Link href={`/cadastrar/cliente`}>Pedidos</Link></li>
-                <li><Link href={`/cadastrar/cliente`}>Produtos</Link></li>
-                <li><Link href={`/cadastrar/cliente`}>Entregador</Link></li>
+                <li><Link href={`/relatorios/clientes`}>Clientes</Link></li>
+                <li><Link href={`/relatorios/clientes`}>Pedidos</Link></li>
+                <li><Link href={`/relatorios/clientes`}>Produtos</Link></li>
+                <li><Link href={`/relatorios/clientes`}>Entregador</Link></li>
               </ul>
             </li>
 
