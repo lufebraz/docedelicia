@@ -28,7 +28,7 @@ export default function Fabricante() {
       <label >Nome: </label>
       <input type="text" required {...register('nomeFabricante')} />
       <div>
-        <input type="submit" value="cadastrar" className={styles.button} />
+        <input type="submit" value="Cadastrar" className={styles.button} />
         <button className={styles.button} type="button"><Link href="/">Cancelar</Link></button>
 
       </div>

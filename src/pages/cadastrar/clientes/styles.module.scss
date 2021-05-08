@@ -67,6 +67,9 @@
      
     .buttons {
       margin: 5rem 0 0 5rem;
+      a{
+        text-decoration: none;
+      }
       button {
         background: var(--background-not-used);
         width: 8rem;

@@ -13,6 +13,7 @@ type Cliente = {
   tfixo: string;
   cpf: string;
   genero: string;
+  ativo:number;
   endereco:{
     nomeEndereco:string;
     cep:string;
@@ -42,10 +43,11 @@ export default function Cadastrar() {
       <form onSubmit={onSubmit} className={styles.form} >
         <div className={styles.dadosCliente}>
           <div>
+            <input type="number" value="1" {...register("ativo")}/>
             <h3>Dados do Cliente:</h3>
             <label> Nome:  </label><br />
             <input name="nomeCliente" placeholder="Jose da Silva" required {...register("nomeCliente")} /> <br />
-              
+
             <label>e-mail: </label><br />
             <input name="email" type="email" placeholder="josesilva@exemplo.com" required {...register("email")} /><br />
 

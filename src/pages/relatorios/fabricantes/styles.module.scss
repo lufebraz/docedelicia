@@ -8,14 +8,8 @@
     scroll-behavior: smooth;
     overflow-y: scroll;
   }
-  input {
-    padding: 0.5rem;
-    width: 75%;
-    border-radius: 5px;
-  }
-  hr {
-    margin: 0.5rem 0rem;
-  }
+  
+  
   div {
     div {
       padding: 0 1rem 0 1rem;
@@ -50,31 +44,6 @@
       }
     }
 
-    .buscarcliente {
-      margin: 0.8rem;
-
-      label {
-        font-size: 1.5rem;
-      }
-
-      input {
-        margin-top: 0.5rem;
-        padding: 0.5rem 1rem;
-        border-width: 1px;
-        border-radius: 15px;
-        width: 50%;
-      }
-      div {
-        display: grid;
-        grid-template-columns: 0.75fr 1fr;
-        align-items: center;
-        margin: 0.1rem 0.8rem;
-        padding: 1rem;
-        div {
-          display: flex;
-          justify-content: space-between;
-        }
-      }
-    }
+    
   }
 }
