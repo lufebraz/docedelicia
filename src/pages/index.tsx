@@ -44,13 +44,14 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <ul>Links rápidos
-                <li>Encontre nossa loja</li>
+              <ul>Links rápidos:
+                <li><a href="https://www.instagram.com/docedeliciabrasilia/" target="blank">Instagram</a></li>
+                <li><a href="https://www.facebook.com/docedeliciabsb" target="blank">Facebook</a></li>
               </ul>
             </div>
             <div>
               <p>Endereço: CLN 5 Bloco B Lote 3/4 Loja 4 - Riacho Fundo I, Brasília - DF, CEP: 71805-522</p>
-              <p>Telefone para contato: <br />(61) 3536-5121 / (61) 9247-6273</p>
+              <p>Telefone para contato: <br />(61) 3536-5121 / (61) 9 9247-6273</p>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { api } from '../../../services/api';
+import { api } from '../../../../services/api';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 import axios from 'axios';
@@ -40,7 +40,7 @@ export default function Cliente({ cliente }: ClienteProps) {
       headers: {'Cliente': 'dados do cliente'},
       data: values
     })
-    Router.push(`/relatorios/clientes`)
+    Router.push(`/relatorios/clientes/clientes`)
   })
   return (
     <main>

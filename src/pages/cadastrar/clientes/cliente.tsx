@@ -1,4 +1,4 @@
-import { NavMenu } from '../../components/NavBar';
+import { NavMenu } from '../../../components/NavBar';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 import {useForm} from 'react-hook-form';
@@ -45,7 +45,7 @@ export default function Cadastrar() {
             <h3>Dados do Cliente:</h3>
             <label> Nome:  </label><br />
             <input name="nomeCliente" placeholder="Jose da Silva" required {...register("nomeCliente")} /> <br />
-
+              
             <label>e-mail: </label><br />
             <input name="email" type="email" placeholder="josesilva@exemplo.com" required {...register("email")} /><br />
 

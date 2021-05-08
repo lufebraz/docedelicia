@@ -119,6 +119,10 @@
     color: white;
     font-size: 0.8rem;
     list-style: none;
+    a {
+      color: white;
+      text-decoration: none;
+    }
   }
   .logo {
     display: flex;
