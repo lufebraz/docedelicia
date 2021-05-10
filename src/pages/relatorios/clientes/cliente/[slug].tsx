@@ -15,6 +15,7 @@ type Cliente = {
   tfixo: string,
   cpf: string,
   genero: string,
+  ativo: number,
   endereco: {
     nomeEndereco: string,
     cep: string,
@@ -75,8 +76,7 @@ export default function Cliente({ cliente }: ClienteProps) {
             <input className={styles.inputCurto} name="cpf" value={cliente.cpf} required maxLength={11} {...register("cpf")}/><br />
 
             <label>gênero: </label><br />
-            <select name="genero" className={styles.inputCurto} {...register("genero")}>
-              <option value="">{cliente.genero}</option>
+            <select name="genero" className={styles.inputCurto} defaultValue={cliente.genero} {...register("genero")}>
               <option value="N">Não Especificado</option>
               <option value="M">Masculino</option>
               <option value="F">Feminino</option>
@@ -121,14 +121,13 @@ export default function Cliente({ cliente }: ClienteProps) {
             <br /><label >Complemento:</label> <br />
             <input className={styles.complemento} name="complemento" defaultValue={cliente.endereco?.complemento} {...register("endereco.complemento")}/>
             <br/><label> Cliente ativo? </label> <br/>
-            <select className={styles.inputCurto} id="">
-              <option value="">Sim</option>
-              <option value="">Não</option>
+            <select className={styles.inputCurto} defaultValue={cliente?.ativo} {...register('ativo')}>
+              <option value="1">Sim</option>
+              <option value="0">Não</option>
             </select>
             <div className={styles.buttons}>
-              <button className="salvar" type="submit">Atualizar</button>
-              <button>Desativar</button>
               <button type="button"><Link  href={`../clientes`}>Voltar</Link></button>
+              <button className="salvar" type="submit">Atualizar</button>
             </div>
           </div>
         </div>
@@ -158,6 +157,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     tfixo:data.tfixo,
     cpf: data.cpf,
     genero: data.genero,
+    ativo: data.ativo,
     endereco: {
       nomeEndereco: data.endereco.nomeEndereco,
       cep: data.endereco.cep,

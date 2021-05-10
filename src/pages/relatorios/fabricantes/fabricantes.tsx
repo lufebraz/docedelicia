@@ -17,12 +17,8 @@ export default function ConsultarCliente({ fabricantes }: HomeProps) {
 
   return (
     <div>
-
       <div className={styles.div}>
-        
-
         <h3>Lista de Fabricantes:</h3>
-        
         <div className={styles.lista}>
           <ul>
             {fabricantesList.map(fabricantes => {

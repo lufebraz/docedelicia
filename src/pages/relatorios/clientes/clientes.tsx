@@ -51,8 +51,7 @@ export default function ConsultarCliente({ clients }: HomeProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get('clients', {
-    params: {           
- 
+    params: {
       _sort: 'nomeCliente',
       _order: 'asc',
     }

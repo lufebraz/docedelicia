@@ -34,7 +34,7 @@ export default function Cadastrar() {
       headers: {'Cliente': 'dados do cliente'},
       data: values
     })
-    Router.push(`/relatorios/clientes`)
+    Router.push(`/relatorios/clientes/clientes`)
   })
 
   return (
@@ -43,7 +43,7 @@ export default function Cadastrar() {
       <form onSubmit={onSubmit} className={styles.form} >
         <div className={styles.dadosCliente}>
           <div>
-            <input type="number" value="1" {...register("ativo")}/>
+            <input type="number" value="1" {...register("ativo")} className={styles.hidden}/>
             <h3>Dados do Cliente:</h3>
             <label> Nome:  </label><br />
             <input name="nomeCliente" placeholder="Jose da Silva" required {...register("nomeCliente")} /> <br />

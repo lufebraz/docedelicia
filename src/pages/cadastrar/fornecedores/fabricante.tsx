@@ -1,10 +1,12 @@
 import axios from 'axios';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
+import Router from 'next/router'
 import styles from './styles.module.scss';
 
 type Fabricante = {
   nomeFabricante: string,
+  ativo: number,
 }
 
 export default function Fabricante() {
@@ -16,7 +18,7 @@ export default function Fabricante() {
       headers: { 'Fabricante': 'dados do Fabricante' },
       data: values
     })
-    // Router.push(`/relatorios/fornecedores/fornecedores`)
+    Router.push(`/relatorios/fabricantes/fabricantes`)
   })
 
 
@@ -27,6 +29,8 @@ export default function Fabricante() {
       <h3>Dados do Fabricante:</h3>
       <label >Nome: </label>
       <input type="text" required {...register('nomeFabricante')} />
+      <input type="number" value="1"  {...register('ativo')} className={styles.hidden}/>
+
       <div>
         <input type="submit" value="Cadastrar" className={styles.button} />
         <button className={styles.button} type="button"><Link href="/">Cancelar</Link></button>

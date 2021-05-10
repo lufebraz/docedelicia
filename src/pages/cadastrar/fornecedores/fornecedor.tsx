@@ -7,6 +7,7 @@ import Fabricante from './fabricante';
 
 type Fornecedor = {
   nomeFornecedor: string,
+  ativo: number,
 }
 
 export default function Fornecedores() {
@@ -30,6 +31,7 @@ export default function Fornecedores() {
 
           <h3>Dados do Fornecedor:</h3>
           <label >Nome: </label>
+          <input type="number" value="1"  {...register('ativo')} className={styles.hidden}/>
           <input type="text" required {...register('nomeFornecedor')} />
           <input type="submit" value="Cadastrar" className={styles.button} />
 
