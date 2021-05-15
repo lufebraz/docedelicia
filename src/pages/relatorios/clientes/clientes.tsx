@@ -23,14 +23,7 @@ export default function ConsultarCliente({ clients }: HomeProps) {
         <div className={styles.buscarcliente}>
           <label>Buscar Cliente:</label> <br />
           <input name="nomeCliente" placeholder="Jose da Silva" ></input>
-          <button>pesquisar</button>
-          <div>
-            <strong>joaozinho</strong>
-            <div>
-              <p>telefone: 61999872372</p>
-              <Link href={`/`}>Visualizar</Link>
-            </div>
-          </div>
+          
         </div>
         <hr />
 
