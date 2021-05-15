@@ -135,7 +135,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
             <div>
 
               <label> Logradouro: <br />
-                <input className={styles.inputCurto} name="logradouro" placeholder="Av. Principal" {...register("endereco.logradouro")} value={endereco?.logradouro}/> <br />
+                <input className={styles.inputCurto} name="logradouro" placeholder="Av. Principal" {...register("endereco.logradouro")} /> <br />
               </label>
               <label> Num: <br />
                 <input className={styles.inputMtCurto} name="numero" placeholder="201" maxLength={6} {...register("endereco.numero")} /> <br />
