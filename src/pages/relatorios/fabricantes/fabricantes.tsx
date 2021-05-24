@@ -1,6 +1,5 @@
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../../utils/RepositoryFabricante';
-import Link from 'next/link';
 import { GetStaticProps } from 'next';
 import { api } from '../../../services/api';
 

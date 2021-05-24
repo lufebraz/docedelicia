@@ -20,7 +20,7 @@ export function Header() {
               <ul>
                 <li><Link href={`/cadastrar/clientes/cliente`}>Clientes</Link></li>
                 <li><Link href={`/cadastrar/pedidos/pedido`}>Pedidos</Link></li>
-                <li><Link href={`/cadastrar/produtos/produto`}>Produtos</Link></li>
+                <li><Link href={`/cadastrar/produtos/produtos`}>Produtos</Link></li>
                 <li><Link href={`/cadastrar/fornecedores/fornecedor`}>Fornecedores</Link></li>
                 <li><Link href={`/cadastrar/entregadores/entregador`}>Entregador</Link></li>
                 <li><Link href={`/cadastrar/funcionarios/funcionario`}>Funcionário</Link></li>

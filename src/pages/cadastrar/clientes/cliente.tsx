@@ -6,8 +6,6 @@ import axios from 'axios';
 import Router from 'next/router'
 import { useEffect, useState } from 'react';
 import VMasker from 'vanilla-masker';
-import { buscarEndereco } from '../../../services/api'
-import { GetServerSideProps } from 'next';
 
 type Cliente = {
   nomeCliente: string;
@@ -54,7 +52,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
 
   const [tel, setTel] = useState('')
   useEffect(() => {
-    setTel(VMasker.toPattern(tel, "(99) 9 9999-9999"))
+    setTel(VMasker.toPattern(tel, "(99) 99999-9999"))
   }, [tel])
   const [telFixo, setTelFixo] = useState('')
   useEffect(() => {
@@ -85,7 +83,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
       <form onSubmit={onSubmit} className={styles.form} >
         <div className={styles.dadosCliente}>
           <div>
-            <input type="number" value="1" {...register("ativo")} className={styles.hidden} />
+            <input type="number" value={1} {...register("ativo")} className={styles.hidden} />
             <h3>Dados do Cliente:</h3>
             <label> Nome:  </label><br />
             <input name="nomeCliente" placeholder="Jose da Silva" required {...register("nomeCliente")} /> <br />
@@ -102,15 +100,15 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
             <br />
             <div>
               <label>Telefone celular:  <br />
-                <input className={styles.inputCurto} name="tcelular" placeholder="(00) 12345-6789" required {...register("tcelular")} onChange={e => setTel(e.target.value)} value={tel} autoComplete="off" /><br />
+                <input className={styles.inputCurto} name="tcelular" placeholder="(00) 12345-6789" required {...register("tcelular")} minLength={11} onChange={e => setTel(e.target.value)} value={tel} autoComplete="off" /><br />
               </label>
               <label>Telefone fixo:<br />
-                <input className={styles.inputCurto} name="tfixo" placeholder="(00) 1234-5678" {...register("tfixo")} onChange={e => setTelFixo(e.target.value)} value={telFixo} autoComplete="off" /><br />
+                <input className={styles.inputCurto} name="tfixo" placeholder="(00) 1234-5678" {...register("tfixo")} minLength={10} onChange={e => setTelFixo(e.target.value)} value={telFixo} autoComplete="off" /><br />
               </label>
             </div>
 
             <label>CPF: </label><br />
-            <input className={styles.inputCurto} id="cpf" name="cpf" placeholder="111.222.333-44" required {...register("cpf")} onChange={e => setCpf(e.target.value)} value={cpf} autoComplete="off" /><br />
+            <input className={styles.inputCurto} id="cpf" name="cpf" placeholder="111.222.333-44" required {...register("cpf")} minLength={14} onChange={e => setCpf(e.target.value)} value={cpf} autoComplete="off" /><br />
 
             <label>gênero: </label><br />
             <select name="genero" className={styles.inputCurto} {...register("genero")}>
@@ -141,7 +139,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
                 <input className={styles.inputMtCurto} name="numero" placeholder="201" maxLength={6} {...register("endereco.numero")} /> <br />
               </label>
               <label> CEP: <br />
-                <input className={styles.tamanhoMedio} name="cep" placeholder="12345-678" {...register("endereco.cep")} onChange={e => setCep(e.target.value)} value={cep} autoComplete="off" /> <br />
+                <input className={styles.tamanhoMedio} name="cep" placeholder="12345-678" {...register("endereco.cep")} minLength={8} onChange={e => setCep(e.target.value)} value={cep} autoComplete="off" /> <br />
               </label>
             </div>
 

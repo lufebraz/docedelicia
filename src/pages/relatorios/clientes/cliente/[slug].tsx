@@ -5,6 +5,8 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Router from 'next/router'
+import { useEffect, useState } from 'react';
+import VMasker from 'vanilla-masker';
 
 type Cliente = {
   id: number,
@@ -43,6 +45,24 @@ export default function Cliente({ cliente }: ClienteProps) {
     })
     Router.push(`/relatorios/clientes/clientes`)
   })
+
+  const [tel, setTel] = useState('')
+  useEffect(() => {
+    setTel(VMasker.toPattern(tel, "(99) 9 9999-9999"))
+  }, [tel])
+  const [telFixo, setTelFixo] = useState('')
+  useEffect(() => {
+    setTelFixo(VMasker.toPattern(telFixo, "(99) 9999-9999"))
+  }, [telFixo])
+  const [cpf, setCpf] = useState('')
+  useEffect(() => {
+    setCpf(VMasker.toPattern(cpf, "999.999.999-99"))
+  }, [cpf]);
+  const [cep, setCep] = useState('')
+  useEffect(() => {
+    setCep(VMasker.toPattern(cep, "99999-999"))
+  }, [cep])
+
   return (
     <main>
       
@@ -65,7 +85,7 @@ export default function Cliente({ cliente }: ClienteProps) {
             <br />
             <div>
               <label>Telefone celular:  <br />
-                <input className={styles.inputCurto} name="tcelular" defaultValue={cliente?.tcelular} maxLength={11}{...register("tcelular")} required /><br />
+                <input className={styles.inputCurto} name="tcelular" defaultValue={cliente?.tcelular} maxLength={11}{...register("tcelular")} required autoComplete="off" /><br />
               </label>
               <label>Telefone fixo:<br />
                 <input className={styles.inputCurto} name="tfixo" defaultValue={cliente?.tfixo} maxLength={10} {...register("tfixo")}/><br />
@@ -73,7 +93,7 @@ export default function Cliente({ cliente }: ClienteProps) {
             </div>
 
             <label>CPF: </label><br />
-            <input className={styles.inputCurto} name="cpf" value={cliente.cpf} required maxLength={11} {...register("cpf")}/><br />
+            <input className={styles.inputCurto} name="cpf" value={cliente.cpf} required maxLength={11} minLength={11} {...register("cpf")}/><br />
 
             <label>gênero: </label><br />
             <select name="genero" className={styles.inputCurto} defaultValue={cliente.genero} {...register("genero")}>
