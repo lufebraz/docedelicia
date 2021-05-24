@@ -4,7 +4,7 @@ import { NavMenu } from '../../../../components/NavBar';
 import styles from '../../../cadastrar/produtos/styles.module.scss';
 import Router from 'next/router'
 import {  GetStaticPaths, GetStaticProps } from 'next';
-import { api } from '../../../../services/api';
+import { api1 } from '../../../../services/api';
 import Link from 'next/link';
 
 type Produto = {
@@ -130,7 +130,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await api.get(`/produtos/${slug}`)
+  const { data } = await api1.get(`/produtos/${slug}`)
 
   const produto = {
     id: data.id,

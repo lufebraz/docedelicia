@@ -4,8 +4,8 @@ import styles from './styles.module.scss';
 
 interface RepositoryClientProps {
   pessoa: {
-    nomeCliente: string;
-    tcelular: string;
+    nome: string;
+    tCelular: string;
     id: number;
   }
 }
@@ -15,11 +15,11 @@ export function RepositoryClient(props: RepositoryClientProps) {
   return (
     
     <div className={styles.div}>
-    <strong>{props.pessoa.nomeCliente}</strong>
+    <strong>{props.pessoa.nome}</strong>
 
     <div>
 
-      <p>telefone: {props.pessoa.tcelular}</p>
+      <p>telefone: {props.pessoa.tCelular}</p>
       <Link href={`cliente/${id}`}>Visualizar</Link>
     </div>
 

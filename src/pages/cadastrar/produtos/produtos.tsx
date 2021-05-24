@@ -4,7 +4,7 @@ import { NavMenu } from '../../../components/NavBar';
 import styles from './styles.module.scss';
 import Router from 'next/router'
 import { GetStaticProps } from 'next';
-import { api } from '../../../services/api';
+import { api1 } from '../../../services/api';
 import { RepositoryFabricantePedido } from '../../../utils/RepositoryFabricantePedido';
 import Link from 'next/link';
 
@@ -132,7 +132,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('fabricantes', {
+  const { data } = await api1.get('fabricantes', {
     params: {
       _sort: 'nomeFabricante',
       _order: 'asc',

@@ -1,12 +1,12 @@
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../../utils/RepositoryClient';
 import { GetStaticProps } from 'next';
-import { api } from '../../../services/api';
+import { api1 } from '../../../services/api';
 
 
 interface Clientes {
-  nomeCliente: string;
-  tcelular: string;
+  nome: string;
+  tCelular: string;
   id: number;
 }
 type HomeProps = {
@@ -21,7 +21,7 @@ export default function ConsultarCliente({ clients }: HomeProps) {
       <div className={styles.div}>
         <div className={styles.buscarcliente}>
           <label>Buscar Cliente:</label> <br />
-          <input name="nomeCliente" placeholder="Jose da Silva" ></input>
+          <input name="nome" placeholder="Jose da Silva" ></input>
           
         </div>
         <hr />
@@ -42,17 +42,17 @@ export default function ConsultarCliente({ clients }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('clients', {
+  const { data } = await api1.get('cliente', {
     params: {
-      _sort: 'nomeCliente',
+      _sort: 'nome',
       _order: 'asc',
     }
   })
 
   const clients = data.map(clients => {
     return {
-      nomeCliente: clients.nomeCliente,
-      tcelular: clients.tcelular,
+      nome: clients.nome,
+      tCelular: clients.tCelular,
       id: clients.id,
     }
   });

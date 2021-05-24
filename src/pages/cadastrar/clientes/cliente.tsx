@@ -8,11 +8,11 @@ import { useEffect, useState } from 'react';
 import VMasker from 'vanilla-masker';
 
 type Cliente = {
-  nomeCliente: string;
+  nome: string;
   email: string;
-  dtNasc: string;
-  tcelular: string;
-  tfixo: string;
+  dtNascimento: string;
+  tCelular: string;
+  tFixo: string;
   cpf: string;
   genero: string;
   ativo: number;
@@ -42,7 +42,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
   const onSubmit = handleSubmit(async (values) => {
     await axios({
       method: 'POST',
-      url: 'http://localhost:3333/clients',
+      url: 'http://docedelicia.ignorelist.com:8080/api/cliente',
       headers: { 'Cliente': 'dados do cliente' },
       data: values
     })
@@ -65,17 +65,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
   const [cep, setCep] = useState('')
   useEffect(() => {
     setCep(VMasker.toPattern(cep, "99999-999"))
-  }, [cep])
-  // function settarCep() {
-
-  //   const [endereco, setEndereco] = useState<Endereco>({} as Endereco);
-  //   useEffect(() => {
-  //     fetch(`https://viacep.com.br/ws/${cep}/json/`)
-  //       .then(response => response.json())
-  //       .then(data => setEndereco(data))
-  //   }, [cep]);
-  //   return endereco;
-  // }
+  }, [cep])  
 
   return (
     <main>
@@ -86,13 +76,13 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
             <input type="number" value={1} {...register("ativo")} className={styles.hidden} />
             <h3>Dados do Cliente:</h3>
             <label> Nome:  </label><br />
-            <input name="nomeCliente" placeholder="Jose da Silva" required {...register("nomeCliente")} /> <br />
+            <input name="nomeCliente" placeholder="Jose da Silva" required {...register("nome")} /> <br />
 
             <label>e-mail: </label><br />
-            <input name="email" type="email" placeholder="josesilva@exemplo.com" required {...register("email")} /><br />
+            <input name="email" type="email" placeholder="josesilva@exemplo.com" {...register("email")} /><br />
 
             <label>data de nascimento:</label> <br />
-            <input className={styles.inputCurto} name="dtNasc" type="date" placeholder="dd/mm/aaaa" max="2010-01-01" min="1900-01-01" required {...register("dtNasc")} /><br />
+            <input className={styles.inputCurto} name="dtNasc" type="date" placeholder="dd/mm/aaaa" max="2010-01-01" min="1900-01-01" required {...register("dtNascimento")} /><br />
           </div>
 
 
@@ -100,10 +90,10 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
             <br />
             <div>
               <label>Telefone celular:  <br />
-                <input className={styles.inputCurto} name="tcelular" placeholder="(00) 12345-6789" required {...register("tcelular")} minLength={11} onChange={e => setTel(e.target.value)} value={tel} autoComplete="off" /><br />
+                <input className={styles.inputCurto} name="tcelular" placeholder="(00) 12345-6789" required {...register("tCelular")} minLength={11} onChange={e => setTel(e.target.value)} value={tel} autoComplete="off" /><br />
               </label>
               <label>Telefone fixo:<br />
-                <input className={styles.inputCurto} name="tfixo" placeholder="(00) 1234-5678" {...register("tfixo")} minLength={10} onChange={e => setTelFixo(e.target.value)} value={telFixo} autoComplete="off" /><br />
+                <input className={styles.inputCurto} name="tfixo" placeholder="(00) 1234-5678" {...register("tFixo")} minLength={10} onChange={e => setTelFixo(e.target.value)} value={telFixo} autoComplete="off" /><br />
               </label>
             </div>
 
@@ -111,11 +101,11 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
             <input className={styles.inputCurto} id="cpf" name="cpf" placeholder="111.222.333-44" required {...register("cpf")} minLength={14} onChange={e => setCpf(e.target.value)} value={cpf} autoComplete="off" /><br />
 
             <label>gênero: </label><br />
-            <select name="genero" className={styles.inputCurto} {...register("genero")}>
+            <select name="genero" className={styles.inputCurto} required {...register("genero")}>
               <option value="">-</option>
-              <option value="N">Não Especificado</option>
-              <option value="M">Masculino</option>
-              <option value="F">Feminino</option>
+              <option value="n">Não Especificado</option>
+              <option value="m">Masculino</option>
+              <option value="f">Feminino</option>
             </select>
 
           </div>
@@ -176,21 +166,3 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
     </main>
   )
 }
-
-// export const getServerSideProps: GetServerSideProps = async (cep) => {
-
-//   const { data } = await buscarEndereco.get(`71691-019/json`)
-
-//   const endereco = {
-//     logradouro: data.logradouro,
-//     bairro: data.bairro,
-//     localidade: data.localidade,
-//     uf: data.uf
-//   }
-
-//   return {
-//     props: {
-//       endereco
-//     }
-//   }
-// }

@@ -22,8 +22,8 @@ export function Header() {
                 <li><Link href={`/cadastrar/pedidos/pedido`}>Pedidos</Link></li>
                 <li><Link href={`/cadastrar/produtos/produtos`}>Produtos</Link></li>
                 <li><Link href={`/cadastrar/fornecedores/fornecedor`}>Fornecedores</Link></li>
-                <li><Link href={`/cadastrar/entregadores/entregador`}>Entregador</Link></li>
-                <li><Link href={`/cadastrar/funcionarios/funcionario`}>Funcionário</Link></li>
+                {/* <li><Link href={`/cadastrar/entregadores/entregador`}>Entregador</Link></li> */}
+                {/* <li><Link href={`/cadastrar/funcionarios/funcionario`}>Funcionário</Link></li> */}
 
               </ul>
             </li>
@@ -34,8 +34,8 @@ export function Header() {
                 <li><Link href={`/relatorios/produtos/produtos`}>Produtos</Link></li>
                 <li><Link href={`/relatorios/fornecedores/fornecedores`}>Fornecedores</Link></li>
                 <li><Link href={`/relatorios/fabricantes/fabricantes`}>Fabricantes</Link></li>
-                <li><Link href={`/relatorios/entregadores/entregadores`}>Entregador</Link></li>
-                <li><Link href={`/relatorios/funcionarios/funcionarios`}>Funcionário</Link></li>
+                {/* <li><Link href={`/relatorios/entregadores/entregadores`}>Entregador</Link></li> */}
+                {/* <li><Link href={`/relatorios/funcionarios/funcionarios`}>Funcionário</Link></li> */}
               </ul>
             </li>
 

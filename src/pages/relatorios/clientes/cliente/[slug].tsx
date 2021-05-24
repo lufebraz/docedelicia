@@ -1,5 +1,5 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { api } from '../../../../services/api';
+import { api1 } from '../../../../services/api';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 import axios from 'axios';
@@ -9,25 +9,25 @@ import { useEffect, useState } from 'react';
 import VMasker from 'vanilla-masker';
 
 type Cliente = {
-  id: number,
-  nomeCliente: string,
-  email: string,
-  dtNasc: string,
-  tcelular: string,
-  tfixo: string,
-  cpf: string,
-  genero: string,
-  ativo: number,
+  nome: string;
+  email: string;
+  dtNascimento: string;
+  tCelular: string;
+  tFixo: string;
+  cpf: string;
+  genero: string;
+  ativo: number;
   endereco: {
-    nomeEndereco: string,
-    cep: string,
-    logradouro: string,
-    numero: string,
-    cidade: string,
-    bairro: string,
-    uf: string,
-    complemento: string
+    nomeEndereco: string;
+    cep: string;
+    logradouro: string;
+    numero: string;
+    cidade: string;
+    bairro: string;
+    uf: string;
+    complemento: string;
   }
+  id:number;
 }
 type ClienteProps = {
   cliente: Cliente;
@@ -39,7 +39,7 @@ export default function Cliente({ cliente }: ClienteProps) {
   const onSubmit =  handleSubmit(async (values) =>{    
     await axios({
       method:'PUT',      
-      url: `http://localhost:3333/clients/${cliente.id}`,
+      url: `http://docedelicia.ignorelist.com:8080/api/cliente/${cliente.id}`,
       headers: {'Cliente': 'dados do cliente'},
       data: values
     })
@@ -48,11 +48,11 @@ export default function Cliente({ cliente }: ClienteProps) {
 
   const [tel, setTel] = useState('')
   useEffect(() => {
-    setTel(VMasker.toPattern(tel, "(99) 9 9999-9999"))
+    setTel(VMasker.toPattern(tel, "(99) 99999-9999"))
   }, [tel])
   const [telFixo, setTelFixo] = useState('')
   useEffect(() => {
-    setTelFixo(VMasker.toPattern(telFixo, "(99) 9999-9999"))
+    setTelFixo(VMasker.toPattern(telFixo, "(99)9999-9999"))
   }, [telFixo])
   const [cpf, setCpf] = useState('')
   useEffect(() => {
@@ -71,13 +71,13 @@ export default function Cliente({ cliente }: ClienteProps) {
           <div>
             <h3>Dados do Cliente:</h3>
             <label> Nome:  </label><br />
-            <input name="nomeCliente" defaultValue={cliente.nomeCliente} required {...register("nomeCliente")}/> <br />
+            <input name="nome" defaultValue={cliente.nome} required {...register("nome")}/> <br />
 
             <label>e-mail: </label><br />
             <input name="email" type="email"  defaultValue={cliente.email} required  {...register("email")}/><br />
 
             <label>data de nascimento:</label> <br />
-            <input className={styles.inputCurto} name="dtNasc" type="date" defaultValue={cliente.dtNasc} max="2003-12-31" {...register("dtNasc")}/><br />
+            <input className={styles.inputCurto} name="dtNascimento" type="date" defaultValue={cliente.dtNascimento} max="2003-12-31" {...register("dtNascimento")}/><br />
           </div>
 
 
@@ -85,10 +85,10 @@ export default function Cliente({ cliente }: ClienteProps) {
             <br />
             <div>
               <label>Telefone celular:  <br />
-                <input className={styles.inputCurto} name="tcelular" defaultValue={cliente?.tcelular} maxLength={11}{...register("tcelular")} required autoComplete="off" /><br />
+                <input className={styles.inputCurto} name="tCelular" defaultValue={cliente?.tCelular} maxLength={14}{...register("tCelular")} required autoComplete="off" /><br />
               </label>
               <label>Telefone fixo:<br />
-                <input className={styles.inputCurto} name="tfixo" defaultValue={cliente?.tfixo} maxLength={10} {...register("tfixo")}/><br />
+                <input className={styles.inputCurto} name="tFixo" defaultValue={cliente?.tFixo} maxLength={14} {...register("tFixo")}/><br />
               </label>
             </div>
 
@@ -97,9 +97,9 @@ export default function Cliente({ cliente }: ClienteProps) {
 
             <label>gênero: </label><br />
             <select name="genero" className={styles.inputCurto} defaultValue={cliente.genero} {...register("genero")}>
-              <option value="N">Não Especificado</option>
-              <option value="M">Masculino</option>
-              <option value="F">Feminino</option>
+              <option value="n">Não Especificado</option>
+              <option value="m">Masculino</option>
+              <option value="f">Feminino</option>
             </select>
 
           </div>
@@ -166,28 +166,28 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await api.get(`/clients/${slug}`)
+  const { data } = await api1.get(`/cliente/${slug}`)
 
   const cliente = {
     id: data.id,
-    nomeCliente: data.nomeCliente,
+    nome: data.nome,
     email: data.email,
-    dtNasc: data.dtNasc,
-    tcelular: data.tcelular,
-    tfixo:data.tfixo,
+    dtNascimento: data.dtNascimento,
+    tCelular: data.tCelular,
+    tFixo:data.tFixo,
     cpf: data.cpf,
     genero: data.genero,
     ativo: data.ativo,
-    endereco: {
-      nomeEndereco: data.endereco.nomeEndereco,
-      cep: data.endereco.cep,
-      logradouro: data.endereco.logradouro,
-      numero: data.endereco.numero,
-      cidade: data.endereco.cidade,
-      bairro: data.endereco.bairro,
-      uf: data.endereco.uf,
-      complemento: data.endereco.complemento
-    }
+    // endereco: {
+    //   nomeEndereco: data.endereco.nomeEndereco,
+    //   cep: data.endereco.cep,
+    //   logradouro: data.endereco.logradouro,
+    //   numero: data.endereco.numero,
+    //   cidade: data.endereco.cidade,
+    //   bairro: data.endereco.bairro,
+    //   uf: data.endereco.uf,
+    //   complemento: data.endereco.complemento
+    // }
   };
 
   return {
