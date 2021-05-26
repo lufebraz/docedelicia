@@ -99,25 +99,49 @@ export default function Produtos({ fabricantes }: HomeProps) {
 
             </div>
           </div>
-          <div className={styles.formgroup}>
-            <div className={styles.formitem}>
+    <div className={styles.formgroup}>
 
-              <label >Recheio:</label>
-              <input type="text" {...register('recheio')} />
+          <div className={styles.formitem}>
+              <label >Recheios:</label>
+              <div>
+                <input type="checkbox" name="nutella" {...register('recheio')} />
+                <label htmlFor="nutella" >Nutella</label>
+              </div>
+              <div>
+                <input type="checkbox" name="chocolate" {...register('recheio')} />
+                <label >Chocolate</label>
+              </div>
+              <div>
+                <input type="checkbox" name="morango" {...register('recheio')} />
+                <label >Morango</label>
+              </div>
+              <div>
+                <input type="checkbox" name="coco" {...register('recheio')} />
+                <label >Coco</label>
+              </div>
+              <div>
+                <input type="checkbox" name="amendoim" {...register('recheio')} />
+                <label >Amendoim</label>
+              </div>
             </div>
 
             <div className={styles.formitem}>
-
-              <label >Formato: </label>
-              <select name="formato" {...register('formato')}>
-                <option value="">-</option>
-                <option value="redondo">Redondo</option>
-                <option value="retangular">Retangular</option>
-                <option value="personalizado">Personalizado</option>
-              </select>
+              <label >Formatos: </label>
+              <div>
+                <input type="checkbox" name="redondo" {...register('formato')} />
+                <label >Redondo</label>
+              </div>
+              <div>
+                <input type="checkbox" name="retangular" {...register('formato')} />
+                <label >Retangular</label>
+              </div>
+              <div>
+                <input type="checkbox" name="personalizado" {...register('formato')} />
+                <label >Personalizado</label>
+              </div>
             </div>
 
-          </div>
+            </div>
           <label >Fabricante: </label>
           <select name="fabricante" {...register('fabricante')} required>
             <option value="">-</option>

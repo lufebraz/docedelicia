@@ -6,24 +6,33 @@ import Router from 'next/router'
 import {  GetStaticPaths, GetStaticProps } from 'next';
 import { api1 } from '../../../../services/api';
 import Link from 'next/link';
+import { RepositoryFabricanteProduto } from '../../../../utils/RepositoryFabricanteProduto'
 
 type Produto = {
-  id:number,
+  id:number, 
   nome: string,
   descricao: string,
   recheio: string,
   tipoUnidade: string,
   categoria: string,
   formato: string,
+  fabricanteId: number,
   fabricante: string,
   preco: number,
-  ativo: number
+  ativo: number,
+
 }
-type ProdutoProps = {
+type HomeProps = {
   produto: Produto;
+  fabricante: Fabricante[];
+}
+type Fabricante = {
+  id: number,
+  nome: string
 }
 
-export default function Produtos({ produto }: ProdutoProps) {
+export default function Produtos({ produto, fabricante }: HomeProps) {
+  // const fabricanteList = [...fabricante]
 
   const { register, handleSubmit } = useForm<Produto>();
   const onSubmit = handleSubmit(async (values) => {
@@ -56,7 +65,7 @@ export default function Produtos({ produto }: ProdutoProps) {
               <label >Tipo de unidade: </label>
               <select name="unidade" {...register('tipoUnidade')} required defaultValue={produto?.tipoUnidade}>
                 <option value="">-</option>
-                <option value="unitario">Unitário</option>
+                <option value="un">Unidade</option>
                 <option value="kilo">Kg</option>
                 <option value="grama">Gramas</option>
                 <option value="litro">Litro</option>
@@ -116,10 +125,14 @@ export default function Produtos({ produto }: ProdutoProps) {
 
           </div>
           <label >Fabricante: </label>
-          <select name="fabricante" {...register('fabricante')}  defaultValue={produto?.fabricante}>
-            <option value="">-</option>
-            
-          </select>
+          <input type="text" value={produto.fabricante} />
+          <input type="text" value={produto.fabricanteId} {...register('fabricanteId')} className={styles.hidden} />
+          {/* <select name="fabricanteId" {...register('fabricante')} defaultValue={produto.fabricante}>
+            {fabricanteList.map(fabricante => {
+              return (<RepositoryFabricanteProduto key={fabricante.id} fabricante={fabricante} />)
+            })}
+          </select> */}
+           
           <div className={styles.formgroup}>
 
             <input type="submit" value="Salvar" className={styles.button} />
@@ -153,7 +166,9 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     formato: data.formato,
     recheio:data.recheio,
     preco: data.preco,
-    ativo: data.ativo
+    ativo: data.ativo,
+    fabricante: data.fabricante.nome,
+    fabricanteId: data.fabricanteId
   }
 
   return {
@@ -162,5 +177,20 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     },
   }
 }
+
+// export const getStaticProps1: GetStaticProps = async (ctx) => {
+//   const { data } = await api1.get(`/fabricante/ativos`)
+
+//   const fabricante = {
+//     id: data.id,
+//     nome: data.nome
+//   }
+
+//   return {
+//     props: {
+//       fabricante
+//     },
+//   }
+// }
 
 
