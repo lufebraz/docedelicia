@@ -65,7 +65,7 @@ export default function Produtos({ produto }: ProdutoProps) {
             </div>
             <div className={styles.formitem}>
               <label >Preço:</label>
-              <input type="number" min="0.00" max="10000.00" step="0.01" required {...register('preco')} defaultValue={produto?.preco} />
+              <input type="number" min="0.00" max="10000.00" step="0.01" required {...register('preco')} defaultValue={produto?.preco} className={styles.input}/>
             </div>
           </div>
           <div className={styles.formgroup}>
