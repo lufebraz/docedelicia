@@ -1,10 +1,10 @@
 import styles from '../fabricantes/styles.module.scss';
 import { RepositoryProduto } from '../../../utils/RepositoryProduto';
 import { GetStaticProps } from 'next';
-import { api } from '../../../services/api';
+import { api1 } from '../../../services/api';
 
 type Produtos = {
-  nomeProduto: string,
+  nome: string,
   descricao: string,
   recheio: string,
   tipoUnidade: string,
@@ -38,16 +38,16 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('produtos', {
+  const { data } = await api1.get('produto', {
     params: {
-      _sort: 'nomeProduto',
+      _sort: 'nome',
       _order: 'asc',
     }
   })
 
   const produtos = data.map(produtos => {
     return {
-      nomeProduto: produtos.nomeProduto,      
+      nome: produtos.nome,      
       id: produtos.id,
     }
   });

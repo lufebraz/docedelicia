@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 
 interface RepositoryClientProps {
   produtos: {
-    nomeProduto: string;
+    nome: string;
     id: number;
   }
 }
@@ -14,7 +14,7 @@ export function RepositoryProduto(props: RepositoryClientProps) {
   return (
 
     <div className={styles.div}>
-      <strong>{props.produtos.nomeProduto}</strong>
+      <strong>{props.produtos.nome}</strong>
       <div>
 
         <Link href={`produto/${id}`}>Visualizar</Link>

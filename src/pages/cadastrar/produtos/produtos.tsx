@@ -4,12 +4,12 @@ import { NavMenu } from '../../../components/NavBar';
 import styles from './styles.module.scss';
 import Router from 'next/router'
 import { GetStaticProps } from 'next';
-import { api1 } from '../../../services/api';
+import { api, api1 } from '../../../services/api';
 import { RepositoryFabricantePedido } from '../../../utils/RepositoryFabricantePedido';
 import Link from 'next/link';
 
 interface Fabricantes {
-  nomeFabricante: string;
+  nome: string;
   id: number;
 }
 type HomeProps = {
@@ -17,13 +17,15 @@ type HomeProps = {
 }
 
 type Produto = {
-  nomeProduto: string,
+  nome: string,
   descricao: string,
   recheio: string,
   tipoUnidade: string,
   categoria: string,
   formato: string,
-  fabricante: string
+  fabricante: string,
+  preco: number,
+  ativo: number
 }
 
 export default function Produtos({ fabricantes }: HomeProps) {
@@ -31,12 +33,14 @@ export default function Produtos({ fabricantes }: HomeProps) {
 
   const { register, handleSubmit } = useForm<Produto>();
   const onSubmit = handleSubmit(async (values) => {
+
     await axios({
       method: 'POST',
-      url: 'http://localhost:3333/produtos',
+      url: 'http://docedelicia.ignorelist.com:8080/api/produto',
       headers: { 'Produto': 'dados do produto' },
       data: values
     })
+    
     Router.push(`/relatorios/produtos/produtos`)
   })
 
@@ -54,12 +58,12 @@ export default function Produtos({ fabricantes }: HomeProps) {
             <div className={styles.formitem}>
 
               <label >Nome do produto: </label>
-              <input type="text" required {...register('nomeProduto')} />
+              <input type="text" required {...register('nome')} />
             </div>
             <div className={styles.formitem}>
 
               <label >Tipo de unidade: </label>
-              <select name="unidade" {...register('tipoUnidade')}>
+              <select name="unidade" {...register('tipoUnidade')} required>
                 <option value="">-</option>
                 <option value="unitario">Unitário</option>
                 <option value="kilo">Kg</option>
@@ -67,6 +71,10 @@ export default function Produtos({ fabricantes }: HomeProps) {
                 <option value="litro">Litro</option>
                 <option value="mililitro">ML</option>
               </select>
+            </div>
+            <div className={styles.formitem}>
+              <label >Preço:</label>
+              <input type="number" min="0.00" max="10000.00" step="0.01" required {...register('preco')} className={styles.input} />
             </div>
           </div>
           <div className={styles.formgroup}>
@@ -78,7 +86,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
             <div className={styles.formitem}>
 
               <label >Categoria: </label>
-              <select name="categoria" {...register('categoria')}>
+              <select name="categoria" {...register('categoria')} required>
                 <option value="">-</option>
                 <option value="bolos">Bolos</option>
                 <option value="salgados">Salgados</option>
@@ -111,7 +119,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
 
           </div>
           <label >Fabricante: </label>
-          <select name="fabricante" {...register('fabricante')}>
+          <select name="fabricante" {...register('fabricante')} required>
             <option value="">-</option>
             {fabricantesList.map(fabricantes => {
               return (<RepositoryFabricantePedido key={fabricantes.id} fabricante={fabricantes} />
@@ -132,16 +140,16 @@ export default function Produtos({ fabricantes }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api1.get('fabricantes', {
+  const { data } = await api1.get('fabricante', {
     params: {
-      _sort: 'nomeFabricante',
+      _sort: 'nome',
       _order: 'asc',
     }
   })
 
   const fabricantes = data.map(fabricantes => {
     return {
-      nomeFabricante: fabricantes.nomeFabricante,
+      nome: fabricantes.nome,
       id: fabricantes.id,
     }
   });

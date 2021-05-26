@@ -5,7 +5,7 @@ import Router from 'next/router'
 import styles from './styles.module.scss';
 
 type Fabricante = {
-  nomeFabricante: string,
+  nome: string,
   ativo: number,
 }
 
@@ -14,7 +14,7 @@ export default function Fabricante() {
   const onSubmit = handleSubmit(async (values) => {
     await axios({
       method: 'POST',
-      url: 'http://localhost:3333/fabricantes',
+      url: 'http://docedelicia.ignorelist.com:8080/api/fabricante',
       headers: { 'Fabricante': 'dados do Fabricante' },
       data: values
     })
@@ -28,7 +28,7 @@ export default function Fabricante() {
 
       <h3>Dados do Fabricante:</h3>
       <label >Nome: </label>
-      <input type="text" required {...register('nomeFabricante')} />
+      <input type="text" required {...register('nome')} />
       <input type="number" value="1"  {...register('ativo')} className={styles.hidden}/>
 
       <div>

@@ -8,14 +8,15 @@ import { api1 } from '../../../../services/api';
 import Link from 'next/link';
 
 type Produto = {
-  nomeProduto: string,
+  id:number,
+  nome: string,
   descricao: string,
   recheio: string,
   tipoUnidade: string,
   categoria: string,
   formato: string,
   fabricante: string,
-  id:number
+  preco: string
 }
 type ProdutoProps = {
   produto: Produto;
@@ -27,7 +28,7 @@ export default function Produtos({ produto }: ProdutoProps) {
   const onSubmit = handleSubmit(async (values) => {
     await axios({
       method: 'PUT',
-      url: `http://localhost:3333/produtos/${produto.id}`,
+      url: `http://docedelicia.ignorelist.com:8080/api/produto/${produto.id}`,
       data: values
     })
     Router.push(`/relatorios/produtos/produtos`)
@@ -47,12 +48,12 @@ export default function Produtos({ produto }: ProdutoProps) {
             <div className={styles.formitem}>
 
               <label >Nome do produto: </label>
-              <input type="text" defaultValue={produto?.nomeProduto} required {...register('nomeProduto')} />
+              <input type="text" defaultValue={produto?.nome} required {...register('nome')} />
             </div>
             <div className={styles.formitem}>
 
               <label >Tipo de unidade: </label>
-              <select name="unidade" {...register('tipoUnidade')} defaultValue={produto?.tipoUnidade}>
+              <select name="unidade" {...register('tipoUnidade')} required defaultValue={produto?.tipoUnidade}>
                 <option value="">-</option>
                 <option value="unitario">Unitário</option>
                 <option value="kilo">Kg</option>
@@ -60,6 +61,10 @@ export default function Produtos({ produto }: ProdutoProps) {
                 <option value="litro">Litro</option>
                 <option value="mililitro">ML</option>
               </select>
+            </div>
+            <div className={styles.formitem}>
+              <label >Preço:</label>
+              <input type="currency" required {...register('preco')}  defaultValue={produto?.preco} className={styles.input} />
             </div>
           </div>
           <div className={styles.formgroup}>
@@ -71,7 +76,7 @@ export default function Produtos({ produto }: ProdutoProps) {
             <div className={styles.formitem}>
 
               <label >Categoria: </label>
-              <select name="categoria" {...register('categoria')} defaultValue={produto?.categoria}>
+              <select name="categoria" {...register('categoria')} required defaultValue={produto?.categoria}>
                 <option value="">-</option>
                 <option value="bolos">Bolos</option>
                 <option value="salgados">Salgados</option>
@@ -104,7 +109,7 @@ export default function Produtos({ produto }: ProdutoProps) {
 
           </div>
           <label >Fabricante: </label>
-          <select name="fabricante" {...register('fabricante')} defaultValue={produto?.fabricante}>
+          <select name="fabricante" {...register('fabricante')}  defaultValue={produto?.fabricante}>
             <option value="">-</option>
             
           </select>
@@ -130,17 +135,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await api1.get(`/produtos/${slug}`)
+  const { data } = await api1.get(`/produto/${slug}`)
 
   const produto = {
     id: data.id,
-    nomeProduto: data.nomeProduto,
+    nome: data.nome,
     descricao: data.descricao,
     tipoUnidade: data.tipoUnidade,
     categoria: data.categoria,
     formato: data.formato,
     recheio:data.recheio,
-    fabricante:data.fabricante
+    preco: data.preco
   }
 
   return {

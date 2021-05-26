@@ -5,7 +5,7 @@ import { api } from '../../../services/api';
 
 
 interface Fornecedores {
-  nomeFornecedor: string;  
+  nome: string;  
   id: number;
 }
 type HomeProps = {
@@ -38,14 +38,14 @@ export default function ConsultarCliente({ fornecedores }: HomeProps) {
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await api.get('fornecedores', {
     params: {
-      _sort: 'nomeFornecedor',
+      _sort: 'nome',
       _order: 'asc',
     }
   })
 
   const fornecedores = data.map(fornecedores => {
     return {
-      nomeFornecedor: fornecedores.nomeFornecedor,      
+      nome: fornecedores.nome,      
       id: fornecedores.id,
     }
   });

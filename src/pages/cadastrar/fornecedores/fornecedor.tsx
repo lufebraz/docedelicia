@@ -6,7 +6,7 @@ import Router from 'next/router'
 import Fabricante from './fabricante';
 
 type Fornecedor = {
-  nomeFornecedor: string,
+  nome: string,
   ativo: number,
 }
 
@@ -32,7 +32,7 @@ export default function Fornecedores() {
           <h3>Dados do Fornecedor:</h3>
           <label >Nome: </label>
           <input type="number" value="1"  {...register('ativo')} className={styles.hidden}/>
-          <input type="text" required {...register('nomeFornecedor')} />
+          <input type="text" required {...register('nome')} />
           <input type="submit" value="Cadastrar" className={styles.button} />
 
         </form>

@@ -1,11 +1,11 @@
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../../utils/RepositoryFabricante';
 import { GetStaticProps } from 'next';
-import { api } from '../../../services/api';
+import { api1 } from '../../../services/api';
 
 
 interface Fabricantes {
-  nomeFabricante: string;  
+  nome: string;  
   id: number;
 }
 type HomeProps = {
@@ -32,16 +32,16 @@ export default function ConsultarCliente({ fabricantes }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await api.get('fabricantes', {
+  const { data } = await api1.get('fabricante', {
     params: {
-      _sort: 'nomeFabricante',
+      _sort: 'nome',
       _order: 'asc',
     }
   })
 
   const fabricantes = data.map(fabricantes => {
     return {
-      nomeFabricante: fabricantes.nomeFabricante,      
+      nome: fabricantes.nome,      
       id: fabricantes.id,
     }
   });

@@ -1,7 +1,7 @@
 
 interface RepositoryClientProps {
   fabricante: {
-    nomeFabricante: string;
+    nome: string;
     id: number;
   }
 }
@@ -9,7 +9,7 @@ interface RepositoryClientProps {
 export function RepositoryFabricantePedido(props: RepositoryClientProps) {
   return (
 
-    <option>{props.fabricante.nomeFabricante}</option>
+    <option>{props.fabricante.nome}</option>
 
   );
 }

@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import { api } from '../../../../services/api';
+import { api, api1 } from '../../../../services/api';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Router from 'next/router'
@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 type Fabricante = {
   id: number,
-  nomeFabricante: string,
+  nome: string,
   ativo: number,
 }
 type FabricanteProps = {
@@ -19,7 +19,7 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
   const onSubmit = handleSubmit(async (values) => {
     await axios({
       method: 'PUT',
-      url: `http://localhost:3333/fabricantes/${fabricante.id}`,
+      url: `http://docedelicia.ignorelist.com:8080/api/fabricante/${fabricante.id}`,
       headers: { 'Fabricante': 'dados do fabricante' },
       data: values
     })
@@ -32,7 +32,7 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
 
           <h3>Fabricante</h3>
           <label >Nome do Fabricante: </label>
-          <input type="text" defaultValue={fabricante.nomeFabricante} required {...register('nomeFabricante')} />
+          <input type="text" defaultValue={fabricante.nome} required {...register('nome')} />
           <label >Fabricante Ativo?</label>
           <select name="ativo" id="" defaultValue={fabricante.ativo}{...register('ativo')} >
             <option value="1">Sim</option>
@@ -59,11 +59,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await api.get(`/fabricantes/${slug}`)
+  const { data } = await api1.get(`/fabricante/${slug}`)
 
   const fabricante = {
     id: data.id,
-    nomeFabricante: data.nomeFabricante,
+    nome: data.nome,
     ativo: data.ativo,
   }
 

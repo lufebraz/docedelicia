@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 type Fornecedor = {
   id: number,
-  nomeFornecedor: string,
+  nome: string,
   ativo: number,
 }
 type FornecedorProps = {
@@ -32,7 +32,7 @@ export default function Fornecedor({ fornecedor }: FornecedorProps) {
 
           <h3>Fornecedor</h3>
           <label >Nome do Fornecedor: </label>
-          <input type="text" defaultValue={fornecedor.nomeFornecedor} required {...register('nomeFornecedor')} />
+          <input type="text" defaultValue={fornecedor.nome} required {...register('nome')} />
           <label >Fornecedor Ativo?</label>
           <select name="ativo" id="" defaultValue={fornecedor.ativo}{...register('ativo')} >
             <option value="1">Sim</option>
@@ -63,7 +63,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
 
   const fornecedor = {
     id: data.id,
-    nomeFornecedor: data.nomeFornecedor,
+    nome: data.nome,
     ativo: data.ativo,
   }
 
