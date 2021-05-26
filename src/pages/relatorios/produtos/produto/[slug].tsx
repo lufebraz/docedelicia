@@ -116,10 +116,8 @@ export default function Produtos({ produto }: ProdutoProps) {
 
           </div>
           <label >Fabricante: </label>
-          <select name="fabricante" {...register('fabricante')}  defaultValue={produto?.fabricante}>
-            <option value="">-</option>
-            
-          </select>
+          <input name="fabricante" {...register('fabricante')}  defaultValue={produto?.fabricante}/>
+           
           <div className={styles.formgroup}>
 
             <input type="submit" value="Salvar" className={styles.button} />
@@ -153,7 +151,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     formato: data.formato,
     recheio:data.recheio,
     preco: data.preco,
-    ativo: data.ativo
+    ativo: data.ativo,
+    fabricante: data.fabricante.nome
   }
 
   return {
