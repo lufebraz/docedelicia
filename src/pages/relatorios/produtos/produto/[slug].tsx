@@ -16,7 +16,8 @@ type Produto = {
   categoria: string,
   formato: string,
   fabricante: string,
-  preco: string
+  preco: number,
+  ativo: number
 }
 type ProdutoProps = {
   produto: Produto;
@@ -64,7 +65,7 @@ export default function Produtos({ produto }: ProdutoProps) {
             </div>
             <div className={styles.formitem}>
               <label >Preço:</label>
-              <input type="currency" required {...register('preco')}  defaultValue={produto?.preco} className={styles.input} />
+              <input type="number" min="0.00" max="10000.00" step="0.01" required {...register('preco')} defaultValue={produto?.preco} />
             </div>
           </div>
           <div className={styles.formgroup}>
@@ -86,7 +87,13 @@ export default function Produtos({ produto }: ProdutoProps) {
                 <option value="topo">Topo</option>
                 <option value="sobremesas">Sobremesas</option>
               </select>
-
+            </div>
+            <div className={styles.formitem}>
+              <label >Ativo:</label>
+              <select name="ativo" {...register('ativo')} defaultValue={produto?.ativo} required >
+                <option value="1">Sim</option>
+                <option value="0">Não</option>
+              </select>
             </div>
           </div>
           <div className={styles.formgroup}>
@@ -145,7 +152,8 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     categoria: data.categoria,
     formato: data.formato,
     recheio:data.recheio,
-    preco: data.preco
+    preco: data.preco,
+    ativo: data.ativo
   }
 
   return {
