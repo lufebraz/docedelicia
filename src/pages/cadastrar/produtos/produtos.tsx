@@ -3,18 +3,12 @@ import { useForm } from 'react-hook-form';
 import { NavMenu } from '../../../components/NavBar';
 import styles from './styles.module.scss';
 import Router from 'next/router'
-import { GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import { api, api1 } from '../../../services/api';
 import { RepositoryFabricantePedido } from '../../../utils/RepositoryFabricantePedido';
 import Link from 'next/link';
+import { RepositoryFabricanteProduto } from '../../../utils/RepositoryFabricanteProduto';
 
-interface Fabricantes {
-  nome: string;
-  id: number;
-}
-type HomeProps = {
-  fabricantes: Fabricantes[];
-}
 
 type Produto = {
   nome: string,
@@ -23,9 +17,16 @@ type Produto = {
   tipoUnidade: string,
   categoria: string,
   formato: string,
-  fabricante: string,
+  fabricanteId: string,
   preco: number,
   ativo: number
+}
+type Fabricantes = {
+  nome: string;
+  id: number;
+}
+type HomeProps = {
+  fabricantes: Fabricantes[];
 }
 
 export default function Produtos({ fabricantes }: HomeProps) {
@@ -103,7 +104,8 @@ export default function Produtos({ fabricantes }: HomeProps) {
 
           <div className={styles.formitem}>
               <label >Recheios:</label>
-              <div>
+              <input type="text" {...register('recheio')}/>
+              {/* <div>
                 <input type="checkbox" name="nutella" {...register('recheio')} />
                 <label htmlFor="nutella" >Nutella</label>
               </div>
@@ -122,12 +124,18 @@ export default function Produtos({ fabricantes }: HomeProps) {
               <div>
                 <input type="checkbox" name="amendoim" {...register('recheio')} />
                 <label >Amendoim</label>
-              </div>
+              </div> */}
             </div>
 
             <div className={styles.formitem}>
               <label >Formatos: </label>
-              <div>
+              <select name="formato" {...register('formato')}>
+                <option value="">-</option>
+                <option value="redondo">redondo</option>
+                <option value="retangular">retangular</option>
+                <option value="personalizado">personalizado</option>
+              </select>
+              {/* <div>
                 <input type="checkbox" name="redondo" {...register('formato')} />
                 <label >Redondo</label>
               </div>
@@ -138,15 +146,15 @@ export default function Produtos({ fabricantes }: HomeProps) {
               <div>
                 <input type="checkbox" name="personalizado" {...register('formato')} />
                 <label >Personalizado</label>
-              </div>
+              </div> */}
             </div>
 
             </div>
           <label >Fabricante: </label>
-          <select name="fabricante" {...register('fabricante')} required>
+          <select name="fabricanteId" {...register('fabricanteId')} required>
             <option value="">-</option>
             {fabricantesList.map(fabricantes => {
-              return (<RepositoryFabricantePedido key={fabricantes.id} fabricante={fabricantes} />
+              return (<RepositoryFabricanteProduto key={fabricantes.id} fabricante={fabricantes} />
               )
             })}
           </select>
@@ -163,7 +171,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { data } = await api1.get('fabricante', {
     params: {
       _sort: 'nome',

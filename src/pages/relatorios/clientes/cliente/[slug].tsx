@@ -1,4 +1,4 @@
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next';
 import { api1 } from '../../../../services/api';
 import styles from './styles.module.scss';
 import Link from 'next/link';
@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import Router from 'next/router'
 import { useEffect, useState } from 'react';
 import VMasker from 'vanilla-masker';
+import { format, parseISO } from 'date-fns';
 
 type Cliente = {
   nome: string;
@@ -85,7 +86,7 @@ export default function Cliente({ cliente }: ClienteProps) {
             <br />
             <div>
               <label>Telefone celular:  <br />
-                <input className={styles.inputCurto} name="tCelular" defaultValue={cliente?.tCelular} maxLength={14}{...register("tCelular")} required autoComplete="off" /><br />
+                <input className={styles.inputCurto} name="tCelular" defaultValue={cliente?.tCelular} maxLength={15}{...register("tCelular")} required autoComplete="off" /><br />
               </label>
               <label>Telefone fixo:<br />
                 <input className={styles.inputCurto} name="tFixo" defaultValue={cliente?.tFixo} maxLength={14} {...register("tFixo")}/><br />
@@ -156,14 +157,8 @@ export default function Cliente({ cliente }: ClienteProps) {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
-}
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
   const { data } = await api1.get(`/cliente/${slug}`)
@@ -172,7 +167,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     id: data.id,
     nome: data.nome,
     email: data.email,
-    dtNascimento: data.dtNascimento,
+    dtNascimento: format(parseISO(data.dtNascimento), 'yyyy-MM-dd'),
     tCelular: data.tCelular,
     tFixo:data.tFixo,
     cpf: data.cpf,
@@ -193,7 +188,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   return {
     props: {
       cliente
-    },
-    revalidate: 60 * 60 * 24, //24h
+    }
   }
 }

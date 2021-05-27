@@ -3,13 +3,14 @@ import { useForm } from 'react-hook-form';
 import { NavMenu } from '../../../../components/NavBar';
 import styles from '../../../cadastrar/produtos/styles.module.scss';
 import Router from 'next/router'
-import {  GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { api1 } from '../../../../services/api';
 import Link from 'next/link';
-import { RepositoryFabricanteProduto } from '../../../../utils/RepositoryFabricanteProduto'
+import { RepositoryFabricanteProduto } from '../../../../utils/RepositoryFabricanteProduto';
+import { RepositoryFabricantePedido } from '../../../../utils/RepositoryFabricantePedido';
 
 type Produto = {
-  id:number, 
+  id: number,
   nome: string,
   descricao: string,
   recheio: string,
@@ -22,17 +23,19 @@ type Produto = {
   ativo: number,
 
 }
+
+type Fabricantes = {
+  id: number,
+  nome: string,
+}
+
 type HomeProps = {
   produto: Produto;
-  fabricante: Fabricante[];
-}
-type Fabricante = {
-  id: number,
-  nome: string
+  fabricante: Fabricantes[];
 }
 
 export default function Produtos({ produto, fabricante }: HomeProps) {
-  // const fabricanteList = [...fabricante]
+  const fabricanteList = [...fabricante];
 
   const { register, handleSubmit } = useForm<Produto>();
   const onSubmit = handleSubmit(async (values) => {
@@ -74,14 +77,14 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
             </div>
             <div className={styles.formitem}>
               <label >Preço:</label>
-              <input type="number" min="0.00" max="10000.00" step="0.01" required {...register('preco')} defaultValue={produto?.preco} className={styles.input}/>
+              <input type="number" min="0.00" max="10000.00" step="0.01" required {...register('preco')} defaultValue={produto?.preco} className={styles.input} />
             </div>
           </div>
           <div className={styles.formgroup}>
             <div className={styles.formitem}>
 
               <label >Descrição:</label>
-              <input type="text" {...register('descricao')} defaultValue={produto?.descricao}/>
+              <input type="text" {...register('descricao')} defaultValue={produto?.descricao} />
             </div>
             <div className={styles.formitem}>
 
@@ -109,7 +112,7 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
             <div className={styles.formitem}>
 
               <label >Recheio:</label>
-              <input type="text" {...register('recheio')} defaultValue={produto?.recheio}/>
+              <input type="text" {...register('recheio')} defaultValue={produto?.recheio} />
             </div>
 
             <div className={styles.formitem}>
@@ -125,14 +128,16 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
 
           </div>
           <label >Fabricante: </label>
-          <input type="text" value={produto.fabricante} />
-          <input type="text" value={produto.fabricanteId} {...register('fabricanteId')} className={styles.hidden} />
-          {/* <select name="fabricanteId" {...register('fabricante')} defaultValue={produto.fabricante}>
-            {fabricanteList.map(fabricante => {
-              return (<RepositoryFabricanteProduto key={fabricante.id} fabricante={fabricante} />)
+
+          <select name="fabricanteId" {...register('fabricanteId')} defaultValue={produto.fabricanteId}>
+            {fabricanteList.map(fabricantes => {
+              return (<RepositoryFabricanteProduto key={fabricantes.id} fabricante={fabricantes} />
+              )
             })}
-          </select> */}
-           
+          </select>
+
+
+
           <div className={styles.formgroup}>
 
             <input type="submit" value="Salvar" className={styles.button} />
@@ -146,13 +151,8 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
-}
-export const getStaticProps: GetStaticProps = async (ctx) => {
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
   const { data } = await api1.get(`/produto/${slug}`)
@@ -164,33 +164,31 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     tipoUnidade: data.tipoUnidade,
     categoria: data.categoria,
     formato: data.formato,
-    recheio:data.recheio,
+    recheio: data.recheio,
     preco: data.preco,
     ativo: data.ativo,
     fabricante: data.fabricante.nome,
     fabricanteId: data.fabricanteId
   }
 
+  const res = await fetch('http://docedelicia.ignorelist.com:8080/api/fabricante/ativos')
+  const data1 = await res.json()
+
+  const fabricante = data1.map(fabricante => {
+    return {
+      id: fabricante.id,
+      nome: fabricante.nome
+    }
+  });
+
+
   return {
     props: {
-      produto
+      produto,
+      fabricante
     },
   }
 }
 
-// export const getStaticProps1: GetStaticProps = async (ctx) => {
-//   const { data } = await api1.get(`/fabricante/ativos`)
-
-//   const fabricante = {
-//     id: data.id,
-//     nome: data.nome
-//   }
-
-//   return {
-//     props: {
-//       fabricante
-//     },
-//   }
-// }
 
 

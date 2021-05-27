@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../../utils/RepositoryFabricante';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import { api1 } from '../../../services/api';
 
 
@@ -31,7 +31,7 @@ export default function ConsultarCliente({ fabricantes }: HomeProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { data } = await api1.get('fabricante', {
     params: {
       _sort: 'nome',
