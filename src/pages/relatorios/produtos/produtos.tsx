@@ -3,6 +3,7 @@ import { RepositoryProduto } from '../../../utils/RepositoryProduto';
 import { GetServerSideProps } from 'next';
 import { api1 } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
+import Link from 'next/link';
 
 type Produtos = {
   nome: string,
@@ -30,7 +31,12 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
         <div className={styles.lista}>
           <ul>
             {produtosList.map(produtos => {
-              return (<RepositoryProduto key={produtos.id} produtos={produtos} />)
+              return (
+              <div key={produtos.id}>
+                <h3>{produtos.nome}</h3>
+                <Link href={`produto/${produtos.id}`}>Visualizar</Link>
+              </div>
+              )
             })}
           </ul>
         </div>
