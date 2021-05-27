@@ -51,7 +51,7 @@ export default function Home() {
             </div>
             <div>
               <p>Endereço: CLN 5 Bloco B Lote 3/4 Loja 4 - Riacho Fundo I, Brasília - DF, CEP: 71805-522</p>
-              <p>Telefone para contato: <br />(61) 3536-5121 / (61) 9 9247-6273</p>
+              <p>Telefones para contato: <br />(61) 3536-5121 </p><p className={styles.contato}> <Link href="https://api.whatsapp.com/message/B4TLWVC75EIRL1">(61) 99247-6273</Link></p>
             </div>
           </div>
         </div>

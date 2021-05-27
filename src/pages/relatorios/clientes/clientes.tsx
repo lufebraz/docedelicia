@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../../utils/RepositoryClient';
 import { GetServerSideProps } from 'next';
-import { api } from '../../../services/api';
+import { raspberry } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
 
 
@@ -43,12 +43,7 @@ export default function ConsultarCliente({ clients }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await api.get('cliente', {
-    params: {
-      _sort: 'nome',
-      _order: 'asc',
-    }
-  })
+  const { data } = await raspberry.get('cliente')
 
   const clients = data.map(clients => {
     return {

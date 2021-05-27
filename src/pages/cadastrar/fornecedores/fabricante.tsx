@@ -38,8 +38,5 @@ export default function Fabricante() {
       </div>
 
     </form>
-
-
-
   )
 }

@@ -1,5 +1,5 @@
-import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next';
-import { api } from '../../../../services/api';
+import { GetServerSideProps } from 'next';
+import { raspberry } from '../../../../services/api';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 import axios from 'axios';
@@ -161,7 +161,7 @@ export default function Cliente({ cliente }: ClienteProps) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await api.get(`cliente/${slug}`)
+  const { data } = await raspberry.get(`cliente/${slug}`)
 
   const cliente = {
     id: data.id,

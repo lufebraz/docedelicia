@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import { GetServerSideProps } from 'next';
-import { api } from '../../../services/api';
+import { raspberry } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
 import Link from 'next/link'
 
@@ -40,12 +40,7 @@ export default function ConsultarCliente({ fabricantes }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await api.get('fabricante', {
-    params: {
-      _sort: 'nome',
-      _order: 'asc',
-    }
-  })
+  const { data } = await raspberry.get('fabricante')
 
   const fabricantes = data.map(fabricantes => {
     return {

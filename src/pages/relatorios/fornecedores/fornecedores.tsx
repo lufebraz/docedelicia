@@ -1,7 +1,7 @@
 import styles from '../fabricantes/styles.module.scss';
 import { RepositoryClient } from '../../../utils/RepositoryFornecedor';
-import { GetServerSideProps, GetStaticProps } from 'next';
-import { api } from '../../../services/api';
+import { GetServerSideProps } from 'next';
+import { raspberry } from '../../../services/api';
 
 
 interface Fornecedores {
@@ -36,7 +36,7 @@ export default function ConsultarCliente({ fornecedores }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await api.get('fornecedores', {
+  const { data } = await raspberry.get('fornecedores', {
     params: {
       _sort: 'nome',
       _order: 'asc',
