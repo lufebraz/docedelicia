@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { NavMenu } from '../../../../components/NavBar';
-import styles from '../../../cadastrar/produtos/styles.module.scss';
+import styles from './styles.module.scss';
 import Router from 'next/router'
 import { GetServerSideProps } from 'next';
 import { api1 } from '../../../../services/api';
@@ -50,7 +49,6 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
   return (
 
     <main >
-      <NavMenu />
       <div className={styles.container}>
         <form onSubmit={onSubmit} className={styles.form}>
 
