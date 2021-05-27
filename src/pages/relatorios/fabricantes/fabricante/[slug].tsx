@@ -1,9 +1,9 @@
 import styles from './styles.module.scss';
-import { api, api1 } from '../../../../services/api';
+import { api1 } from '../../../../services/api';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Router from 'next/router'
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 
 type Fabricante = {
@@ -49,14 +49,7 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
-}
-
-export const getStaticProps: GetStaticProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
   const { data } = await api1.get(`/fabricante/${slug}`)
