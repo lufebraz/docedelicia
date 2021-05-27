@@ -16,7 +16,8 @@
     "react-hook-form": "^7.3.6",
     "sass": "^1.32.12",
     "swr": "^0.5.6",
-    "vanilla-masker": "^1.2.0"
+    "vanilla-masker": "^1.2.0",
+    "vercel": "^23.0.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.41",

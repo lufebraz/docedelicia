@@ -6,7 +6,7 @@ export function NavMenu() {
       <div className={styles.div}>
 
         <Link href={`/cadastrar/clientes/cliente`}>Cliente</Link>
-        <Link href={`/cadastrar/pedidos/pedido`}>Pedido</Link>
+        {/* <Link href={`/cadastrar/pedidos/pedido`}>Pedido</Link> */}
         <Link href={`/cadastrar/produtos/produtos`}>Produto</Link>
         <Link href={`/cadastrar/fornecedores/fornecedor`}>Fornecedores</Link>
         {/* <Link href={`/cadastrar/entregadores/entregador`}>Entregador</Link> */}
