@@ -40,7 +40,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
       headers: { 'Produto': 'dados do produto' },
       data: values
     })
-    
+
     Router.push(`/relatorios/produtos/produtos`)
   })
 
@@ -51,7 +51,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
       <NavMenu />
       <div className={styles.container}>
         <form onSubmit={onSubmit} className={styles.form}>
-
+          <input type="text" value="1" {...register('ativo')} className={styles.hidden} />
           <h3>Dados do Produto:</h3>
 
           <div className={styles.formgroup}>
@@ -65,7 +65,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
               <label >Tipo de unidade: </label>
               <select name="unidade" {...register('tipoUnidade')} required>
                 <option value="">-</option>
-                <option value="unitario">Unitário</option>
+                <option value="un">Unidade</option>
                 <option value="kilo">Kg</option>
                 <option value="grama">Gramas</option>
                 <option value="litro">Litro</option>
@@ -99,11 +99,11 @@ export default function Produtos({ fabricantes }: HomeProps) {
 
             </div>
           </div>
-    <div className={styles.formgroup}>
+          <div className={styles.formgroup}>
 
-          <div className={styles.formitem}>
+            <div className={styles.formitem}>
               <label >Recheios:</label>
-              <input type="text" {...register('recheio')}/>
+              <input type="text" {...register('recheio')} />
               {/* <div>
                 <input type="checkbox" name="nutella" {...register('recheio')} />
                 <label htmlFor="nutella" >Nutella</label>
@@ -148,7 +148,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
               </div> */}
             </div>
 
-            </div>
+          </div>
           <label >Fabricante: </label>
           <select name="fabricanteId" {...register('fabricanteId')} required>
             <option value="">-</option>

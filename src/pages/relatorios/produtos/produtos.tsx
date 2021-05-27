@@ -1,6 +1,6 @@
 import styles from '../fabricantes/styles.module.scss';
 import { RepositoryProduto } from '../../../utils/RepositoryProduto';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { api1 } from '../../../services/api';
 
 type Produtos = {
@@ -23,7 +23,7 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
   return (
     <div>
       <div className={styles.div}>
-        <h3>Lista de Fabricantes:</h3>
+        <h3>Lista de Produtos:</h3>
         <div className={styles.lista}>
           <ul>
             {produtosList.map(produtos => {
@@ -37,7 +37,7 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const { data } = await api1.get('produto', {
     params: {
       _sort: 'nome',
@@ -56,6 +56,5 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       produtos
     },
-    revalidate: 60
   }
 }
