@@ -2,6 +2,7 @@ import styles from '../fabricantes/styles.module.scss';
 import { RepositoryProduto } from '../../../utils/RepositoryProduto';
 import { GetServerSideProps } from 'next';
 import { api1 } from '../../../services/api';
+import { NavMenu1 } from '../../../components/NavBar';
 
 type Produtos = {
   nome: string,
@@ -21,6 +22,8 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
   const produtosList = [...produtos]
 
   return (
+    <>
+    <NavMenu1/>
     <div>
       <div className={styles.div}>
         <h3>Lista de Produtos:</h3>
@@ -33,7 +36,7 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
         </div>
       </div>
     </div>
-
+    </>
   )
 }
 

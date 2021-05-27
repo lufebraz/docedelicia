@@ -2,6 +2,7 @@ import styles from './styles.module.scss';
 import { RepositoryClient } from '../../../utils/RepositoryClient';
 import { GetServerSideProps } from 'next';
 import { api1 } from '../../../services/api';
+import { NavMenu1 } from '../../../components/NavBar';
 
 
 interface Clientes {
@@ -16,13 +17,14 @@ export default function ConsultarCliente({ clients }: HomeProps) {
   const clientesList = [...clients]
 
   return (
-
+    <>
+    <NavMenu1/>
     <div className={styles.div}>
       {/* <div className={styles.buscarcliente}>
           <label>Buscar Cliente:</label> <br />
           <input name="nome" placeholder="Jose da Silva" ></input>
           
-        </div>
+          </div>
         <hr /> */}
 
       <h3>Lista de Clientes:</h3>
@@ -35,6 +37,7 @@ export default function ConsultarCliente({ clients }: HomeProps) {
         </ul>
       </div>
     </div>
+          </>
 
   )
 }
