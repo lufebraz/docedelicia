@@ -15,7 +15,7 @@ export default function Fornecedores() {
   const onSubmit = handleSubmit(async (values) => {
     await axios({
       method: 'POST',
-      url: 'http://localhost:3333/fornecedores',
+      url: 'https://docedelicia.herokuapp.com/api/fornecedores',
       headers: { 'Fornecedor': 'dados do fornecedor' },
       data: values
     })

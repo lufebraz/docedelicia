@@ -14,7 +14,7 @@ export default function Fabricante() {
   const onSubmit = handleSubmit(async (values) => {
     await axios({
       method: 'POST',
-      url: 'http://docedelicia.ignorelist.com:8080/api/fabricante',
+      url: 'https://docedelicia.herokuapp.com/api/fabricante',
       headers: { 'Fabricante': 'dados do Fabricante' },
       data: values
     })
