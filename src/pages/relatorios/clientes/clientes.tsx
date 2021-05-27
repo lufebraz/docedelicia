@@ -18,26 +18,26 @@ export default function ConsultarCliente({ clients }: HomeProps) {
 
   return (
     <>
-    <NavMenu1/>
-    <div className={styles.div}>
-      {/* <div className={styles.buscarcliente}>
+      <NavMenu1 />
+      <div className={styles.div}>
+        {/* <div className={styles.buscarcliente}>
           <label>Buscar Cliente:</label> <br />
           <input name="nome" placeholder="Jose da Silva" ></input>
           
           </div>
         <hr /> */}
 
-      <h3>Lista de Clientes:</h3>
+        <h3>Lista de Clientes:</h3>
 
-      <div className={styles.lista}>
-        <ul>
-          {clientesList.map(clientes => {
-            return (<RepositoryClient key={clientes.id} pessoa={clientes} />)
-          })}
-        </ul>
+        <div className={styles.lista}>
+          <ul>
+            {clientesList.map(clientes => {
+              return (<RepositoryClient key={clientes.id} pessoa={clientes} />)
+            })}
+          </ul>
+        </div>
       </div>
-    </div>
-          </>
+    </>
 
   )
 }

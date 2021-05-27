@@ -1,5 +1,4 @@
 import styles from '../fabricantes/styles.module.scss';
-import { RepositoryProduto } from '../../../utils/RepositoryProduto';
 import { GetServerSideProps } from 'next';
 import { api1 } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
@@ -13,7 +12,7 @@ type Produtos = {
   categoria: string,
   formato: string,
   fabricante: string,
-  id:number
+  id: number
 }
 
 type HomeProps = {
@@ -24,24 +23,25 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
 
   return (
     <>
-    <NavMenu1/>
-    <div>
-      <div className={styles.div}>
-        <h3>Lista de Produtos:</h3>
-        <div className={styles.lista}>
-          <ul>
-            {produtosList.map(produtos => {
-              return (
-              <div key={produtos.id}>
-                <h3>{produtos.nome}</h3>
-                <Link href={`produto/${produtos.id}`}>Visualizar</Link>
-              </div>
-              )
-            })}
-          </ul>
+      <NavMenu1 />
+      <div>
+        <div className={styles.div}>
+          <h3>Lista de Produtos:</h3>
+          <br />
+          <div className={styles.lista}>
+            <ul>
+              {produtosList.map(produtos => {
+                return (
+                  <div key={produtos.id} className={styles.repo}>
+                    <h3>{produtos.nome}</h3>
+                    <Link href={`produto/${produtos.id}`}>Visualizar</Link>
+                  </div>
+                )
+              })}
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
     </>
   )
 }
@@ -56,7 +56,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   const produtos = data.map(produtos => {
     return {
-      nome: produtos.nome,      
+      nome: produtos.nome,
       id: produtos.id,
     }
   });

@@ -28,6 +28,25 @@
       }
     }
   }
+  .repo {
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.5rem;  
+    border-width: 1px;
+    border-style: solid;
+    h3 {
+      margin: 0.3rem;
+    }
+    a {
+      text-decoration: none;
+      background: var(--background-not-used);
+      border-style: solid;
+      border-width: 1px;
+      padding: 4px;    
+    }
+  }
   @media (min-width: 700px) {
     margin: 0 auto;
     border-radius: 0 15px 15px 15px;
@@ -42,8 +61,6 @@
         font: 500 Poppins, sans-serif;
         text-align: left;
       }
-    }
-
-    
+    }    
   }
 }
