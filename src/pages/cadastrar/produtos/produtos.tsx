@@ -3,9 +3,8 @@ import { useForm } from 'react-hook-form';
 import { NavMenu } from '../../../components/NavBar';
 import styles from './styles.module.scss';
 import Router from 'next/router'
-import { GetServerSideProps, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { api, api1 } from '../../../services/api';
-import { RepositoryFabricantePedido } from '../../../utils/RepositoryFabricantePedido';
 import Link from 'next/link';
 import { RepositoryFabricanteProduto } from '../../../utils/RepositoryFabricanteProduto';
 
@@ -172,7 +171,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await api1.get('fabricante', {
+  const { data } = await api1.get('fabricante/ativos', {
     params: {
       _sort: 'nome',
       _order: 'asc',

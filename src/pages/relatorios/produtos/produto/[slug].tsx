@@ -7,7 +7,6 @@ import { GetServerSideProps } from 'next';
 import { api1 } from '../../../../services/api';
 import Link from 'next/link';
 import { RepositoryFabricanteProduto } from '../../../../utils/RepositoryFabricanteProduto';
-import { RepositoryFabricantePedido } from '../../../../utils/RepositoryFabricantePedido';
 
 type Produto = {
   id: number,
