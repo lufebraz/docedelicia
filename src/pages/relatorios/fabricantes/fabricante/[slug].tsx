@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import { api1 } from '../../../../services/api';
+import { api } from '../../../../services/api';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Router from 'next/router'
@@ -19,7 +19,7 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
   const onSubmit = handleSubmit(async (values) => {
     await axios({
       method: 'PUT',
-      url: `http://docedelicia.ignorelist.com:8080/api/fabricante/${fabricante.id}`,
+      url: `https://docedelicia.herokuapp.com/api/fabricante/${fabricante.id}`,
       headers: { 'Fabricante': 'dados do fabricante' },
       data: values
     })
@@ -52,7 +52,7 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await api1.get(`/fabricante/${slug}`)
+  const { data } = await api.get(`fabricante/${slug}`)
 
   const fabricante = {
     id: data.id,

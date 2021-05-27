@@ -1,6 +1,6 @@
 import styles from '../fabricantes/styles.module.scss';
 import { GetServerSideProps } from 'next';
-import { api1 } from '../../../services/api';
+import { api } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
 import Link from 'next/link';
 
@@ -47,7 +47,7 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await api1.get('produto', {
+  const { data } = await api.get('produto', {
     params: {
       _sort: 'nome',
       _order: 'asc',

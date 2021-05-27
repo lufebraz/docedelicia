@@ -1,5 +1,5 @@
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next';
-import { api1 } from '../../../../services/api';
+import { api } from '../../../../services/api';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 import axios from 'axios';
@@ -40,7 +40,7 @@ export default function Cliente({ cliente }: ClienteProps) {
   const onSubmit =  handleSubmit(async (values) =>{    
     await axios({
       method:'PUT',      
-      url: `http://docedelicia.ignorelist.com:8080/api/cliente/${cliente.id}`,
+      url: `https://docedelicia.herokuapp.com/api/cliente/${cliente.id}`,
       headers: {'Cliente': 'dados do cliente'},
       data: values
     })
@@ -161,7 +161,7 @@ export default function Cliente({ cliente }: ClienteProps) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await api1.get(`/cliente/${slug}`)
+  const { data } = await api.get(`cliente/${slug}`)
 
   const cliente = {
     id: data.id,

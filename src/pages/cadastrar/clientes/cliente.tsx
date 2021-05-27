@@ -42,7 +42,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
   const onSubmit = handleSubmit(async (values) => {
     await axios({
       method: 'POST',
-      url: 'http://docedelicia.ignorelist.com:8080/api/cliente',
+      url: 'https://docedelicia.herokuapp.com/api/cliente',
       headers: { 'Cliente': 'dados do cliente' },
       data: values
     })

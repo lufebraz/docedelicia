@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import styles from './styles.module.scss';
 import Router from 'next/router'
 import { GetServerSideProps } from 'next';
-import { api1 } from '../../../../services/api';
+import { api } from '../../../../services/api';
 import Link from 'next/link';
 import { RepositoryFabricanteProduto } from '../../../../utils/RepositoryFabricanteProduto';
 
@@ -19,7 +19,6 @@ type Produto = {
   fabricante: string,
   preco: number,
   ativo: number,
-
 }
 
 type Fabricantes = {
@@ -39,7 +38,7 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
   const onSubmit = handleSubmit(async (values) => {
     await axios({
       method: 'PUT',
-      url: `http://docedelicia.ignorelist.com:8080/api/produto/${produto.id}`,
+      url: `https://docedelicia.herokuapp.com/api/produto/${produto.id}`,
       data: values
     })
     Router.push(`/relatorios/produtos/produtos`)
@@ -152,7 +151,7 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await api1.get(`/produto/${slug}`)
+  const { data } = await api.get(`produto/${slug}`)
 
   const produto = {
     id: data.id,
@@ -168,7 +167,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     fabricanteId: data.fabricanteId
   }
 
-  const res = await fetch('http://docedelicia.ignorelist.com:8080/api/fabricante/ativos')
+  const res = await fetch('https://docedelicia.herokuapp.com/api/fabricante/ativos')
   const data1 = await res.json()
 
   const fabricante = data1.map(fabricante => {

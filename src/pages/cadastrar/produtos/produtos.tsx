@@ -4,7 +4,7 @@ import { NavMenu } from '../../../components/NavBar';
 import styles from './styles.module.scss';
 import Router from 'next/router'
 import { GetServerSideProps } from 'next';
-import { api, api1 } from '../../../services/api';
+import { api } from '../../../services/api';
 import Link from 'next/link';
 import { RepositoryFabricanteProduto } from '../../../utils/RepositoryFabricanteProduto';
 
@@ -36,7 +36,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
 
     await axios({
       method: 'POST',
-      url: 'http://docedelicia.ignorelist.com:8080/api/produto',
+      url: 'https://docedelicia.herokuapp.com/api/produto',
       headers: { 'Produto': 'dados do produto' },
       data: values
     })
@@ -171,7 +171,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await api1.get('fabricante/ativos', {
+  const { data } = await api.get('fabricante/ativos', {
     params: {
       _sort: 'nome',
       _order: 'asc',
