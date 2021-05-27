@@ -16,25 +16,23 @@ export default function ConsultarCliente({ clients }: HomeProps) {
   const clientesList = [...clients]
 
   return (
-    <div>
 
-      <div className={styles.div}>
-        <div className={styles.buscarcliente}>
+    <div className={styles.div}>
+      {/* <div className={styles.buscarcliente}>
           <label>Buscar Cliente:</label> <br />
           <input name="nome" placeholder="Jose da Silva" ></input>
           
         </div>
-        <hr />
+        <hr /> */}
 
-        <h3>Lista de Clientes:</h3>
-        
-        <div className={styles.lista}>
-          <ul>
-            {clientesList.map(clientes => {
-              return (<RepositoryClient key={clientes.id} pessoa={clientes} />)
-            })}
-          </ul>
-        </div>
+      <h3>Lista de Clientes:</h3>
+
+      <div className={styles.lista}>
+        <ul>
+          {clientesList.map(clientes => {
+            return (<RepositoryClient key={clientes.id} pessoa={clientes} />)
+          })}
+        </ul>
       </div>
     </div>
 
