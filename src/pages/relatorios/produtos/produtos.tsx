@@ -5,14 +5,9 @@ import { NavMenu1 } from '../../../components/NavBar';
 import Link from 'next/link';
 
 type Produtos = {
+  id: number,
   nome: string,
-  descricao: string,
-  recheio: string,
-  tipoUnidade: string,
-  categoria: string,
-  formato: string,
-  fabricante: string,
-  id: number
+  ativo: number, 
 }
 
 type HomeProps = {
@@ -26,6 +21,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return {
       nome: produtos.nome,
       id: produtos.id,
+      ativo: produtos.ativo
     }
   });
 
@@ -52,6 +48,7 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
                 return (
                   <div key={produtos.id} className={styles.repo}>
                     <strong>{produtos.nome}</strong>
+                    <strong>{produtos.ativo==1? 'ativo' : 'desativado'}</strong>
                     <Link href={`produto/${produtos.id}`}>Visualizar</Link>
                   </div>
                 )

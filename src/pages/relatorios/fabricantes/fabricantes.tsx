@@ -4,9 +4,10 @@ import { heroku } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
 import Link from 'next/link'
 
-interface Fabricantes {
-  nome: string;
-  id: number;
+type Fabricantes = {
+  id: number,
+  nome: string,
+  ativo: number,
 }
 type HomeProps = {
   fabricantes: Fabricantes[];
@@ -18,6 +19,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return {
       nome: fabricantes.nome,
       id: fabricantes.id,
+      ativo: fabricantes.ativo,
     }
   });
 
@@ -44,6 +46,7 @@ export default function ConsultarCliente({ fabricantes }: HomeProps) {
               return (
               <div key={fabricantes.id} className={styles.repo}>
                 <strong>{fabricantes.nome}</strong>
+                <strong>{fabricantes.ativo==1? 'ativo' : 'desativado'}</strong>
                 <Link href={`fabricante/${fabricantes.id}`}>Visualizar</Link>
               </div>
               )
