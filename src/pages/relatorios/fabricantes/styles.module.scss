@@ -29,7 +29,8 @@
     }
   }
   .repo {    
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 1fr 0.5fr;
     align-items: center;
     justify-content: space-between;
     margin: 0.5rem;  
@@ -37,8 +38,11 @@
     border-style: solid;
     strong {
       margin: 0.3rem;
-    }
+    }   
+    
     a {
+      display: flex;
+      justify-content: center;
       text-decoration: none;
       background: var(--background-not-used);
       border-style: solid;
@@ -63,4 +67,10 @@
       }
     }    
   }
+}
+.off {
+  color: red;
+}
+.on {
+  color: green;
 }

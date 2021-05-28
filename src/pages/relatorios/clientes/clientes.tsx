@@ -49,9 +49,9 @@ export default function ConsultarCliente({ clientes }: HomeProps) {
           {clientesList.map(clientes => {
               return (
               <div key={clientes.id} className={styles.repo}>
-                <strong>{clientes.nome}</strong>
-                <strong>{clientes.tCelular}</strong>
-                <strong>{clientes.ativo==1? 'ativo' : 'desativado'}</strong>
+                <strong >{clientes.nome}</strong>
+                <strong >{clientes.tCelular}</strong>
+                <strong className={clientes.ativo == 1 ? styles.on : styles.off}>{clientes.ativo==1? 'on' : 'off'}</strong>
                 <Link href={`cliente/${clientes.id}`}>Visualizar</Link>
               </div>
               )
