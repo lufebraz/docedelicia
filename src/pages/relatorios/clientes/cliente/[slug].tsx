@@ -10,6 +10,7 @@ import VMasker from 'vanilla-masker';
 import { format, parseISO } from 'date-fns';
 
 type Cliente = {
+  id: number;
   nome: string;
   email: string;
   dtNascimento: string;
@@ -18,17 +19,22 @@ type Cliente = {
   cpf: string;
   genero: string;
   ativo: number;
-  endereco: {
-    nomeEndereco: string;
-    cep: string;
-    logradouro: string;
-    numero: string;
-    cidade: string;
-    bairro: string;
-    uf: string;
-    complemento: string;
-  }
-  id: number;
+  endereco: [
+    {
+      id: number;
+      clienteId: number;
+      nome: string;
+      cep: string;
+      estado: string;
+      cidade: string;
+      logradouro: string;
+      numero: number;
+      complemento: string;
+      referencia: string;
+      ativo: number;
+    }
+  ]
+
 }
 type ClienteProps = {
   cliente: Cliente;
@@ -42,23 +48,28 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cliente = {
     id: data.id,
     nome: data.nome,
-    email: data.email,
-    dtNascimento: format(parseISO(data.dtNascimento), 'yyyy-MM-dd'),
     tCelular: data.tCelular,
     tFixo: data.tFixo,
     cpf: data.cpf,
+    dtNascimento: format(parseISO(data.dtNascimento), 'yyyy-MM-dd'),
     genero: data.genero,
+    email: data.email,
     ativo: data.ativo,
-    // endereco: {
-    //   nomeEndereco: data.endereco.nomeEndereco,
-    //   cep: data.endereco.cep,
-    //   logradouro: data.endereco.logradouro,
-    //   numero: data.endereco.numero,
-    //   cidade: data.endereco.cidade,
-    //   bairro: data.endereco.bairro,
-    //   uf: data.endereco.uf,
-    //   complemento: data.endereco.complemento
-    // }
+    endereco: [
+      {
+        id: data.endereco[0].id,
+        nome: data.endereco[0].nome,
+        cep: data.endereco[0].cep,
+        estado: data.endereco[0].estado,
+        cidade: data.endereco[0].cidade,
+        logradouro: data.endereco[0].logradouro,
+        numero: data.endereco[0].numero,
+        complemento: data.endereco[0].complemento,
+        referencia: data.endereco[0].referencia,
+        ativo: data.endereco[0].ativo,
+        clienteId: data.endereco[0].clienteId,
+      }
+    ]
   };
 
   return {
@@ -124,18 +135,29 @@ export default function Cliente({ cliente }: ClienteProps) {
                 <input className={styles.inputCurto} name="tFixo" defaultValue={cliente?.tFixo} maxLength={14} {...register("tFixo")} /><br />
               </label>
             </div>
+            <div >
+              <div className={styles.cpf}>
 
-            <label>CPF: </label><br />
-            <input className={styles.inputCurto} name="cpf" value={cliente.cpf} required maxLength={11} minLength={11} {...register("cpf")} /><br />
+              <label >CPF: </label><br />
+              <input className={styles.inputCurto} name="cpf" value={cliente.cpf} required maxLength={11} minLength={11} {...register("cpf")} /><br />
+              </div>
+              <div className={styles.cpf}>
 
-            <label>gênero: </label><br />
-            <select name="genero" className={styles.inputCurto} defaultValue={cliente.genero} {...register("genero")}>
-              <option value="n">Não Especificado</option>
-              <option value="m">Masculino</option>
-              <option value="f">Feminino</option>
+              <label>gênero: </label> <br />
+              <select name="genero" className={styles.inputCurto} defaultValue={cliente.genero} {...register("genero")}>
+                <option value="n">Não Especificado</option>
+                <option value="m">Masculino</option>
+                <option value="f">Feminino</option>
+              </select>
+              </div>
+            </div>
+            <label> Cliente ativo? </label> <br />
+            <select className={styles.inputCurto} defaultValue={cliente?.ativo} {...register('ativo')}>
+              <option value="1">Sim</option>
+              <option value="0">Não</option>
             </select>
+            <br />
           </div>
-          <br />
         </div>
 
         <hr />
@@ -145,36 +167,36 @@ export default function Cliente({ cliente }: ClienteProps) {
             <h3>Endereço do cliente:</h3>
 
             <label> Nome do endereço:  </label><br />
-            <input name="nomeEndereco" defaultValue={cliente.endereco?.nomeEndereco} {...register("endereco.nomeEndereco")} /> <br />
+            <input name="nomeEndereco" defaultValue={cliente.endereco[0]?.nome} {...register("endereco.0.nome")} /> <br />
             <div>
               <label> Logradouro: <br />
-                <input className={styles.inputCurto} name="logradouro" defaultValue={cliente.endereco?.logradouro} {...register("endereco.logradouro")} /> <br />
+                <input className={styles.inputCurto} name="logradouro" defaultValue={cliente.endereco[0]?.logradouro} {...register("endereco.0.logradouro")} /> <br />
               </label>
               <label> Num: <br />
-                <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.endereco?.numero} maxLength={10} {...register("endereco.numero")} /> <br />
+                <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.endereco[0]?.numero} maxLength={10} {...register("endereco.0.numero")} /> <br />
               </label>
               <label> CEP: <br />
-                <input className={styles.tamanhoMedio} name="cep" defaultValue={cliente.endereco?.cep} maxLength={8} {...register("endereco.cep")} /> <br />
+                <input className={styles.tamanhoMedio} name="cep" defaultValue={cliente.endereco[0]?.cep} maxLength={8} {...register("endereco.0.cep")} /> <br />
               </label>
             </div>
             <div >
-              <label >Bairro: <br />
-                <input className={styles.tamanhoMedio} name="bairro" defaultValue={cliente.endereco?.bairro} {...register("endereco.bairro")} /><br />
-              </label >
               <label >Cidade: <br />
-                <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco?.cidade} {...register("endereco.cidade")} /><br />
+                <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco[0]?.cidade} {...register("endereco.0.cidade")} /><br />
               </label>
               <label >UF: <br />
-                <input className={styles.inputMtCurto} name="uf" maxLength={2} defaultValue={cliente.endereco?.uf} {...register("endereco.uf")} />
+                <input className={styles.inputMtCurto} name="uf" maxLength={2} defaultValue={cliente.endereco[0]?.estado} {...register("endereco.0.estado")} />
               </label>
             </div>
           </div>
-
+          <input type="enderecoid" className={styles.hidden} value={cliente.endereco[0].id} {...register("endereco.0.id")} />
           <div>
             <br /><label >Complemento:</label> <br />
-            <input className={styles.complemento} name="complemento" defaultValue={cliente.endereco?.complemento} {...register("endereco.complemento")} />
-            <br /><label> Cliente ativo? </label> <br />
-            <select className={styles.inputCurto} defaultValue={cliente?.ativo} {...register('ativo')}>
+            <input className={styles.complemento} name="complemento" defaultValue={cliente.endereco[0]?.complemento} {...register("endereco.0.complemento")} />
+            <br /><label >Referência: <br />
+              <input className={styles.complemento} name="bairro" defaultValue={cliente.endereco[0]?.referencia} {...register("endereco.0.referencia")} /><br />
+            </label >
+            <br /><label> Endereço ativo? </label> <br />
+            <select className={styles.inputCurto} defaultValue={cliente.endereco[0].ativo} {...register('endereco.0.ativo')}>
               <option value="1">Sim</option>
               <option value="0">Não</option>
             </select>

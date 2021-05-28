@@ -17,7 +17,7 @@ export function RepositoryClient(props: RepositoryClientProps) {
       <strong>{props.fornecedor.nome}</strong>
       <div>
 
-        <Link href={`fornecedor/${id}`}>Visualizar</Link>
+        <Link href={`${id}`}>Visualizar</Link>
       </div>
     </div>
   );
