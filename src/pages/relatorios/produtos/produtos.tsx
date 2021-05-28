@@ -18,6 +18,24 @@ type Produtos = {
 type HomeProps = {
   produtos: Produtos[];
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data } = await raspberry.get('produto')
+
+  const produtos = data.map(produtos => {
+    return {
+      nome: produtos.nome,
+      id: produtos.id,
+    }
+  });
+
+  return {
+    props: {
+      produtos
+    }
+  }
+}
+
 export default function ConsultarCliente({ produtos }: HomeProps) {
   const produtosList = [...produtos]
 
@@ -46,19 +64,3 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await raspberry.get('produto')
-
-  const produtos = data.map(produtos => {
-    return {
-      nome: produtos.nome,
-      id: produtos.id,
-    }
-  });
-
-  return {
-    props: {
-      produtos
-    },
-  }
-}

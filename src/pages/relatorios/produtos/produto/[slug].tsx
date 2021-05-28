@@ -31,6 +31,44 @@ type HomeProps = {
   fabricante: Fabricantes[];
 }
 
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { slug } = ctx.params;
+
+  const { data } = await raspberry.get(`produto/${slug}`)
+
+  const produto = {
+    id: data.id,
+    nome: data.nome,
+    descricao: data.descricao,
+    tipoUnidade: data.tipoUnidade,
+    categoria: data.categoria,
+    formato: data.formato,
+    recheio: data.recheio,
+    preco: data.preco,
+    ativo: data.ativo,
+    fabricante: data.fabricante.nome,
+    fabricanteId: data.fabricanteId
+  }
+
+  const res = await fetch(`http://docedelicia.ignorelist.com:8080/api/fabricante/ativos`)
+  const data1 = await res.json()
+
+  const fabricante = data1.map(fabricante => {
+    return {
+      id: fabricante.id,
+      nome: fabricante.nome
+    }
+  });
+
+
+  return {
+    props: {
+      produto,
+      fabricante
+    },
+  }
+}
+
 export default function Produtos({ produto, fabricante }: HomeProps) {
   const fabricanteList = [...fabricante];
 
@@ -148,43 +186,6 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
 }
 
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { slug } = ctx.params;
-
-  const { data } = await raspberry.get(`produto/${slug}`)
-
-  const produto = {
-    id: data.id,
-    nome: data.nome,
-    descricao: data.descricao,
-    tipoUnidade: data.tipoUnidade,
-    categoria: data.categoria,
-    formato: data.formato,
-    recheio: data.recheio,
-    preco: data.preco,
-    ativo: data.ativo,
-    fabricante: data.fabricante.nome,
-    fabricanteId: data.fabricanteId
-  }
-
-  const res = await fetch(`http://docedelicia.ignorelist.com:8080/api/fabricante/ativos`)
-  const data1 = await res.json()
-
-  const fabricante = data1.map(fabricante => {
-    return {
-      id: fabricante.id,
-      nome: fabricante.nome
-    }
-  });
-
-
-  return {
-    props: {
-      produto,
-      fabricante
-    },
-  }
-}
 
 
 

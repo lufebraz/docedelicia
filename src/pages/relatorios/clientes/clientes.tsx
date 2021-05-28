@@ -1,9 +1,8 @@
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../../utils/RepositoryClient';
-import { GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import { raspberry } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
-
 
 interface Clientes {
   nome: string;
@@ -11,22 +10,35 @@ interface Clientes {
   id: number;
 }
 type HomeProps = {
-  clients: Clientes[];
+  clientes: Clientes[];
 }
-export default function ConsultarCliente({ clients }: HomeProps) {
-  const clientesList = [...clients]
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data } = await raspberry.get('cliente')
+
+  const clientes = data.map(clientes => {
+    return {
+      nome: clientes.nome,
+      tCelular: clientes.tCelular,
+      id: clientes.id,
+    }
+  });
+
+  return {
+    props: {
+      clientes
+    }
+  }
+}
+
+export default function ConsultarCliente({ clientes }: HomeProps) {
+  const clientesList = [...clientes]
 
   return (
     <>
       <NavMenu1 />
       <div className={styles.div}>
-        {/* <div className={styles.buscarcliente}>
-          <label>Buscar Cliente:</label> <br />
-          <input name="nome" placeholder="Jose da Silva" ></input>
-          
-          </div>
-        <hr /> */}
-
+                
         <h3>Lista de Clientes:</h3>
 
         <div className={styles.lista}>
@@ -36,27 +48,9 @@ export default function ConsultarCliente({ clients }: HomeProps) {
             })}
           </ul>
         </div>
+        
       </div>
     </>
 
   )
-}
-
-export const getStaticProps: GetStaticProps = async () => {
-  const { data } = await raspberry.get('cliente')
-
-  const clients = data.map(clients => {
-    return {
-      nome: clients.nome,
-      tCelular: clients.tCelular,
-      id: clients.id,
-    }
-  });
-
-  return {
-    props: {
-      clients
-    },
-    revalidate: 30
-  }
 }
