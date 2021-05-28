@@ -126,7 +126,7 @@ export default function Cliente({ cliente }: ClienteProps) {
 
 
           <div>
-            <br className={styles.hiddenbr} />
+            <br />
             <div>
               <label>Telefone celular:  <br />
                 <input className={styles.inputCurto} name="tCelular" defaultValue={cliente?.tCelular} maxLength={15}{...register("tCelular")} required autoComplete="off" /><br />
