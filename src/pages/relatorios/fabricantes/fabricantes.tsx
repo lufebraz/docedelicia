@@ -26,7 +26,7 @@ export default function ConsultarCliente({ fabricantes }: HomeProps) {
             {fabricantesList.map(fabricantes => {
               return (
               <div key={fabricantes.id} className={styles.repo}>
-                <h3>{fabricantes.nome}</h3>
+                <strong>{fabricantes.nome}</strong>
                 <Link href={`fabricante/${fabricantes.id}`}>Visualizar</Link>
               </div>
               )

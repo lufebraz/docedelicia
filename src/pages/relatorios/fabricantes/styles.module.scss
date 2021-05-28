@@ -36,7 +36,7 @@
     margin: 0.5rem;  
     border-width: 1px;
     border-style: solid;
-    h3 {
+    strong {
       margin: 0.3rem;
     }
     a {
@@ -44,7 +44,8 @@
       background: var(--background-not-used);
       border-style: solid;
       border-width: 1px;
-      padding: 4px;    
+      padding: 2px;   
+      margin: 1px; 
     }
   }
   @media (min-width: 700px) {

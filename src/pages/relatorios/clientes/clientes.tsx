@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../../utils/RepositoryClient';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import { raspberry } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
 
@@ -42,7 +42,7 @@ export default function ConsultarCliente({ clients }: HomeProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const { data } = await raspberry.get('cliente')
 
   const clients = data.map(clients => {

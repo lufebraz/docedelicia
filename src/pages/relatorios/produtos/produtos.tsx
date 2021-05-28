@@ -33,7 +33,7 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
               {produtosList.map(produtos => {
                 return (
                   <div key={produtos.id} className={styles.repo}>
-                    <h3>{produtos.nome}</h3>
+                    <strong>{produtos.nome}</strong>
                     <Link href={`produto/${produtos.id}`}>Visualizar</Link>
                   </div>
                 )
