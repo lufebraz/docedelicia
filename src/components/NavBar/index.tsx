@@ -20,9 +20,9 @@ export function NavMenu1() {
   return (
       <div className={styles.div}>
 
-        <Link href={`/relatorios/clientes/clientes`}>Cliente</Link>
+        <Link href={`/relatorios/clientes/clientes`}>Clientes</Link>
         {/* <Link href={`/cadastrar/pedidos/pedido`}>Pedido</Link> */}
-        <Link href={`/relatorios/produtos/produtos`}>Produto</Link>
+        <Link href={`/relatorios/produtos/produtos`}>Produtos</Link>
         <Link href={`/relatorios/fabricantes/fabricantes`}>Fabricantes</Link>
         {/* <Link href={`/cadastrar/entregadores/entregador`}>Entregador</Link> */}
         {/* <Link href={`/cadastrar/funcionarios/funcionario`}>Funcionário</Link> */}
