@@ -1,5 +1,5 @@
-import styles from '../../fabricantes/fabricante/styles.module.scss';
-import { heroku } from '../../../../services/api';
+import styles from '../fabricantes/list.module.scss';
+import { heroku } from '../../../services/api';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Router from 'next/router'
