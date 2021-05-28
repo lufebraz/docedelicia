@@ -40,6 +40,9 @@
     }
   }
   @media (min-width: 800px) {
+    .br{
+      display: none;
+    }
     input,
     select {
       padding: 0.6rem;

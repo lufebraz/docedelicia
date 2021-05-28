@@ -109,6 +109,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
             </select>
 
           </div>
+          <br className={styles.br}/>
         </div>
 
         <hr />

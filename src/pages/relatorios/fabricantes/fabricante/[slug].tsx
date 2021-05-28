@@ -14,6 +14,25 @@ type Fabricante = {
 type FabricanteProps = {
   fabricante: Fabricante;
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { slug } = ctx.params;
+
+  const { data } = await raspberry.get(`fabricante/${slug}`)
+
+  const fabricante = {
+    id: data.id,
+    nome: data.nome,
+    ativo: data.ativo,
+  }
+
+  return {
+    props: {
+      fabricante
+    },
+  }
+}
+
 export default function Fabricante({ fabricante }: FabricanteProps) {
   const { register, handleSubmit } = useForm<Fabricante>();
   const onSubmit = handleSubmit(async (values) => {
@@ -47,22 +66,4 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
       </div>
     </main>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { slug } = ctx.params;
-
-  const { data } = await raspberry.get(`fabricante/${slug}`)
-
-  const fabricante = {
-    id: data.id,
-    nome: data.nome,
-    ativo: data.ativo,
-  }
-
-  return {
-    props: {
-      fabricante
-    },
-  }
 }

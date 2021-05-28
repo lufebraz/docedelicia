@@ -11,6 +11,23 @@ interface Fabricantes {
 type HomeProps = {
   fabricantes: Fabricantes[];
 }
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data } = await raspberry.get('fabricante')
+
+  const fabricantes = data.map(fabricantes => {
+    return {
+      nome: fabricantes.nome,
+      id: fabricantes.id,
+    }
+  });
+
+  return {
+    props: {
+      fabricantes
+    }
+  }
+}
+
 export default function ConsultarCliente({ fabricantes }: HomeProps) {
   const fabricantesList = [...fabricantes]
 
@@ -39,19 +56,3 @@ export default function ConsultarCliente({ fabricantes }: HomeProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await raspberry.get('fabricante')
-
-  const fabricantes = data.map(fabricantes => {
-    return {
-      nome: fabricantes.nome,
-      id: fabricantes.id,
-    }
-  });
-
-  return {
-    props: {
-      fabricantes
-    }
-  }
-}
