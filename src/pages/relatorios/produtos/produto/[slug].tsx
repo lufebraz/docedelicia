@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     fabricanteId: data.fabricanteId
   }
 
-  const res = await fetch(`http://docedelicia.ignorelist.com:8080/api/fabricante/ativos`)
+  const res = await fetch(`https://docedelicia.herokuapp.com/api/fabricante/ativos`)
   const data1 = await res.json()
 
   const fabricante = data1.map(fabricante => {
