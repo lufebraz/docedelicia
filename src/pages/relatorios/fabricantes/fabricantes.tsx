@@ -1,4 +1,4 @@
-import styles from './styles.module.scss';
+import styles from './list.module.scss';
 import { GetServerSideProps } from 'next';
 import { heroku } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';

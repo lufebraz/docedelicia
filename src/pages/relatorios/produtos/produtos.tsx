@@ -1,4 +1,4 @@
-import styles from '../fabricantes/styles.module.scss';
+import styles from '../fabricantes/list.module.scss';
 import { GetServerSideProps } from 'next';
 import { heroku } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';

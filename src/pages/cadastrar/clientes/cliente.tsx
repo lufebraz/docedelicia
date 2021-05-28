@@ -16,28 +16,22 @@ type Cliente = {
   cpf: string;
   genero: string;
   ativo: number;
-  endereco: {
-    nomeEndereco: string;
-    cep: string;
-    logradouro: string;
-    numero: string;
-    cidade: string;
-    bairro: string;
-    uf: string;
-    complemento: string;
-  }
-}
-type Endereco = {
-  logradouro: string;
-  localidade: string;
-  bairro: string;
-  uf: string;
-}
-type EnderecoProps = {
-  endereco: Endereco;
+  endereco: [
+    {
+      nome: string;
+      cep: string;
+      estado: string;
+      cidade: string;
+      logradouro: string;
+      numero: number;
+      complemento: string;
+      referencia: string;
+      ativo: number;
+    }
+  ]
 }
 
-export default function Cadastrar({ endereco }: EnderecoProps) {
+export default function Cadastrar() {
   const { register, handleSubmit } = useForm<Cliente>();
   const onSubmit = handleSubmit(async (values) => {
     await axios({
@@ -65,7 +59,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
   const [cep, setCep] = useState('')
   useEffect(() => {
     setCep(VMasker.toPattern(cep, "99999-999"))
-  }, [cep])  
+  }, [cep])
 
   return (
     <main>
@@ -101,7 +95,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
             <input className={styles.inputCurto} id="cpf" name="cpf" placeholder="111.222.333-44" required {...register("cpf")} minLength={14} onChange={e => setCpf(e.target.value)} value={cpf} autoComplete="off" /><br />
 
             <label>gênero: </label><br />
-            <select name="genero" className={styles.inputCurto} required {...register("genero")}>
+            <select name="genero" className={styles.inputCurto} {...register("genero")}>
               <option value="">-</option>
               <option value="n">Não Especificado</option>
               <option value="m">Masculino</option>
@@ -109,7 +103,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
             </select>
 
           </div>
-          <br className={styles.br}/>
+          <br className={styles.br} />
         </div>
 
         <hr />
@@ -117,34 +111,34 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
         <div className={styles.enderecoCliente}>
           <div>
             <h3>Endereço do cliente:</h3>
-
+            <input type="number" value={1} {...register("endereco.0.ativo")} className={styles.hidden} />
             <label> Nome do endereço:  </label><br />
-            <input name="nomeEndereco" placeholder="Casa / Trabalho" {...register("endereco.nomeEndereco")} /> <br />
+            <input name="nome" placeholder="Casa / Trabalho" {...register("endereco.0.nome")} required /> <br />
 
             <div>
 
               <label> Logradouro: <br />
-                <input className={styles.inputCurto} name="logradouro" placeholder="Av. Principal" {...register("endereco.logradouro")} /> <br />
+                <input className={styles.inputCurto} name="logradouro" placeholder="Av. Principal" {...register("endereco.0.logradouro")}required /> <br />
               </label>
               <label> Num: <br />
-                <input className={styles.inputMtCurto} name="numero" placeholder="201" maxLength={6} {...register("endereco.numero")} /> <br />
+                <input className={styles.inputMtCurto} name="numero" placeholder="201" maxLength={6} {...register("endereco.0.numero")} required/> <br />
               </label>
               <label> CEP: <br />
-                <input className={styles.tamanhoMedio} name="cep" placeholder="12345-678" {...register("endereco.cep")} minLength={8} onChange={e => setCep(e.target.value)} value={cep} autoComplete="off" /> <br />
+                <input className={styles.tamanhoMedio} name="cep" placeholder="12345-678" {...register("endereco.0.cep")} minLength={8} onChange={e => setCep(e.target.value)} value={cep} autoComplete="off" required /> <br />
               </label>
             </div>
 
 
 
             <div >
-              <label >Bairro: <br />
-                <input className={styles.tamanhoMedio} name="bairro" placeholder="Asa Norte" {...register("endereco.bairro")} /><br />
+              <label >Referência: <br />
+                <input className={styles.tamanhoMedio} name="bairro" placeholder="Asa Norte" {...register("endereco.0.referencia")} /><br />
               </label >
               <label >Cidade: <br />
-                <input className={styles.inputCurto} name="cidade" placeholder="Brasília" {...register("endereco.cidade")} /><br />
+                <input className={styles.inputCurto} name="cidade" placeholder="Brasília" {...register("endereco.0.cidade")} required/><br />
               </label>
               <label >UF: <br />
-                <input className={styles.inputMtCurto} name="uf" placeholder="DF" maxLength={2} {...register("endereco.uf")} />
+                <input className={styles.inputMtCurto} name="uf" placeholder="DF" maxLength={2} {...register("endereco.0.estado")} required />
               </label>
             </div>
 
@@ -153,7 +147,7 @@ export default function Cadastrar({ endereco }: EnderecoProps) {
           <div>
 
             <br /><label >Complemento:</label> <br />
-            <input className={styles.complemento} name="complemento" maxLength={40} {...register("endereco.complemento")} />
+            <input className={styles.complemento} name="complemento" maxLength={40} {...register("endereco.0.complemento")} />
 
             <div className={styles.buttons}>
               <button type="button"><Link href="/">Cancelar</Link></button>
