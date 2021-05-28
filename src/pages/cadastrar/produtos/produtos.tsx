@@ -4,7 +4,7 @@ import { NavMenu } from '../../../components/NavBar';
 import styles from './styles.module.scss';
 import Router from 'next/router'
 import { GetServerSideProps } from 'next';
-import { raspberry } from '../../../services/api';
+import { heroku } from '../../../services/api';
 import Link from 'next/link';
 import { RepositoryFabricanteProduto } from '../../../utils/RepositoryFabricanteProduto';
 
@@ -171,7 +171,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await raspberry.get('fabricante/ativos', {
+  const { data } = await heroku.get('fabricante/ativos', {
     params: {
       _sort: 'nome',
       _order: 'asc',

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import styles from './styles.module.scss';
 import Router from 'next/router'
 import { GetServerSideProps } from 'next';
-import { raspberry } from '../../../../services/api';
+import { heroku } from '../../../../services/api';
 import Link from 'next/link';
 import { RepositoryFabricanteProduto } from '../../../../utils/RepositoryFabricanteProduto';
 
@@ -34,7 +34,7 @@ type HomeProps = {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await raspberry.get(`produto/${slug}`)
+  const { data } = await heroku.get(`produto/${slug}`)
 
   const produto = {
     id: data.id,

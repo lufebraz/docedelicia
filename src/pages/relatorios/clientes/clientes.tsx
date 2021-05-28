@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 import { RepositoryClient } from '../../../utils/RepositoryClient';
 import { GetServerSideProps } from 'next';
-import { raspberry } from '../../../services/api';
+import { heroku } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
 
 interface Clientes {
@@ -14,7 +14,7 @@ type HomeProps = {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await raspberry.get('cliente')
+  const { data } = await heroku.get('cliente')
 
   const clientes = data.map(clientes => {
     return {

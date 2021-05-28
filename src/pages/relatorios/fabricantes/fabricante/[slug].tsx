@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import { raspberry } from '../../../../services/api';
+import { heroku } from '../../../../services/api';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Router from 'next/router'
@@ -18,7 +18,7 @@ type FabricanteProps = {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await raspberry.get(`fabricante/${slug}`)
+  const { data } = await heroku.get(`fabricante/${slug}`)
 
   const fabricante = {
     id: data.id,

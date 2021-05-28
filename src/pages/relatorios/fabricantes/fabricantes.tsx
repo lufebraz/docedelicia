@@ -1,6 +1,6 @@
 import styles from './styles.module.scss';
 import { GetServerSideProps } from 'next';
-import { raspberry } from '../../../services/api';
+import { heroku } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
 import Link from 'next/link'
 
@@ -12,7 +12,7 @@ type HomeProps = {
   fabricantes: Fabricantes[];
 }
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await raspberry.get('fabricante')
+  const { data } = await heroku.get('fabricante')
 
   const fabricantes = data.map(fabricantes => {
     return {

@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { raspberry } from '../../../../services/api';
+import { heroku } from '../../../../services/api';
 import styles from './styles.module.scss';
 import Link from 'next/link';
 import axios from 'axios';
@@ -37,7 +37,7 @@ type ClienteProps = {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await raspberry.get(`cliente/${slug}`)
+  const { data } = await heroku.get(`cliente/${slug}`)
 
   const cliente = {
     id: data.id,
