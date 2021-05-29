@@ -135,7 +135,7 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
               </select>
             </div>
             <div className={styles.formitem}>
-              <label >Ativo:</label>
+              <label >Produto ativo?</label>
               <select name="ativo" {...register('ativo')} defaultValue={produto?.ativo} required >
                 <option value="1">Sim</option>
                 <option value="0">Não</option>
