@@ -36,15 +36,15 @@ export function Header() {
 
                 </ul>
               </li>
-              <li><Link href={`/relatorios/clientes/`}>Consultar</Link>
+              <li><Link href={`/consultar/clientes/`}>Consultar</Link>
                 <ul>
-                  <li><Link href={`/relatorios/clientes`}>Clientes</Link></li>
-                  {/* <li><Link href={`/relatorios/pedidos/pedidos`}>Pedidos</Link></li> */}
-                  <li><Link href={`/relatorios/produtos`}>Produtos</Link></li>
-                  {/* <li><Link href={`/relatorios/fornecedores/fornecedores`}>Fornecedores</Link></li> */}
-                  <li><Link href={`/relatorios/fabricantes`}>Fabricantes</Link></li>
-                  {/* <li><Link href={`/relatorios/entregadores/entregadores`}>Entregador</Link></li> */}
-                  {/* <li><Link href={`/relatorios/funcionarios/funcionarios`}>Funcionário</Link></li> */}
+                  <li><Link href={`/consultar/clientes`}>Clientes</Link></li>
+                  {/* <li><Link href={`/consultar/pedidos/pedidos`}>Pedidos</Link></li> */}
+                  <li><Link href={`/consultar/produtos`}>Produtos</Link></li>
+                  {/* <li><Link href={`/consultar/fornecedores/fornecedores`}>Fornecedores</Link></li> */}
+                  <li><Link href={`/consultar/fabricantes`}>Fabricantes</Link></li>
+                  {/* <li><Link href={`/consultar/entregadores/entregadores`}>Entregador</Link></li> */}
+                  {/* <li><Link href={`/consultar/funcionarios/funcionarios`}>Funcionário</Link></li> */}
                 </ul>
               </li>
 

@@ -18,7 +18,7 @@ export default function Fabricante() {
       headers: { 'Fabricante': 'dados do Fabricante' },
       data: values
     })
-    Router.push(`/relatorios/fabricantes`)
+    Router.push(`/consultar/fabricantes`)
   })
 
 
@@ -29,7 +29,7 @@ export default function Fabricante() {
       <h3>Dados do Fabricante:</h3>
       <label >Nome: </label>
       <input type="text" required {...register('nome')} />
-      <input type="number" value="1"  {...register('ativo')} className={styles.hidden}/>
+      <input type="number" value="1"  {...register('ativo')} className={styles.hidden} readOnly/>
 
       <div>
         <input type="submit" value="Cadastrar" className={styles.button} />

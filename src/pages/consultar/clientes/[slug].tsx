@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     nome: data.nome,
     tCelular: VMasker.toPattern(data.tCelular, "(99) 99999-9999"),
     tFixo: !!data.tFixo ? VMasker.toPattern(data.tFixo, "(99) 9999-9999") : null,
-    cpf: VMasker.toPattern(data.cpf,"999.999.999-99"),
+    cpf: VMasker.toPattern(data.cpf, "999.999.999-99"),
     dtNascimento: format(parseISO(data.dtNascimento), 'yyyy-MM-dd'),
     genero: data.genero,
     email: data.email,
@@ -59,7 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       {
         id: data.endereco[0].id,
         nome: data.endereco[0].nome,
-        cep: VMasker.toPattern(data.endereco[0].cep,"99999-999"),
+        cep: VMasker.toPattern(data.endereco[0].cep, "99999-999"),
         estado: data.endereco[0].estado,
         cidade: data.endereco[0].cidade,
         logradouro: data.endereco[0].logradouro,
@@ -82,16 +82,16 @@ export default function Cliente({ cliente }: ClienteProps) {
   const { register, handleSubmit } = useForm<Cliente>();
   const onSubmit = handleSubmit(async (values) => {
 
-   values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
-   values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
-   values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
-   values.cpf = VMasker.toPattern(values.cpf,"99999999999")
-   values.email = !!values.email ? values.email : null
-   values.genero = !!values.genero ? values.genero : null   
-   values.endereco[0].complemento = !!values.endereco[0].complemento ? values.endereco[0].complemento : null
-   values.endereco[0].referencia = !!values.endereco[0].referencia ? values.endereco[0].referencia : null
-    
-   await axios({
+    values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
+    values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
+    values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
+    values.cpf = VMasker.toPattern(values.cpf, "99999999999")
+    values.email = !!values.email ? values.email : null
+    values.genero = !!values.genero ? values.genero : null
+    values.endereco[0].complemento = !!values.endereco[0].complemento ? values.endereco[0].complemento : null
+    values.endereco[0].referencia = !!values.endereco[0].referencia ? values.endereco[0].referencia : null
+
+    await axios({
       method: 'PUT',
       url: `https://docedelicia.herokuapp.com/api/cliente/${cliente.id}`,
       headers: { 'Cliente': 'dados do cliente' },
@@ -107,7 +107,7 @@ export default function Cliente({ cliente }: ClienteProps) {
   const [telFixo, setTelFixo] = useState(!!cliente.tFixo ? cliente.tFixo : '')
   useEffect(() => {
     setTelFixo(VMasker.toPattern(telFixo, "(99) 9999-9999"))
-  }, [telFixo])  
+  }, [telFixo])
   const [cep, setCep] = useState(cliente.endereco[0].cep)
   useEffect(() => {
     setCep(VMasker.toPattern(cep, "99999-999"))
@@ -127,7 +127,7 @@ export default function Cliente({ cliente }: ClienteProps) {
             <input name="email" type="email" defaultValue={cliente.email}   {...register("email")} /><br />
 
             <label>data de nascimento*</label> <br />
-            <input className={styles.inputCurto} name="dtNascimento" type="date" defaultValue={cliente.dtNascimento} max="2003-12-31" {...register("dtNascimento")} required /><br />
+            <input className={styles.inputCurto} name="dtNascimento" type="date" defaultValue={cliente.dtNascimento} max={''} {...register("dtNascimento")} required /><br />
           </div>
 
 
@@ -135,26 +135,26 @@ export default function Cliente({ cliente }: ClienteProps) {
             <br />
             <div>
               <label>Telefone celular*  <br />
-                <input className={styles.inputCurto} name="tCelular" defaultValue={cliente?.tCelular}{...register("tCelular")} onChange={e => setTel(e.target.value)} value={tel} required autoComplete="off" /><br />
+                <input className={styles.inputCurto} name="tCelular" {...register("tCelular")} onChange={e => setTel(e.target.value)} value={tel} required autoComplete="off" /><br />
               </label>
               <label>Telefone fixo<br />
-                <input className={styles.inputCurto} name="tFixo" defaultValue={cliente?.tFixo} maxLength={14} {...register("tFixo")} onChange={e => setTelFixo(e.target.value)} value={telFixo}/><br />
+                <input className={styles.inputCurto} name="tFixo" maxLength={14} {...register("tFixo")} onChange={e => setTelFixo(e.target.value)} value={telFixo} /><br />
               </label>
             </div>
             <div >
               <div className={styles.cpf}>
 
-              <label >CPF* </label><br />
-              <input className={styles.inputCurto} name="cpf" value={cliente.cpf} {...register('cpf')} readOnly/><br />
+                <label >CPF* </label><br />
+                <input className={styles.inputCurto} name="cpf" value={cliente.cpf} {...register('cpf')} readOnly /><br />
               </div>
               <div className={styles.cpf}>
 
-              <label>gênero </label> <br />
-              <select name="genero" className={styles.inputCurto} defaultValue={cliente.genero} {...register("genero")}>
-                <option value="n">Não Especificado</option>
-                <option value="m">Masculino</option>
-                <option value="f">Feminino</option>
-              </select>
+                <label>gênero </label> <br />
+                <select name="genero" className={styles.inputCurto} defaultValue={cliente.genero} {...register("genero")}>
+                  <option value="n">Não Especificado</option>
+                  <option value="m">Masculino</option>
+                  <option value="f">Feminino</option>
+                </select>
               </div>
             </div>
             <label> Cliente ativo? </label> <br />
@@ -173,21 +173,21 @@ export default function Cliente({ cliente }: ClienteProps) {
             <h3>Endereço do cliente:</h3>
 
             <label> Nome do endereço* </label><br />
-            <input name="nomeEndereco" defaultValue={cliente.endereco[0]?.nome} {...register("endereco.0.nome")} required/> <br />
+            <input name="nomeEndereco" defaultValue={cliente.endereco[0]?.nome} {...register("endereco.0.nome")} required /> <br />
             <div>
               <label> Logradouro* <br />
-                <input className={styles.inputCurto} name="logradouro" defaultValue={cliente.endereco[0]?.logradouro} {...register("endereco.0.logradouro")} required/> <br />
+                <input className={styles.inputCurto} name="logradouro" defaultValue={cliente.endereco[0]?.logradouro} {...register("endereco.0.logradouro")} required /> <br />
               </label>
               <label> Num* <br />
-                <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.endereco[0]?.numero} maxLength={10} {...register("endereco.0.numero")}required /> <br />
+                <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.endereco[0]?.numero} maxLength={10} {...register("endereco.0.numero")} required /> <br />
               </label>
               <label> CEP* <br />
-                <input className={styles.tamanhoMedio} name="cep" defaultValue={cliente.endereco[0]?.cep} maxLength={8} {...register("endereco.0.cep")} required/> <br />
+                <input className={styles.tamanhoMedio} name="cep" {...register("endereco.0.cep")}  onChange={e => setCep(e.target.value)} value={cep} required/> <br />
               </label>
             </div>
             <div >
               <label >Cidade* <br />
-                <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco[0]?.cidade} {...register("endereco.0.cidade")}required /><br />
+                <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco[0]?.cidade} {...register("endereco.0.cidade")} required /><br />
               </label>
               <label >UF* <br />
                 <select className={styles.inputCurto} name="estado" defaultValue={cliente.endereco[0].estado} {...register("endereco.0.estado")} required>
@@ -236,8 +236,8 @@ export default function Cliente({ cliente }: ClienteProps) {
               <option value="0">Não</option>
             </select>
             <div className={styles.buttons}>
-              <button type="button"><Link href="./">Voltar</Link></button>
-              <button className="salvar" type="submit">Atualizar</button>
+              <Link href="./"><button >Voltar</button></Link>
+              <button type="submit">Atualizar</button>
             </div>
           </div>
         </div>

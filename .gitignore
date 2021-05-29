@@ -15,6 +15,7 @@ pedido.json
 # production
 /build
 test.json
+teste.html
 # misc
 .DS_Store
 *.pem

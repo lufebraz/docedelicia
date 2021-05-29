@@ -49,7 +49,7 @@ export default function Cadastrar() {
       headers: { 'Cliente': 'dados do cliente' },
       data: values
     })
-    Router.push(`/relatorios/clientes`)
+    Router.push(`/consultar/clientes`)
   })
 
 
@@ -76,7 +76,7 @@ export default function Cadastrar() {
       <form onSubmit={onSubmit} className={styles.form} >
         <div className={styles.dadosCliente}>
           <div>
-            <input type="number" value={1} {...register("ativo")} className={styles.hidden} />
+            <input type="number" value={1} {...register("ativo")} className={styles.hidden} readOnly/>
             <h3>Dados do Cliente:</h3>
             <label> Nome*  </label><br />
             <input name="nomeCliente" placeholder="Jose da Silva" required {...register("nome")} /> <br />
@@ -120,7 +120,7 @@ export default function Cadastrar() {
         <div className={styles.enderecoCliente}>
           <div>
             <h3>Endereço do cliente:</h3>
-            <input type="number" value={1} {...register("endereco.0.ativo")} className={styles.hidden} />
+            <input type="number" value={1} {...register("endereco.0.ativo")} className={styles.hidden} readOnly />
             <label> Nome do endereço* </label><br />
             <input name="nome" placeholder="Casa / Trabalho" {...register("endereco.0.nome")} required /> <br />
 

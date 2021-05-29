@@ -40,7 +40,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
       data: values
     })
 
-    Router.push(`/relatorios/produtos/`)
+    Router.push(`/consultar/produtos/`)
   })
 
 

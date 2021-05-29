@@ -58,8 +58,8 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
             <option value="0">Não</option>
           </select>
           <div>
-            <input type="submit" value="Atualizar" className={styles.button} />
-            <button className={styles.button} type="button"><Link href="./">Voltar</Link></button>
+            <Link href="./"><button >Voltar</button></Link>
+            <button type="submit">Atualizar</button>
           </div>
         </form>
 

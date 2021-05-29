@@ -167,14 +167,9 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
               return (<option key={fabricantes.id} value={fabricantes.id}>{fabricantes.nome}</option>)
             })}
           </select>
-
-
-
           <div className={styles.formgroup}>
-
-            <input type="submit" value="Salvar" className={styles.button} />
-
-            <button className={styles.button}><Link href="./">Voltar</Link></button>
+            <Link href="./"><button >Voltar</button></Link>
+            <button type="submit">Atualizar</button>
           </div>
         </form>
 
