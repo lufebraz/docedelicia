@@ -49,7 +49,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     id: data.id,
     nome: data.nome,
     tCelular: VMasker.toPattern(data.tCelular, "(99) 99999-9999"),
-    tFixo: VMasker.toPattern(data.tFixo, "(99) 9999-9999"),
+    tFixo: !!data.tFixo ? VMasker.toPattern(data.tFixo, "(99) 9999-9999") : null,
     cpf: VMasker.toPattern(data.cpf,"999.999.999-99"),
     dtNascimento: format(parseISO(data.dtNascimento), 'yyyy-MM-dd'),
     genero: data.genero,
@@ -121,10 +121,10 @@ export default function Cliente({ cliente }: ClienteProps) {
             <input name="nome" defaultValue={cliente.nome} required {...register("nome")} /> <br />
 
             <label>e-mail </label><br />
-            <input name="email" type="email" defaultValue={cliente.email} required  {...register("email")} /><br />
+            <input name="email" type="email" defaultValue={cliente.email}   {...register("email")} /><br />
 
             <label>data de nascimento*</label> <br />
-            <input className={styles.inputCurto} name="dtNascimento" type="date" defaultValue={cliente.dtNascimento} max="2003-12-31" {...register("dtNascimento")} /><br />
+            <input className={styles.inputCurto} name="dtNascimento" type="date" defaultValue={cliente.dtNascimento} max="2003-12-31" {...register("dtNascimento")} required /><br />
           </div>
 
 
@@ -170,21 +170,21 @@ export default function Cliente({ cliente }: ClienteProps) {
             <h3>Endereço do cliente:</h3>
 
             <label> Nome do endereço* </label><br />
-            <input name="nomeEndereco" defaultValue={cliente.endereco[0]?.nome} {...register("endereco.0.nome")} /> <br />
+            <input name="nomeEndereco" defaultValue={cliente.endereco[0]?.nome} {...register("endereco.0.nome")} required/> <br />
             <div>
               <label> Logradouro* <br />
-                <input className={styles.inputCurto} name="logradouro" defaultValue={cliente.endereco[0]?.logradouro} {...register("endereco.0.logradouro")} /> <br />
+                <input className={styles.inputCurto} name="logradouro" defaultValue={cliente.endereco[0]?.logradouro} {...register("endereco.0.logradouro")} required/> <br />
               </label>
               <label> Num* <br />
-                <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.endereco[0]?.numero} maxLength={10} {...register("endereco.0.numero")} /> <br />
+                <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.endereco[0]?.numero} maxLength={10} {...register("endereco.0.numero")}required /> <br />
               </label>
               <label> CEP* <br />
-                <input className={styles.tamanhoMedio} name="cep" defaultValue={cliente.endereco[0]?.cep} maxLength={8} {...register("endereco.0.cep")} /> <br />
+                <input className={styles.tamanhoMedio} name="cep" defaultValue={cliente.endereco[0]?.cep} maxLength={8} {...register("endereco.0.cep")} required/> <br />
               </label>
             </div>
             <div >
               <label >Cidade* <br />
-                <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco[0]?.cidade} {...register("endereco.0.cidade")} /><br />
+                <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco[0]?.cidade} {...register("endereco.0.cidade")}required /><br />
               </label>
               <label >UF* <br />
                 <select className={styles.inputCurto} name="estado" defaultValue={cliente.endereco[0].estado} {...register("endereco.0.estado")} required>
