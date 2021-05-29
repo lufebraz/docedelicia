@@ -1,5 +1,5 @@
-import styles from './styles.module.scss';
-import { heroku } from '../../../../services/api';
+import styles from './slug.module.scss';
+import { heroku } from '../../../services/api';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Router from 'next/router'
@@ -42,7 +42,7 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
       headers: { 'Fabricante': 'dados do fabricante' },
       data: values
     })
-    Router.push(`/relatorios/fabricantes/fabricantes`)
+    Router.push(`/relatorios/fabricantes/`)
   })
   return (
     <main >
@@ -59,7 +59,7 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
           </select>
           <div>
             <input type="submit" value="Atualizar" className={styles.button} />
-            <button className={styles.button} type="button"><Link href={`../fabricantes`}>Voltar</Link></button>
+            <button className={styles.button} type="button"><Link href="./">Voltar</Link></button>
           </div>
         </form>
 

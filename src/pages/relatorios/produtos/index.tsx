@@ -49,7 +49,7 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
                   <div key={produtos.id} className={styles.repo}>
                     <strong>{produtos.nome}</strong>
                     <strong className={produtos.ativo == 1 ? styles.on : styles.off}>{produtos.ativo == 1 ? 'on' : 'off'}</strong>
-                    <Link href={`produto/${produtos.id}`}>Visualizar</Link>
+                    <Link href={`produtos/${produtos.id}`}>Visualizar</Link>
                   </div>
                 )
               })}

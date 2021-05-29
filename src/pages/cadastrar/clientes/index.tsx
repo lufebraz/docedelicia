@@ -49,7 +49,7 @@ export default function Cadastrar() {
       headers: { 'Cliente': 'dados do cliente' },
       data: values
     })
-    Router.push(`/relatorios/clientes/clientes`)
+    Router.push(`/relatorios/clientes`)
   })
 
 

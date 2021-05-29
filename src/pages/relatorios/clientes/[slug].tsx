@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
-import { heroku } from '../../../../services/api';
-import styles from './styles.module.scss';
+import { heroku } from '../../../services/api';
+import styles from './slug.module.scss';
 import Link from 'next/link';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
@@ -81,6 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 export default function Cliente({ cliente }: ClienteProps) {
   const { register, handleSubmit } = useForm<Cliente>();
   const onSubmit = handleSubmit(async (values) => {
+    
    values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
    values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
    values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
@@ -89,14 +90,16 @@ export default function Cliente({ cliente }: ClienteProps) {
    values.genero = !!values.genero ? values.genero : null   
    values.endereco[0].complemento = !!values.endereco[0].complemento ? values.endereco[0].complemento : null
    values.endereco[0].referencia = !!values.endereco[0].referencia ? values.endereco[0].referencia : null
-    await axios({
+    
+   await axios({
       method: 'PUT',
       url: `https://docedelicia.herokuapp.com/api/cliente/${cliente.id}`,
       headers: { 'Cliente': 'dados do cliente' },
       data: values
     })
-    Router.push(`/relatorios/clientes/clientes`)
+    Router.push(`./`)
   })
+
   const [tel, setTel] = useState(cliente.tCelular)
   useEffect(() => {
     setTel(VMasker.toPattern(tel, "(99) 9 9999-9999"))
@@ -233,7 +236,7 @@ export default function Cliente({ cliente }: ClienteProps) {
               <option value="0">Não</option>
             </select>
             <div className={styles.buttons}>
-              <button type="button"><Link href={`../clientes`}>Voltar</Link></button>
+              <button type="button"><Link href="./">Voltar</Link></button>
               <button className="salvar" type="submit">Atualizar</button>
             </div>
           </div>

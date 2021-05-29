@@ -27,7 +27,7 @@ export default function Fornecedores() {
     <main >
       <NavMenu />
       <div className={styles.container}>
-        <form onSubmit={onSubmit} className={styles.form}>
+        {/* <form onSubmit={onSubmit} className={styles.form}>
 
           <h3>Dados do Fornecedor:</h3>
           <label >Nome: </label>
@@ -36,7 +36,7 @@ export default function Fornecedores() {
           <input type="submit" value="Cadastrar" className={styles.button} />
 
         </form>
-        <hr />
+        <hr /> */}
         <Fabricante />
       </div>
     </main>

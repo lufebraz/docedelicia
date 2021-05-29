@@ -18,7 +18,7 @@ export default function Fabricante() {
       headers: { 'Fabricante': 'dados do Fabricante' },
       data: values
     })
-    Router.push(`/relatorios/fabricantes/fabricantes`)
+    Router.push(`/relatorios/fabricantes`)
   })
 
 

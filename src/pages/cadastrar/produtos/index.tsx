@@ -41,7 +41,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
       data: values
     })
 
-    Router.push(`/relatorios/produtos/produtos`)
+    Router.push(`/relatorios/produtos/`)
   })
 
 

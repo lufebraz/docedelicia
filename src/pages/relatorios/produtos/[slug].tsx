@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import styles from './styles.module.scss';
+import styles from './slug.module.scss';
 import Router from 'next/router'
 import { GetServerSideProps } from 'next';
-import { heroku } from '../../../../services/api';
+import { heroku } from '../../../services/api';
 import Link from 'next/link';
-import { RepositoryFabricanteProduto } from '../../../../utils/RepositoryFabricanteProduto';
+import { RepositoryFabricanteProduto } from '../../../utils/RepositoryFabricanteProduto';
 
 type Produto = {
   id: number,
@@ -79,7 +79,7 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
       url: `https://docedelicia.herokuapp.com/api/produto/${produto.id}`,
       data: values
     })
-    Router.push(`/relatorios/produtos/produtos`)
+    Router.push(`./`)
   })
 
 
@@ -176,7 +176,7 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
 
             <input type="submit" value="Salvar" className={styles.button} />
 
-            <button className={styles.button}><Link href="../produtos">Voltar</Link></button>
+            <button className={styles.button}><Link href="./">Voltar</Link></button>
           </div>
         </form>
 
