@@ -117,13 +117,13 @@ export default function Cliente({ cliente }: ClienteProps) {
         <div className={styles.dadosCliente}>
           <div>
             <h3>Dados do Cliente:</h3>
-            <label> Nome:  </label><br />
+            <label> Nome* </label><br />
             <input name="nome" defaultValue={cliente.nome} required {...register("nome")} /> <br />
 
-            <label>e-mail: </label><br />
+            <label>e-mail </label><br />
             <input name="email" type="email" defaultValue={cliente.email} required  {...register("email")} /><br />
 
-            <label>data de nascimento:</label> <br />
+            <label>data de nascimento*</label> <br />
             <input className={styles.inputCurto} name="dtNascimento" type="date" defaultValue={cliente.dtNascimento} max="2003-12-31" {...register("dtNascimento")} /><br />
           </div>
 
@@ -131,22 +131,22 @@ export default function Cliente({ cliente }: ClienteProps) {
           <div>
             <br />
             <div>
-              <label>Telefone celular:  <br />
+              <label>Telefone celular*  <br />
                 <input className={styles.inputCurto} name="tCelular" defaultValue={cliente?.tCelular}{...register("tCelular")} onChange={e => setTel(e.target.value)} value={tel} required autoComplete="off" /><br />
               </label>
-              <label>Telefone fixo:<br />
+              <label>Telefone fixo<br />
                 <input className={styles.inputCurto} name="tFixo" defaultValue={cliente?.tFixo} maxLength={14} {...register("tFixo")} onChange={e => setTelFixo(e.target.value)} value={telFixo}/><br />
               </label>
             </div>
             <div >
               <div className={styles.cpf}>
 
-              <label >CPF: </label><br />
+              <label >CPF* </label><br />
               <input className={styles.inputCurto} name="cpf" value={cliente.cpf} {...register('cpf')} /><br />
               </div>
               <div className={styles.cpf}>
 
-              <label>gênero: </label> <br />
+              <label>gênero </label> <br />
               <select name="genero" className={styles.inputCurto} defaultValue={cliente.genero} {...register("genero")}>
                 <option value="n">Não Especificado</option>
                 <option value="m">Masculino</option>
@@ -169,36 +169,65 @@ export default function Cliente({ cliente }: ClienteProps) {
           <div>
             <h3>Endereço do cliente:</h3>
 
-            <label> Nome do endereço:  </label><br />
+            <label> Nome do endereço* </label><br />
             <input name="nomeEndereco" defaultValue={cliente.endereco[0]?.nome} {...register("endereco.0.nome")} /> <br />
             <div>
-              <label> Logradouro: <br />
+              <label> Logradouro* <br />
                 <input className={styles.inputCurto} name="logradouro" defaultValue={cliente.endereco[0]?.logradouro} {...register("endereco.0.logradouro")} /> <br />
               </label>
-              <label> Num: <br />
+              <label> Num* <br />
                 <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.endereco[0]?.numero} maxLength={10} {...register("endereco.0.numero")} /> <br />
               </label>
-              <label> CEP: <br />
+              <label> CEP* <br />
                 <input className={styles.tamanhoMedio} name="cep" defaultValue={cliente.endereco[0]?.cep} maxLength={8} {...register("endereco.0.cep")} /> <br />
               </label>
             </div>
             <div >
-              <label >Cidade: <br />
+              <label >Cidade* <br />
                 <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco[0]?.cidade} {...register("endereco.0.cidade")} /><br />
               </label>
-              <label >UF: <br />
-                <input className={styles.inputMtCurto} name="uf" maxLength={2} defaultValue={cliente.endereco[0]?.estado} {...register("endereco.0.estado")} />
+              <label >UF* <br />
+                <select className={styles.inputCurto} name="estado" defaultValue={cliente.endereco[0].estado} {...register("endereco.0.estado")} required>
+                  <option value="AC">Acre</option>
+                  <option value="AL">Alagoas</option>
+                  <option value="AP">Amapá</option>
+                  <option value="AM">Amazonas</option>
+                  <option value="BA">Bahia</option>
+                  <option value="CE">Ceará</option>
+                  <option value="DF">Distrito Federal</option>
+                  <option value="ES">Espírito Santo</option>
+                  <option value="GO">Goiás</option>
+                  <option value="MA">Maranhão</option>
+                  <option value="MT">Mato Grosso</option>
+                  <option value="MS">Mato Grosso do Sul</option>
+                  <option value="MG">Minas Gerais</option>
+                  <option value="PA">Pará</option>
+                  <option value="PB">Paraíba</option>
+                  <option value="PR">Paraná</option>
+                  <option value="PE">Pernambuco</option>
+                  <option value="PI">Piauí</option>
+                  <option value="RJ">Rio de Janeiro</option>
+                  <option value="RN">Rio Grande do Norte</option>
+                  <option value="RS">Rio Grande do Sul</option>
+                  <option value="RO">Rondônia</option>
+                  <option value="RR">Roraima</option>
+                  <option value="SC">Santa Catarina</option>
+                  <option value="SP">São Paulo</option>
+                  <option value="SE">Sergipe</option>
+                  <option value="TO">Tocantins</option>
+                  <option value="EX">Estrangeiro</option>
+                </select>
               </label>
             </div>
           </div>
           <input type="enderecoid" className={styles.hidden} value={cliente.endereco[0].id} {...register("endereco.0.id")} />
           <div>
-            <br /><label >Complemento:</label> <br />
+            <br /><label >Complemento</label> <br />
             <input className={styles.complemento} name="complemento" defaultValue={cliente.endereco[0]?.complemento} {...register("endereco.0.complemento")} />
-            <br /><label >Referência: <br />
-              <input className={styles.complemento} name="bairro" defaultValue={cliente.endereco[0]?.referencia} {...register("endereco.0.referencia")} /><br />
+            <br /><label >Referência <br />
+              <input className={styles.inputCurto} name="bairro" defaultValue={cliente.endereco[0]?.referencia} {...register("endereco.0.referencia")} /><br />
             </label >
-            <br /><label> Endereço ativo? </label> <br />
+            <label> Endereço ativo? </label> <br />
             <select className={styles.inputCurto} defaultValue={cliente.endereco[0].ativo} {...register('endereco.0.ativo')}>
               <option value="1">Sim</option>
               <option value="0">Não</option>
