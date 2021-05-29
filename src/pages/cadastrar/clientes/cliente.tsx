@@ -34,6 +34,15 @@ type Cliente = {
 export default function Cadastrar() {
   const { register, handleSubmit } = useForm<Cliente>();
   const onSubmit = handleSubmit(async (values) => {
+   values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
+   values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
+   values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
+   values.cpf = VMasker.toPattern(values.cpf,"99999999999")
+   values.email = !!values.email ? values.email : null
+   values.genero = !!values.genero ? values.genero : null
+   values.endereco[0].complemento = !!values.endereco[0].complemento ? values.endereco[0].complemento : null
+   values.endereco[0].referencia = !!values.endereco[0].referencia ? values.endereco[0].referencia : null
+
     await axios({
       method: 'POST',
       url: 'https://docedelicia.herokuapp.com/api/cliente',

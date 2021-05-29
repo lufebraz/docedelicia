@@ -1,9 +1,9 @@
 import styles from './styles.module.scss';
-import { RepositoryClient } from '../../../utils/RepositoryClient';
 import { GetServerSideProps } from 'next';
 import { heroku } from '../../../services/api';
 import { NavMenu1 } from '../../../components/NavBar';
 import Link from 'next/link';
+import VMasker from 'vanilla-masker';
 
 type Clientes = {
   id: number,
@@ -50,7 +50,7 @@ export default function ConsultarCliente({ clientes }: HomeProps) {
               return (
               <div key={clientes.id} className={styles.repo}>
                 <strong >{clientes.nome}</strong>
-                <strong >{clientes.tCelular}</strong>
+                <strong >{VMasker.toPattern(clientes.tCelular, "(99) 99999-9999")}</strong>
                 <strong className={clientes.ativo == 1 ? styles.on : styles.off}>{clientes.ativo==1? 'on' : 'off'}</strong>
                 <Link href={`cliente/${clientes.id}`}>Visualizar</Link>
               </div>

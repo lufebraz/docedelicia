@@ -48,9 +48,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cliente = {
     id: data.id,
     nome: data.nome,
-    tCelular: data.tCelular,
-    tFixo: data.tFixo,
-    cpf: data.cpf,
+    tCelular: VMasker.toPattern(data.tCelular, "(99) 99999-9999"),
+    tFixo: VMasker.toPattern(data.tFixo, "(99) 9999-9999"),
+    cpf: VMasker.toPattern(data.cpf,"999.999.999-99"),
     dtNascimento: format(parseISO(data.dtNascimento), 'yyyy-MM-dd'),
     genero: data.genero,
     email: data.email,
@@ -59,7 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       {
         id: data.endereco[0].id,
         nome: data.endereco[0].nome,
-        cep: data.endereco[0].cep,
+        cep: VMasker.toPattern(data.endereco[0].cep,"99999-999"),
         estado: data.endereco[0].estado,
         cidade: data.endereco[0].cidade,
         logradouro: data.endereco[0].logradouro,
@@ -81,6 +81,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 export default function Cliente({ cliente }: ClienteProps) {
   const { register, handleSubmit } = useForm<Cliente>();
   const onSubmit = handleSubmit(async (values) => {
+   values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
+   values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
+   values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
+   values.cpf = VMasker.toPattern(values.cpf,"99999999999")
+   values.email = !!values.email ? values.email : null
+   values.genero = !!values.genero ? values.genero : null
     await axios({
       method: 'PUT',
       url: `https://docedelicia.herokuapp.com/api/cliente/${cliente.id}`,
@@ -89,20 +95,15 @@ export default function Cliente({ cliente }: ClienteProps) {
     })
     Router.push(`/relatorios/clientes/clientes`)
   })
-
-  const [tel, setTel] = useState('')
+  const [tel, setTel] = useState(cliente.tCelular)
   useEffect(() => {
-    setTel(VMasker.toPattern(tel, "(99) 99999-9999"))
+    setTel(VMasker.toPattern(tel, "(99) 9 9999-9999"))
   }, [tel])
-  const [telFixo, setTelFixo] = useState('')
+  const [telFixo, setTelFixo] = useState(!!cliente.tFixo ? cliente.tFixo : '')
   useEffect(() => {
-    setTelFixo(VMasker.toPattern(telFixo, "(99)9999-9999"))
-  }, [telFixo])
-  const [cpf, setCpf] = useState('')
-  useEffect(() => {
-    setCpf(VMasker.toPattern(cpf, "999.999.999-99"))
-  }, [cpf]);
-  const [cep, setCep] = useState('')
+    setTelFixo(VMasker.toPattern(telFixo, "(99) 9999-9999"))
+  }, [telFixo])  
+  const [cep, setCep] = useState(cliente.endereco[0].cep)
   useEffect(() => {
     setCep(VMasker.toPattern(cep, "99999-999"))
   }, [cep])
@@ -129,17 +130,17 @@ export default function Cliente({ cliente }: ClienteProps) {
             <br />
             <div>
               <label>Telefone celular:  <br />
-                <input className={styles.inputCurto} name="tCelular" defaultValue={cliente?.tCelular} maxLength={15}{...register("tCelular")} required autoComplete="off" /><br />
+                <input className={styles.inputCurto} name="tCelular" defaultValue={cliente?.tCelular}{...register("tCelular")} onChange={e => setTel(e.target.value)} value={tel} required autoComplete="off" /><br />
               </label>
               <label>Telefone fixo:<br />
-                <input className={styles.inputCurto} name="tFixo" defaultValue={cliente?.tFixo} maxLength={14} {...register("tFixo")} /><br />
+                <input className={styles.inputCurto} name="tFixo" defaultValue={cliente?.tFixo} maxLength={14} {...register("tFixo")} onChange={e => setTelFixo(e.target.value)} value={telFixo}/><br />
               </label>
             </div>
             <div >
               <div className={styles.cpf}>
 
               <label >CPF: </label><br />
-              <input className={styles.inputCurto} name="cpf" value={cliente.cpf} required maxLength={11} minLength={11} {...register("cpf")} /><br />
+              <input className={styles.inputCurto} name="cpf" value={cliente.cpf} {...register('cpf')} /><br />
               </div>
               <div className={styles.cpf}>
 
