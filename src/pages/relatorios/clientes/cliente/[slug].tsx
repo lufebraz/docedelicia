@@ -86,7 +86,9 @@ export default function Cliente({ cliente }: ClienteProps) {
    values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
    values.cpf = VMasker.toPattern(values.cpf,"99999999999")
    values.email = !!values.email ? values.email : null
-   values.genero = !!values.genero ? values.genero : null
+   values.genero = !!values.genero ? values.genero : null   
+   values.endereco[0].complemento = !!values.endereco[0].complemento ? values.endereco[0].complemento : null
+   values.endereco[0].referencia = !!values.endereco[0].referencia ? values.endereco[0].referencia : null
     await axios({
       method: 'PUT',
       url: `https://docedelicia.herokuapp.com/api/cliente/${cliente.id}`,
