@@ -19,7 +19,7 @@ export default function Fornecedores() {
       headers: { 'Fornecedor': 'dados do fornecedor' },
       data: values
     })
-    Router.push(`/relatorios/fornecedores/fornecedores`)
+    Router.push(`/relatorios/fornecedores/`)
   })
 
 

@@ -5,7 +5,6 @@ import Router from 'next/router'
 import { GetServerSideProps } from 'next';
 import { heroku } from '../../../services/api';
 import Link from 'next/link';
-import { RepositoryFabricanteProduto } from '../../../utils/RepositoryFabricanteProduto';
 
 type Produto = {
   id: number,
@@ -165,7 +164,7 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
 
           <select name="fabricanteId" {...register('fabricanteId')} defaultValue={produto.fabricanteId}>
             {fabricanteList.map(fabricantes => {
-              return (<RepositoryFabricanteProduto key={fabricantes.id} fabricante={fabricantes} />
+              return (<option key={fabricantes.id} value={fabricantes.id}>{fabricantes.nome}</option>
               )
             })}
           </select>

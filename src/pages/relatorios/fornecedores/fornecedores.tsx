@@ -1,5 +1,4 @@
 import styles from '../fabricantes/list.module.scss';
-import { RepositoryClient } from '../../../utils/RepositoryFornecedor';
 import { GetServerSideProps } from 'next';
 import { heroku } from '../../../services/api';
 
@@ -24,9 +23,7 @@ export default function ConsultarCliente({ fornecedores }: HomeProps) {
         
         <div className={styles.lista}>
           <ul>
-            {fornecedoresList.map(fornecedores => {
-              return (<RepositoryClient key={fornecedores.id} fornecedor={fornecedores} />)
-            })}
+            
           </ul>
         </div>
       </div>
