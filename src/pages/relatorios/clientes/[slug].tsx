@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 export default function Cliente({ cliente }: ClienteProps) {
   const { register, handleSubmit } = useForm<Cliente>();
   const onSubmit = handleSubmit(async (values) => {
-    
+
    values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
    values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
    values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
@@ -145,7 +145,7 @@ export default function Cliente({ cliente }: ClienteProps) {
               <div className={styles.cpf}>
 
               <label >CPF* </label><br />
-              <input className={styles.inputCurto} name="cpf" value={cliente.cpf} {...register('cpf')} /><br />
+              <input className={styles.inputCurto} name="cpf" value={cliente.cpf} {...register('cpf')} readOnly/><br />
               </div>
               <div className={styles.cpf}>
 

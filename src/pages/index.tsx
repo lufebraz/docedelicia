@@ -6,10 +6,10 @@ export default function Home() {
     <div>
       <nav className={styles.nav}>
         <ul>
-          <li><Link href="">BOLOS</Link></li>
-          <li><Link href="">TORTAS</Link></li>
-          <li><Link href="">SALGADOS</Link></li>
-          <li><Link href="">KIT FESTA</Link></li>
+          <li><Link href="/">BOLOS</Link></li>
+          <li><Link href="/">TORTAS</Link></li>
+          <li><Link href="/">SALGADOS</Link></li>
+          <li><Link href="/">KIT FESTA</Link></li>
         </ul>
       </nav>
 

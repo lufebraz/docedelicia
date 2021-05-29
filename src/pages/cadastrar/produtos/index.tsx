@@ -6,7 +6,6 @@ import Router from 'next/router'
 import { GetServerSideProps } from 'next';
 import { heroku } from '../../../services/api';
 import Link from 'next/link';
-import { RepositoryFabricanteProduto } from '../../../utils/RepositoryFabricanteProduto';
 
 
 type Produto = {
@@ -51,7 +50,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
       <NavMenu />
       <div className={styles.container}>
         <form onSubmit={onSubmit} className={styles.form}>
-          <input type="text" value="1" {...register('ativo')} className={styles.hidden} />
+          <input type="text" value="1" {...register('ativo')} className={styles.hidden} readOnly />
           <h3>Dados do Produto:</h3>
 
           <div className={styles.formgroup}>
@@ -153,8 +152,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
           <select name="fabricanteId" {...register('fabricanteId')} required>
             <option value="">-</option>
             {fabricantesList.map(fabricantes => {
-              return (<RepositoryFabricanteProduto key={fabricantes.id} fabricante={fabricantes} />
-              )
+              return (<option key={fabricantes.id} value={fabricantes.id}>{fabricantes.nome}</option>)
             })}
           </select>
           <div className={styles.formgroup}>

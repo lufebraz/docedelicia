@@ -164,8 +164,7 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
 
           <select name="fabricanteId" {...register('fabricanteId')} defaultValue={produto.fabricanteId}>
             {fabricanteList.map(fabricantes => {
-              return (<option key={fabricantes.id} value={fabricantes.id}>{fabricantes.nome}</option>
-              )
+              return (<option key={fabricantes.id} value={fabricantes.id}>{fabricantes.nome}</option>)
             })}
           </select>
 
