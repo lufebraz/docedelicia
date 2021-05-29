@@ -35,22 +35,22 @@ export default function ConsultarCliente({ fabricantes }: HomeProps) {
 
   return (
     <>
-      <NavMenu1/>
+      <NavMenu1 />
       <div>
         <div className={styles.div}>
           <h3>Lista de Fabricantes:</h3>
           <br />
           <div className={styles.lista}>
             <ul>
-            {fabricantesList.map(fabricantes => {
-              return (
-              <div key={fabricantes.id} className={styles.repo}>
-                <strong>{fabricantes.nome}</strong>
-                <strong className={fabricantes.ativo == 1 ? styles.on : styles.off}>{fabricantes.ativo == 1 ? 'on' : 'off'}</strong>
-                <Link href={`fabricantes/${fabricantes.id}`}>Visualizar</Link>
-              </div>
-              )
-            })}
+              {fabricantesList.map(fabricantes => {
+                return (
+                  <div key={fabricantes.id} className={styles.repo}>
+                    <strong>{fabricantes.nome}</strong>
+                    <strong className={fabricantes.ativo == 1 ? styles.on : styles.off}>{fabricantes.ativo == 1 ? '✅' : '❌'}</strong>
+                    <Link href={`fabricantes/${fabricantes.id}`}>🔍</Link>
+                  </div>
+                )
+              })}
             </ul>
           </div>
         </div>

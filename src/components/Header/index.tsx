@@ -15,22 +15,19 @@ export function Header() {
         <div>
 
           <div >
-            <Link href="/">              
-            <img src="/logo.svg" alt="Doce Delicia" />
-            </Link>
+            <a href="/"><img src="/logo.svg" alt="Doce Delicia" /></a>
           </div>
 
-          <div className="menu">
+          <div >
 
             <ul>
-
               <li><Link href="/">Home</Link></li>
               <li><Link href={`/cadastrar/clientes/`}>Cadastrar</Link>
                 <ul>
                   <li><Link href={`/cadastrar/clientes/`}>Clientes</Link></li>
                   {/* <li><Link href={`/cadastrar/pedidos/pedido`}>Pedidos</Link></li> */}
                   <li><Link href={`/cadastrar/produtos/`}>Produtos</Link></li>
-                  <li><Link href={`/cadastrar/fornecedores/`}>Fornecedores</Link></li>
+                  <li><Link href={`/cadastrar/fornecedores/`}>Fabricantes</Link></li>
                   {/* <li><Link href={`/cadastrar/entregadores/entregador`}>Entregador</Link></li> */}
                   {/* <li><Link href={`/cadastrar/funcionarios/funcionario`}>Funcionário</Link></li> */}
 
@@ -47,9 +44,7 @@ export function Header() {
                   {/* <li><Link href={`/consultar/funcionarios/funcionarios`}>Funcionário</Link></li> */}
                 </ul>
               </li>
-
             </ul>
-
 
           </div>
         </div>

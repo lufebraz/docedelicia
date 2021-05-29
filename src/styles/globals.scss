@@ -63,3 +63,10 @@ button, a {
 .hidden {
   display: none;
 }
+.notfound {
+  text-align: center;
+  a {
+    color: #4979FF;
+    text-decoration: underline;
+  }
+}

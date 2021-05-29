@@ -29,12 +29,11 @@ export default function Fabricante() {
       <h3>Dados do Fabricante:</h3>
       <label >Nome: </label>
       <input type="text" required {...register('nome')} />
-      <input type="number" value="1"  {...register('ativo')} className={styles.hidden} readOnly/>
+      <input type="hidden" value="1"  {...register('ativo')} readOnly/>
 
       <div>
         <input type="submit" value="Cadastrar" className={styles.button} />
         <button className={styles.button} type="button"><Link href="/">Cancelar</Link></button>
-
       </div>
 
     </form>

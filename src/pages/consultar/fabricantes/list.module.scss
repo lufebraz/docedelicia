@@ -28,7 +28,7 @@
       }
     }
   }
-  .repo {    
+  .repo {   
     display: grid;
     grid-template-columns: 2fr 1fr 0.5fr;
     align-items: center;
@@ -38,17 +38,11 @@
     border-style: solid;
     strong {
       margin: 0.3rem;
+      font-size: 0.9rem; 
     }   
     
-    a {
-      display: flex;
-      justify-content: center;
-      text-decoration: none;
-      background: var(--background-not-used);
-      border-style: solid;
-      border-width: 1px;
-      padding: 2px;   
-      margin: 1px; 
+    a {      
+      text-decoration: none;     
     }
   }
   @media (min-width: 700px) {
@@ -66,6 +60,11 @@
         text-align: left;
       }
     }    
+    .repo {
+      strong {
+        font-size: 1rem;
+      }
+    }
   }
 }
 .off {

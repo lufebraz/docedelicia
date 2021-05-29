@@ -16,6 +16,7 @@ pedido.json
 /build
 test.json
 teste.html
+_document.tsx
 # misc
 .DS_Store
 *.pem

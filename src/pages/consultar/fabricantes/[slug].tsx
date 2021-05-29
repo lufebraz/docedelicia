@@ -42,7 +42,7 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
       headers: { 'Fabricante': 'dados do fabricante' },
       data: values
     })
-    Router.push(`/relatorios/fabricantes/`)
+    Router.push(`./`)
   })
   return (
     <main >

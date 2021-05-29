@@ -27,6 +27,28 @@ type HomeProps = {
   fabricantes: Fabricantes[];
 }
 
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data } = await heroku.get('fabricante/ativos', {
+    params: {
+      _sort: 'nome',
+      _order: 'asc',
+    }
+  })
+
+  const fabricantes = data.map(fabricantes => {
+    return {
+      nome: fabricantes.nome,
+      id: fabricantes.id,
+    }
+  });
+
+  return {
+    props: {
+      fabricantes
+    }
+  }
+}
+
 export default function Produtos({ fabricantes }: HomeProps) {
   const fabricantesList = [...fabricantes]
 
@@ -50,7 +72,7 @@ export default function Produtos({ fabricantes }: HomeProps) {
       <NavMenu />
       <div className={styles.container}>
         <form onSubmit={onSubmit} className={styles.form}>
-          <input type="text" value="1" {...register('ativo')} className={styles.hidden} readOnly />
+          <input type="hidden" value="1" {...register('ativo')} readOnly />
           <h3>Dados do Produto:</h3>
 
           <div className={styles.formgroup}>
@@ -168,24 +190,3 @@ export default function Produtos({ fabricantes }: HomeProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await heroku.get('fabricante/ativos', {
-    params: {
-      _sort: 'nome',
-      _order: 'asc',
-    }
-  })
-
-  const fabricantes = data.map(fabricantes => {
-    return {
-      nome: fabricantes.nome,
-      id: fabricantes.id,
-    }
-  });
-
-  return {
-    props: {
-      fabricantes
-    }
-  }
-}

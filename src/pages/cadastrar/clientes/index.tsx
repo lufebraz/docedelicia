@@ -1,11 +1,11 @@
-import { NavMenu } from '../../../components/NavBar';
-import styles from './styles.module.scss';
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import Router from 'next/router'
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Router from 'next/router';
 import VMasker from 'vanilla-masker';
+import styles from './styles.module.scss';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { NavMenu } from '../../../components/NavBar';
 
 type Cliente = {
   nome: string;
@@ -76,7 +76,7 @@ export default function Cadastrar() {
       <form onSubmit={onSubmit} className={styles.form} >
         <div className={styles.dadosCliente}>
           <div>
-            <input type="number" value={1} {...register("ativo")} className={styles.hidden} readOnly/>
+            <input type="hidden" value={1} {...register("ativo")} readOnly />
             <h3>Dados do Cliente:</h3>
             <label> Nome*  </label><br />
             <input name="nomeCliente" placeholder="Jose da Silva" required {...register("nome")} /> <br />
@@ -120,12 +120,11 @@ export default function Cadastrar() {
         <div className={styles.enderecoCliente}>
           <div>
             <h3>Endereço do cliente:</h3>
-            <input type="number" value={1} {...register("endereco.0.ativo")} className={styles.hidden} readOnly />
+            <input type="hidden" value={1} {...register("endereco.0.ativo")} readOnly />
             <label> Nome do endereço* </label><br />
             <input name="nome" placeholder="Casa / Trabalho" {...register("endereco.0.nome")} required /> <br />
 
             <div>
-
               <label> Logradouro*<br />
                 <input className={styles.inputCurto} name="logradouro" placeholder="Av. Principal" {...register("endereco.0.logradouro")} required /> <br />
               </label>
@@ -137,12 +136,12 @@ export default function Cadastrar() {
               </label>
             </div>
 
-            <div >              
+            <div >
               <label >Cidade* <br />
                 <input className={styles.inputCurto} name="cidade" placeholder="Brasília" {...register("endereco.0.cidade")} required /><br />
               </label>
               <label >UF* <br />
-                <select className={styles.inputCurto} name="estado" {...register("endereco.0.estado")} required>
+                <select className={styles.inputCurto} name="estado" {...register("endereco.0.estado")} defaultValue="DF" required>
                   <option value="AC">Acre</option>
                   <option value="AL">Alagoas</option>
                   <option value="AP">Amapá</option>
@@ -182,11 +181,11 @@ export default function Cadastrar() {
             <br /><label >Complemento</label> <br />
             <input className={styles.complemento} name="complemento" maxLength={40} {...register("endereco.0.complemento")} />
             <br /><label >Referência <br />
-                <input className={styles.complemento} name="bairro" {...register("endereco.0.referencia")} /><br />
-              </label >
+              <input className={styles.complemento} name="bairro" {...register("endereco.0.referencia")} /><br />
+            </label >
             <div className={styles.buttons}>
-              <button type="button"><Link href="/">Cancelar</Link></button>
-              <button className="salvar" type="submit" >Salvar</button>
+              <Link href="/"><button>Cancelar</button></Link>
+              <button type="submit" >Salvar</button>
             </div>
 
           </div>

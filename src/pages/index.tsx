@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from './home.module.scss'
+import styles from '../styles/home.module.scss'
 
 export default function Home() {
   return (
@@ -57,8 +57,8 @@ export default function Home() {
         </div>
         <hr />
         <div className={styles.creditos}>
-          <p>© 2021 - Todos direitos reservados à Doce Delicia</p>
-          <p>Desenvolvido por Luiz Fernando </p>
+          <p>© 2021 - Todos direitos reservados à Doce Delícia</p>
+          <p><Link href="https://github.com/lufebraz" >Site desenvolvido por Luiz Fernando </Link></p>
         </div>
       </footer>
     </div>
