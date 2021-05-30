@@ -14,8 +14,9 @@
 
   input,
   select {
+    height: 2.6rem;
     width: 90vw;
-    max-width: 28rem;
+    max-width: 25.5rem;
     padding: 0.4rem;
     border-width: 1px;
     border-radius: 0.5rem;
@@ -103,8 +104,22 @@
     .inputMtCurto {
       width: 3rem;
     }
-    .tamanhoMedio {
-      width: 9rem;
+    .cep {
+      width: 8rem;
+      input{
+        margin: 0;
+        width: 7rem;
+        border-radius: 1rem 0 0 1rem;
+      }
+      button {
+        position: absolute;
+        width: 1.5rem;
+        height: 2.6rem;
+        margin-left: 7rem;
+        border-radius: 0 1rem 1rem 0;
+        background: #4979FF;
+        border: 1px;        
+      }
     }
     .complemento {
       width: 25rem;
@@ -115,6 +130,10 @@
   }
 }
 
-.hidden {
-  display: none;
+.quebralinha {
+  flex-direction: column;
+}
+.complementoo {
+  position: absolute;
+  margin-left: 30.5rem;
 }
