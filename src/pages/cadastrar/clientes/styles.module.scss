@@ -89,21 +89,6 @@
         }
       }
     }
-  }
-  @media (min-width: 900px) {
-    input{
-      width: 26rem;
-    }
-    .dadosCliente, .enderecoCliente {
-      display: flex;
-      gap: 5rem;
-    }
-    .inputCurto {
-      width: 12rem;
-    }
-    .inputMtCurto {
-      width: 3rem;
-    }
     .cep {
       width: 8rem;
       input{
@@ -121,19 +106,32 @@
         border: 1px;        
       }
     }
-    .complemento {
-      width: 25rem;
+    .quebralinha {
+      flex-direction: column;
     }
-    .buttons {
+    .complementoo {
+      position: absolute;
+      margin-left: 30.5rem;
+    }
+  }
+  @media (min-width: 900px) {
+    input{
+      width: 26rem;
+    }
+    .dadosCliente, .enderecoCliente {
+      display: flex;
+      gap: 5rem;
+    }
+    .inputCurto {
+      width: 12rem;
+    }
+    .inputMtCurto {
+      width: 3rem;
+    }
+    
+        .buttons {
       margin: 3rem 0 0 8rem;
     }
   }
 }
 
-.quebralinha {
-  flex-direction: column;
-}
-.complementoo {
-  position: absolute;
-  margin-left: 30.5rem;
-}
