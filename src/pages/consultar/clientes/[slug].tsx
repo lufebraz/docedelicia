@@ -32,6 +32,7 @@ type Cliente = {
       complemento: string;
       referencia: string;
       ativo: number;
+      bairro:string;
     }
   ]
 
@@ -189,6 +190,11 @@ export default function Cliente({ cliente }: ClienteProps) {
               <label >Cidade* <br />
                 <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco[0]?.cidade} {...register("endereco.0.cidade")} required /><br />
               </label>
+              <label >Bairro* <br />
+              <input type="text" className={styles.inputCurto} name="bairro" />
+              </label>
+            </div>
+            <div>
               <label >UF* <br />
                 <select className={styles.inputCurto} name="estado" defaultValue={cliente.endereco[0].estado} {...register("endereco.0.estado")} required>
                   <option value="AC">Acre</option>
@@ -221,6 +227,7 @@ export default function Cliente({ cliente }: ClienteProps) {
                   <option value="EX">Estrangeiro</option>
                 </select>
               </label>
+
             </div>
           </div>
           <input type="enderecoid" className={styles.hidden} value={cliente.endereco[0].id} {...register("endereco.0.id")} />

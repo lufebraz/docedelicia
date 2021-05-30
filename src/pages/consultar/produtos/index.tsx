@@ -48,7 +48,7 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
                 return (
                   <div key={produtos.id} className={styles.repo}>
                     <strong>{produtos.nome}</strong>
-                    <strong className={produtos.ativo == 1 ? styles.on : styles.off}>{produtos.ativo == 1 ? '✅' : '❌'}</strong>
+                    <strong className={produtos.ativo == 1 ? styles.on : styles.off}>{produtos.ativo == 1 ? '✅' : '🚫'}</strong>
                     <Link href={`produtos/${produtos.id}`}>🔍</Link>
                   </div>
                 )
