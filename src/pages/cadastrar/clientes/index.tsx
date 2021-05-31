@@ -6,6 +6,7 @@ import styles from './styles.module.scss';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { NavMenu } from '../../../components/NavBar';
+import SyncLoader from 'react-spinners/SyncLoader';
 
 type Cliente = {
   nome: string;
@@ -41,6 +42,7 @@ type Endereco = {
 
 
 export default function Cadastrar() {
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm<Cliente>();
   const [tel, setTel] = useState('')
   const [cpf, setCpf] = useState('')
@@ -52,6 +54,7 @@ export default function Cadastrar() {
   const [logradouro, setLogradouro] = useState('')
   const [endereco, setEndereco] = useState<Endereco>({} as Endereco)
   const onSubmit = handleSubmit(async (values) => {
+    setLoading(true);
     values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
     values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
     values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
@@ -80,20 +83,15 @@ export default function Cadastrar() {
       .catch(function (response) {
         alert('Cliente não cadastrado! Verificar campos');
       });
-
+    setLoading(false)
   })
 
   function buscarEndereco() {
-    document.getElementById("cep").style.background = "lightgreen";
+    document.getElementById("cep").style.opacity = "0.5";
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
       .then(response => response.json())
       .then(data => setEndereco(data))
       .catch(function (error) { alert('por favor, insira 8 digitos no cep') })
-  }
-  function doOnSubmit() {
-    document.getElementById("botaosalvar").style.opacity = ".6";
-    document.getElementById("botaosalvar").style.background = "lightgreen";
-
   }
 
   useEffect(() => {
@@ -144,7 +142,7 @@ export default function Cadastrar() {
                   placeholder="(00) 12345-6789" minLength={15}
                   value={tel} {...register("tCelular")}
                   onChange={e => setTel(e.target.value)}
-                  autoComplete="off" required/><br />
+                  autoComplete="off" required /><br />
               </label>
               <label>Telefone fixo<br />
                 <input className={styles.inputCurto}
@@ -266,8 +264,12 @@ export default function Cadastrar() {
                 {...register("endereco.0.referencia")} /><br />
             </label >
             <div className={styles.buttons}>
-              <button id="botaosalvar" type="submit" onClick={doOnSubmit} >Salvar</button>
-              <Link href="/"><button>Cancelar</button></Link>
+              {loading ? <SyncLoader color="#4979FF" size="11" /> :
+                <>
+                  <button type="submit" >Salvar</button>
+                  <Link href="/"><button>Cancelar</button></Link>
+                </>
+              }
             </div>
 
           </div>

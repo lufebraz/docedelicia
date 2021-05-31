@@ -8,6 +8,7 @@ import Router from 'next/router'
 import { useEffect, useState } from 'react';
 import VMasker from 'vanilla-masker';
 import { format, parseISO } from 'date-fns';
+import SyncLoader from 'react-spinners/SyncLoader';
 
 type Cliente = {
   id: number;
@@ -32,7 +33,7 @@ type Cliente = {
       complemento: string;
       referencia: string;
       ativo: number;
-      bairro:string;
+      bairro: string;
     }
   ]
 
@@ -80,13 +81,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 }
 export default function Cliente({ cliente }: ClienteProps) {
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm<Cliente>();
   const onSubmit = handleSubmit(async (values) => {
-
+    setLoading(true)
     values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
     values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
     values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
-    values.cpf = VMasker.toPattern(cliente.cpf,"99999999999")
+    values.cpf = VMasker.toPattern(cliente.cpf, "99999999999")
     values.email = !!values.email ? values.email : null
     values.genero = !!values.genero ? values.genero : null
     values.endereco[0].complemento = !!values.endereco[0].complemento ? values.endereco[0].complemento : null
@@ -97,8 +99,17 @@ export default function Cliente({ cliente }: ClienteProps) {
       url: `https://docedelicia.herokuapp.com/api/cliente/${cliente.id}`,
       headers: { 'Cliente': 'dados do cliente' },
       data: values
+    }).then(function (response) {
+      if (response.status === 200) {
+        alert('Cliente atualizado!!');
+        Router.push(`./`)
+      }
     })
-    Router.push(`./`)
+      .catch(function (response) {
+        alert('Cliente não atualizado!');
+      });
+
+    setLoading(false)
   })
 
   const [tel, setTel] = useState(cliente.tCelular)
@@ -183,7 +194,7 @@ export default function Cliente({ cliente }: ClienteProps) {
                 <input className={styles.inputMtCurto} name="numero" defaultValue={cliente.endereco[0]?.numero} maxLength={10} {...register("endereco.0.numero")} required /> <br />
               </label>
               <label> CEP* <br />
-                <input className={styles.tamanhoMedio} name="cep" {...register("endereco.0.cep")}  onChange={e => setCep(e.target.value)} value={cep} required/> <br />
+                <input className={styles.tamanhoMedio} name="cep" {...register("endereco.0.cep")} onChange={e => setCep(e.target.value)} value={cep} required /> <br />
               </label>
             </div>
             <div >
@@ -191,7 +202,7 @@ export default function Cliente({ cliente }: ClienteProps) {
                 <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco[0]?.cidade} {...register("endereco.0.cidade")} required /><br />
               </label>
               <label >Bairro* <br />
-              <input type="text" className={styles.inputCurto} name="bairro" />
+                <input type="text" className={styles.inputCurto} name="bairro" />
               </label>
             </div>
             <div>
@@ -243,8 +254,13 @@ export default function Cliente({ cliente }: ClienteProps) {
               <option value="0">Não</option>
             </select>
             <div className={styles.buttons}>
-              <Link href="./"><button >Voltar</button></Link>
-              <button type="submit">Atualizar</button>
+              {
+                loading ? <SyncLoader color="#4979FF" size="11" /> :
+                  <>
+                    <button type="submit">Atualizar</button>
+                    <Link href="./"><button >Voltar</button></Link>
+                  </>
+              }
             </div>
           </div>
         </div>
