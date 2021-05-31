@@ -59,17 +59,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     ativo: data.ativo,
     endereco: [
       {
-        id: data.endereco[0].id,
-        nome: data.endereco[0].nome,
-        cep: VMasker.toPattern(data.endereco[0].cep, "99999-999"),
-        estado: data.endereco[0].estado,
-        cidade: data.endereco[0].cidade,
-        logradouro: data.endereco[0].logradouro,
-        numero: data.endereco[0].numero,
-        complemento: data.endereco[0].complemento,
-        referencia: data.endereco[0].referencia,
-        ativo: data.endereco[0].ativo,
-        clienteId: data.endereco[0].clienteId,
+        id: data.endereco[0]?.id,
+        nome: data.endereco[0]?.nome,
+        cep: !!data.endereco[0]?.cep ? VMasker.toPattern(data.endereco[0]?.cep, "99999-999") : null,
+        estado: data.endereco[0]?.estado,
+        cidade: data.endereco[0]?.cidade,
+        logradouro: data.endereco[0]?.logradouro,
+        numero: data.endereco[0]?.numero,
+        complemento: data.endereco[0]?.complemento,
+        referencia: data.endereco[0]?.referencia,
+        ativo: data.endereco[0]?.ativo,
+        clienteId: data.endereco[0]?.clienteId,
       }
     ]
   };
@@ -85,6 +85,7 @@ export default function Cliente({ cliente }: ClienteProps) {
   const { register, handleSubmit } = useForm<Cliente>();
   const onSubmit = handleSubmit(async (values) => {
     setLoading(true)
+    values.dtNascimento =  !!values.dtNascimento ? values.dtNascimento : '0001-01-01'
     values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
     values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
     values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
@@ -207,7 +208,7 @@ export default function Cliente({ cliente }: ClienteProps) {
             </div>
             <div>
               <label >UF* <br />
-                <select className={styles.inputCurto} name="estado" defaultValue={cliente.endereco[0].estado} {...register("endereco.0.estado")} required>
+                <select className={styles.inputCurto} name="estado" defaultValue={cliente.endereco[0]?.estado} {...register("endereco.0.estado")} required>
                   <option value="AC">Acre</option>
                   <option value="AL">Alagoas</option>
                   <option value="AP">Amapá</option>
@@ -241,7 +242,7 @@ export default function Cliente({ cliente }: ClienteProps) {
 
             </div>
           </div>
-          <input type="enderecoid" className={styles.hidden} value={cliente.endereco[0].id} {...register("endereco.0.id")} />
+          <input type="enderecoid" className={styles.hidden} value={cliente.endereco[0]?.id} {...register("endereco.0.id")} />
           <div>
             <br /><label >Complemento</label> <br />
             <input className={styles.complemento} name="complemento" defaultValue={cliente.endereco[0]?.complemento} {...register("endereco.0.complemento")} />
@@ -249,7 +250,7 @@ export default function Cliente({ cliente }: ClienteProps) {
               <input className={styles.inputCurto} name="bairro" defaultValue={cliente.endereco[0]?.referencia} {...register("endereco.0.referencia")} /><br />
             </label >
             <label> Endereço ativo? </label> <br />
-            <select className={styles.inputCurto} defaultValue={cliente.endereco[0].ativo} {...register('endereco.0.ativo')}>
+            <select className={styles.inputCurto} defaultValue={cliente.endereco[0]?.ativo} {...register('endereco.0.ativo')}>
               <option value="1">Sim</option>
               <option value="0">Não</option>
             </select>
