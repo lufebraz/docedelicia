@@ -85,7 +85,6 @@ export default function Cliente({ cliente }: ClienteProps) {
   const { register, handleSubmit } = useForm<Cliente>();
   const onSubmit = handleSubmit(async (values) => {
     setLoading(true)
-    values.dtNascimento =  !!values.dtNascimento ? values.dtNascimento : '0001-01-01'
     values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
     values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
     values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
