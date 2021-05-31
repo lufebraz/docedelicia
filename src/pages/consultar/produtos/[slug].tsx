@@ -5,6 +5,9 @@ import Router from 'next/router'
 import { GetServerSideProps } from 'next';
 import { heroku } from '../../../services/api';
 import Link from 'next/link';
+import SyncLoader from 'react-spinners/SyncLoader';
+import { useState } from 'react';
+
 
 type Produto = {
   id: number,
@@ -71,14 +74,25 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 export default function Produtos({ produto, fabricante }: HomeProps) {
   const fabricanteList = [...fabricante];
 
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm<Produto>();
   const onSubmit = handleSubmit(async (values) => {
+    setLoading(true)
     await axios({
       method: 'PUT',
       url: `https://docedelicia.herokuapp.com/api/produto/${produto.id}`,
       data: values
+    }).then(function (response) {
+      if (response.status === 200) {
+        alert('Produto atualizado!!');
+        Router.push(`./`)
+      }
     })
-    Router.push(`./`)
+      .catch(function (response) {
+        alert('Produto não atualizado!');
+      });
+
+    setLoading(false)
   })
 
 
@@ -168,8 +182,14 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
             })}
           </select>
           <div className={styles.formgroup}>
-            <Link href="./"><button >Voltar</button></Link>
-            <button type="submit">Atualizar</button>
+            {
+              loading ? <SyncLoader color="#4979FF" size="11" /> :
+                <>
+                  <button type="submit">Atualizar</button>
+                  <Link href="./"><button >Voltar</button></Link>
+                </>
+            }
+
           </div>
         </form>
 

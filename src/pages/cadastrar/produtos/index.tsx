@@ -6,6 +6,8 @@ import Router from 'next/router'
 import { GetServerSideProps } from 'next';
 import { heroku } from '../../../services/api';
 import Link from 'next/link';
+import { useState } from 'react';
+import SyncLoader from 'react-spinners/SyncLoader';
 
 
 type Produto = {
@@ -51,18 +53,26 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 export default function Produtos({ fabricantes }: HomeProps) {
   const fabricantesList = [...fabricantes]
+  const [loading, setLoading] = useState(false);
 
   const { register, handleSubmit } = useForm<Produto>();
   const onSubmit = handleSubmit(async (values) => {
-
+    setLoading(true)
     await axios({
       method: 'POST',
       url: 'https://docedelicia.herokuapp.com/api/produto',
       headers: { 'Produto': 'dados do produto' },
       data: values
+    }).then(function (response) {
+      if (response.status === 200) {
+        alert('Produto cadastrado!!');
+        Router.push(`/consultar/produtos/`)
+      }
     })
-
-    Router.push(`/consultar/produtos/`)
+    .catch(function (response) {
+      alert('Produto não cadastrado!');
+    });
+    setLoading(false)
   })
 
 
@@ -178,10 +188,12 @@ export default function Produtos({ fabricantes }: HomeProps) {
             })}
           </select>
           <div className={styles.formgroup}>
-
-            <input type="submit" value="Cadastrar" className={styles.button} />
-
-            <button className={styles.button}><Link href="/">Cancelar</Link></button>
+          {loading ? <SyncLoader color="#4979FF" size="11" /> :
+                <>
+              <input type="submit" value="Cadastrar" className={styles.button} />
+              <button className={styles.button}><Link href="/">Cancelar</Link></button>
+            </>
+            }
           </div>
         </form>
 
