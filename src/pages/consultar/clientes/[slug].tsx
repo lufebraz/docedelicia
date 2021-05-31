@@ -139,7 +139,7 @@ export default function Cliente({ cliente }: ClienteProps) {
             <input name="email" type="email" defaultValue={cliente.email}   {...register("email")} /><br />
 
             <label>data de nascimento*</label> <br />
-            <input className={styles.inputCurto} name="dtNascimento" type="date" defaultValue={cliente.dtNascimento} max={''} {...register("dtNascimento")} required /><br />
+            <input className={styles.inputCurto} name="dtNascimento" type="date" defaultValue={cliente.dtNascimento} max={''} {...register("dtNascimento")} /><br />
           </div>
 
 
