@@ -86,7 +86,7 @@ export default function Cliente({ cliente }: ClienteProps) {
     values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
     values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
     values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
-    values.cpf = VMasker.toPattern(values.cpf, "99999999999")
+    values.cpf = VMasker.toPattern(cliente.cpf,"99999999999")
     values.email = !!values.email ? values.email : null
     values.genero = !!values.genero ? values.genero : null
     values.endereco[0].complemento = !!values.endereco[0].complemento ? values.endereco[0].complemento : null
@@ -146,7 +146,7 @@ export default function Cliente({ cliente }: ClienteProps) {
               <div className={styles.cpf}>
 
                 <label >CPF* </label><br />
-                <input className={styles.inputCurto} name="cpf" value={cliente.cpf} {...register('cpf')} readOnly /><br />
+                <input className={styles.inputCurto} name="cpf" value={cliente.cpf} readOnly /><br />
               </div>
               <div className={styles.cpf}>
 

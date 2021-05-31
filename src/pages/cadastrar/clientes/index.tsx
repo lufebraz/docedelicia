@@ -71,13 +71,29 @@ export default function Cadastrar() {
       headers: { 'Cliente': 'dados do cliente' },
       data: values
     })
-    Router.push(`/consultar/clientes`)
+      .then(function (response) {
+        if (response.status === 200) {
+          alert('Cliente cadastrado!!');
+          Router.push(`/consultar/clientes`)
+        }
+      })
+      .catch(function (response) {
+        alert('Cliente não cadastrado! Verificar campos');
+      });
+
   })
 
   function buscarEndereco() {
+    document.getElementById("cep").style.background = "lightgreen";
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
       .then(response => response.json())
       .then(data => setEndereco(data))
+      .catch(function (error) { alert('por favor, insira 8 digitos no cep') })
+  }
+  function doOnSubmit() {
+    document.getElementById("botaosalvar").style.opacity = ".6";
+    document.getElementById("botaosalvar").style.background = "lightgreen";
+
   }
 
   useEffect(() => {
@@ -107,25 +123,25 @@ export default function Cadastrar() {
           <div>
             <input type="hidden" value={1} {...register("ativo")} readOnly />
             <h3>Dados do Cliente:</h3>
-            <label> Nome*  </label><br />
-            <input name="nomeCliente" placeholder="Jose da Silva"
-              required {...register("nome")} /> <br />
+            <label> Nome*  <br />
+              <input name="nomeCliente" placeholder="Jose da Silva"
+                required {...register("nome")} /></label> <br />
 
-            <label>e-mail </label><br />
-            <input name="email" type="email"
-              placeholder="josesilva@exemplo.com" {...register("email")} /><br />
+            <label>e-mail <br />
+              <input name="email" type="email"
+                placeholder="josesilva@exemplo.com" {...register("email")} /></label><br />
 
-            <label>data de nascimento*</label> <br />
-            <input className={styles.inputCurto} name="dtNasc"
-              type="date" placeholder="dd/mm/aaaa" max="2010-01-01"
-              min="1900-01-01" required {...register("dtNascimento")} /><br />
+            <label>data de nascimento <br />
+              <input className={styles.inputCurto} name="dtNasc"
+                type="date" placeholder="dd/mm/aaaa" max="2010-01-01"
+                min="1900-01-01" {...register("dtNascimento")} /></label><br />
           </div>
           <div>
             <br />
             <div>
               <label>Telefone celular* <br />
                 <input className={styles.inputCurto} name="tcelular"
-                  placeholder="(00) 12345-6789" required minLength={15}
+                  placeholder="(00) 12345-6789" minLength={15}
                   value={tel} {...register("tCelular")}
                   onChange={e => setTel(e.target.value)}
                   autoComplete="off" /><br />
@@ -147,8 +163,8 @@ export default function Cadastrar() {
               autoComplete="off" /><br />
 
             <label>gênero </label><br />
-            <select name="genero" className={styles.inputCurto} 
-            {...register("genero")}>
+            <select name="genero" className={styles.inputCurto}
+              {...register("genero")}>
               <option value="">-</option>
               <option value="n">Não Especificado</option>
               <option value="m">Masculino</option>
@@ -175,7 +191,7 @@ export default function Cadastrar() {
                     value={cep} {...register("endereco.0.cep")}
                     minLength={8} onChange={e => setCep(e.target.value)}
                     autoComplete="off" required /> <br />
-                  <button onClick={buscarEndereco} type="button">🔍</button>
+                  <button onClick={buscarEndereco} type="button" id="cep">🔍</button>
                 </div> </label>
               <label> Logradouro* <br />
                 <input value={logradouro}{...register("endereco.0.logradouro")}
@@ -250,8 +266,8 @@ export default function Cadastrar() {
                 {...register("endereco.0.referencia")} /><br />
             </label >
             <div className={styles.buttons}>
+              <button id="botaosalvar" type="submit" onClick={doOnSubmit} >Salvar</button>
               <Link href="/"><button>Cancelar</button></Link>
-              <button type="submit" >Salvar</button>
             </div>
 
           </div>
