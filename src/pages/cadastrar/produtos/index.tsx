@@ -97,10 +97,10 @@ export default function Produtos({ fabricantes }: HomeProps) {
               <select name="unidade" {...register('tipoUnidade')} required>
                 <option value="">-</option>
                 <option value="un">Unidade</option>
-                <option value="kilo">Kg</option>
-                <option value="grama">Gramas</option>
-                <option value="litro">Litro</option>
-                <option value="mililitro">ML</option>
+                <option value="kg">Kg</option>
+                <option value="g">Gramas</option>
+                <option value="l">Litro</option>
+                <option value="ml">ML</option>
               </select>
             </div>
             <div className={styles.formitem}>

@@ -81,7 +81,11 @@ export default function Cadastrar() {
         }
       })
       .catch(function (response) {
-        alert('Cliente não cadastrado! Verificar campos');
+        console.log(response.data)
+        console.log(response.message)
+        console.log(response.status)
+        console.log(response)
+        alert('Cliente não cadastrado! Verificar campos' + response);
       });
     setLoading(false)
   })
