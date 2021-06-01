@@ -48,7 +48,7 @@ export default function Cadastrar() {
   const [cpf, setCpf] = useState('')
   const [cep, setCep] = useState('')
   const [telFixo, setTelFixo] = useState('')
-  const [uf, setUf] = useState('DF')
+  const [uf, setUf] = useState('')
   const [bairro, setBairro] = useState('')
   const [localidade, setLocalidade] = useState('')
   const [logradouro, setLogradouro] = useState('')
