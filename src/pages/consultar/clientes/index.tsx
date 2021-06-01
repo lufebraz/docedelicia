@@ -55,7 +55,7 @@ export default function ConsultarCliente({ clientes }: HomeProps) {
                   <strong >{
                     !!clientes.tCelular ?
                       VMasker.toPattern((clientes.tCelular), "(99) 99999-9999") :
-                      VMasker.toPattern((clientes.tFixo), "(99) 9999-9999")
+                      VMasker.toPattern((!!clientes.tFixo ? clientes.tFixo : ''), "(99) 9999-9999")
                   }</strong>
                   <strong className={clientes.ativo == 1 ? styles.on : styles.off}>{clientes.ativo == 1 ? '✅' : '🚫'}</strong>
                   <Link href={`clientes/${clientes.id}`}>🔍</Link>
