@@ -142,7 +142,7 @@ export default function Cadastrar() {
                   placeholder="(00) 12345-6789" minLength={15}
                   value={tel} {...register("tCelular")}
                   onChange={e => setTel(e.target.value)}
-                  autoComplete="off" required /><br />
+                  autoComplete="off" /><br />
               </label>
               <label>Telefone fixo<br />
                 <input className={styles.inputCurto}

@@ -50,10 +50,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cliente = {
     id: data.id,
     nome: data.nome,
-    tCelular: VMasker.toPattern(data.tCelular, "(99) 99999-9999"),
+    tCelular: !!data.tCelular ? VMasker.toPattern(data.tCelular, "(99) 99999-9999"):null,
     tFixo: !!data.tFixo ? VMasker.toPattern(data.tFixo, "(99) 9999-9999") : null,
     cpf: VMasker.toPattern(data.cpf, "999.999.999-99"),
-    dtNascimento: format(parseISO(data.dtNascimento), 'yyyy-MM-dd'),
+    dtNascimento: !!data.dtNascimento ? format(parseISO(data.dtNascimento), 'yyyy-MM-dd'):null,
     genero: data.genero,
     email: data.email,
     ativo: data.ativo,
@@ -70,6 +70,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         referencia: data.endereco[0]?.referencia,
         ativo: data.endereco[0]?.ativo,
         clienteId: data.endereco[0]?.clienteId,
+        bairro: data.endereco[0]?.bairro,
       }
     ]
   };
@@ -202,7 +203,7 @@ export default function Cliente({ cliente }: ClienteProps) {
                 <input className={styles.inputCurto} name="cidade" defaultValue={cliente.endereco[0]?.cidade} {...register("endereco.0.cidade")} required /><br />
               </label>
               <label >Bairro* <br />
-                <input type="text" className={styles.inputCurto} name="bairro" />
+                <input type="text" className={styles.inputCurto} name="bairro"  defaultValue={cliente.endereco[0]?.bairro} {...register("endereco.0.bairro")} required/>
               </label>
             </div>
             <div>
