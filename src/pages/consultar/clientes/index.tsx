@@ -9,6 +9,7 @@ type Clientes = {
   id: number,
   nome: string,
   tCelular: string,
+  tFixo: string,
   ativo: number,
 }
 type HomeProps = {
@@ -22,6 +23,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     return {
       nome: clientes.nome,
       tCelular: clientes.tCelular,
+      tFixo: clientes.tFixo,
       id: clientes.id,
       ativo: clientes.ativo
     }
@@ -41,24 +43,28 @@ export default function ConsultarCliente({ clientes }: HomeProps) {
     <>
       <NavMenu1 />
       <div className={styles.div}>
-                
+
         <h3>Lista de Clientes:</h3>
 
         <div className={styles.lista}>
           <ul>
-          {clientesList.map(clientes => {
+            {clientesList.map(clientes => {
               return (
-              <div key={clientes.id} className={styles.repo}>
-                <strong >{clientes.nome}</strong>
-                <strong >{VMasker.toPattern(clientes.tCelular, "(99) 99999-9999")}</strong>
-                <strong className={clientes.ativo == 1 ? styles.on : styles.off}>{clientes.ativo==1? '✅' : '🚫'}</strong>
-                <Link href={`clientes/${clientes.id}`}>🔍</Link>
-              </div>
+                <div key={clientes.id} className={styles.repo}>
+                  <strong >{clientes.nome}</strong>
+                  <strong >{
+                    !!clientes.tCelular ?
+                      VMasker.toPattern((clientes.tCelular), "(99) 99999-9999") :
+                      VMasker.toPattern((clientes.tFixo), "(99) 9999-9999")
+                  }</strong>
+                  <strong className={clientes.ativo == 1 ? styles.on : styles.off}>{clientes.ativo == 1 ? '✅' : '🚫'}</strong>
+                  <Link href={`clientes/${clientes.id}`}>🔍</Link>
+                </div>
               )
             })}
           </ul>
         </div>
-        
+
       </div>
     </>
 
