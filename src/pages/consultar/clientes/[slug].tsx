@@ -50,10 +50,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const cliente = {
     id: data.id,
     nome: data.nome,
-    tCelular: !!data.tCelular ? VMasker.toPattern(data.tCelular, "(99) 99999-9999"):null,
-    tFixo: !!data.tFixo ? VMasker.toPattern(data.tFixo, "(99) 9999-9999") : null,
+    tCelular: data.tCelular,
+    tFixo: data.tFixo,
     cpf: VMasker.toPattern(data.cpf, "999.999.999-99"),
-    dtNascimento: !!data.dtNascimento ? format(parseISO(data.dtNascimento), 'yyyy-MM-dd'):null,
+    dtNascimento: !!data.dtNascimento ? format(parseISO(data.dtNascimento), 'yyyy-MM-dd') : null,
     genero: data.genero,
     email: data.email,
     ativo: data.ativo,
@@ -86,7 +86,7 @@ export default function Cliente({ cliente }: ClienteProps) {
   const { register, handleSubmit } = useForm<Cliente>();
   const onSubmit = handleSubmit(async (values) => {
     setLoading(true)
-    values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
+    values.tCelular = !!values.tCelular ? VMasker.toPattern(values.tCelular, "99999999999") : null
     values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
     values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
     values.cpf = VMasker.toPattern(cliente.cpf, "99999999999")
@@ -113,7 +113,7 @@ export default function Cliente({ cliente }: ClienteProps) {
     setLoading(false)
   })
 
-  const [tel, setTel] = useState(cliente.tCelular)
+  const [tel, setTel] = useState(!!cliente.tCelular ? cliente.tCelular : '')
   useEffect(() => {
     setTel(VMasker.toPattern(tel, "(99) 9 9999-9999"))
   }, [tel])
@@ -148,7 +148,7 @@ export default function Cliente({ cliente }: ClienteProps) {
             <br />
             <div>
               <label>Telefone celular*  <br />
-                <input className={styles.inputCurto} name="tCelular" {...register("tCelular")} onChange={e => setTel(e.target.value)} value={tel} required autoComplete="off" /><br />
+                <input className={styles.inputCurto} name="tCelular" {...register("tCelular")} onChange={e => setTel(e.target.value)} value={tel} autoComplete="off" /><br />
               </label>
               <label>Telefone fixo<br />
                 <input className={styles.inputCurto} name="tFixo" maxLength={14} {...register("tFixo")} onChange={e => setTelFixo(e.target.value)} value={telFixo} /><br />

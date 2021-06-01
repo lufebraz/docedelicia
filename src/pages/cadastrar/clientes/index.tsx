@@ -55,7 +55,7 @@ export default function Cadastrar() {
   const [endereco, setEndereco] = useState<Endereco>({} as Endereco)
   const onSubmit = handleSubmit(async (values) => {
     setLoading(true);
-    values.tCelular = VMasker.toPattern(values.tCelular, "99999999999")
+    values.tCelular = !!values.tCelular ? VMasker.toPattern(values.tCelular, "99999999999") : null
     values.tFixo = !!values.tFixo ? VMasker.toPattern(values.tFixo, "9999999999") : null
     values.endereco[0].cep = VMasker.toPattern(values.endereco[0].cep, "99999999")
     values.cpf = VMasker.toPattern(values.cpf, "99999999999")
