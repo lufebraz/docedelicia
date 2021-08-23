@@ -176,7 +176,7 @@ export default function Produtos({ fabricantes, formatos, recheios }: HomeProps)
               {recheiosList.map((recheios, i) => {                
                 return (
                   <div key={recheios.id} className={styles.spaceBtw}>
-                    <input value={recheios.id} type="checkbox" {...register(`produtoRecheio.${i}.idRecheio` )} ></input>
+                    <input value={recheios.id} type="checkbox" {...register(`produtoRecheio.${i}.idRecheio` as const)} ></input>
                     <label > {recheios.nome}</label>
                   </div>
                 )
@@ -188,7 +188,7 @@ export default function Produtos({ fabricantes, formatos, recheios }: HomeProps)
               {formatosList.map((formatos , i) => {
                 return (
                   <div key={formatos.id} className={styles.spaceBtw}>
-                    <input value={formatos.id} type="checkbox" {...register(`produtoFormato.${i}.idFormato`)}></input>
+                    <input value={formatos.id} type="checkbox" {...register(`produtoFormato.${i}.idFormato` as const)}></input>
                     <label > {formatos.nome}</label>
                   </div>
                 )

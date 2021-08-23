@@ -201,7 +201,7 @@ export default function Produtos({ produto, fabricante, formatos, recheios }: Ho
                 return (
 
                   <div key={recheios.id} className={styles.spaceBtw}>
-                    <input value={recheios.id} type="checkbox" {...register(`produtoRecheio.${i}.idRecheio`)}
+                    <input value={recheios.id} type="checkbox" {...register(`produtoRecheio.${i}.idRecheio` as const)}
                       defaultChecked={
                         !!produto.produtoRecheio.find(e => e.idRecheio === recheios.id)
                       } ></input>
@@ -216,7 +216,7 @@ export default function Produtos({ produto, fabricante, formatos, recheios }: Ho
               {formatosList.map((formatos, i) => {
                 return (
                   <div key={formatos.id} className={styles.spaceBtw}>
-                    <input value={formatos.id} type="checkbox" {...register(`produtoFormato.${i}.idFormato`)}
+                    <input value={formatos.id} type="checkbox" {...register(`produtoFormato.${i}.idFormato` as const)}
                     defaultChecked={
                       !!produto.produtoFormato.find(e => e.idFormato === formatos.id)
                     } ></input>
