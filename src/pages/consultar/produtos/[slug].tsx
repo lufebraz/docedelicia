@@ -13,16 +13,24 @@ type Produto = {
   id: number,
   nome: string,
   descricao: string,
-  recheio: string,
   tipoUnidade: string,
   categoria: string,
-  formato: string,
   fabricanteId: number,
   fabricante: string,
   preco: number,
   ativo: number,
+  produtoRecheio: { idRecheio: number }[],
+  produtoFormato: { idFormato: number }[],
 }
 
+type Recheios = {
+  nome: string;
+  id: number;
+}
+type Formatos = {
+  nome: string;
+  id: number;
+}
 type Fabricantes = {
   id: number,
   nome: string,
@@ -31,6 +39,8 @@ type Fabricantes = {
 type HomeProps = {
   produto: Produto;
   fabricante: Fabricantes[];
+  formatos: Formatos[];
+  recheios: Recheios[];
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -44,12 +54,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     descricao: data.descricao,
     tipoUnidade: data.tipoUnidade,
     categoria: data.categoria,
-    formato: data.formato,
-    recheio: data.recheio,
     preco: data.preco,
     ativo: data.ativo,
     fabricante: data.fabricante.nome,
-    fabricanteId: data.fabricanteId
+    fabricanteId: data.fabricanteId,
+    produtoFormato: data.produtoFormato,
+    produtoRecheio: data.produtoRecheio,
   }
 
   const res = await fetch(`https://docedelicia.herokuapp.com/api/fabricante/ativos`)
@@ -62,22 +72,51 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   });
 
+  const res1 = await fetch(`https://docedelicia.herokuapp.com/api/formato/ativos`)
+  const data2 = await res1.json()
+  const formatos = data2.map(formato => {
+    return {
+      id: formato.id,
+      nome: formato.nome
+    }
+  });
+
+  const res2 = await fetch(`https://docedelicia.herokuapp.com/api/recheio/ativos`)
+  const data3 = await res2.json()
+  const recheios = data3.map(recheio => {
+    return {
+      id: recheio.id,
+      nome: recheio.nome
+    }
+  });
 
   return {
     props: {
+      formatos,
+      recheios,
       produto,
       fabricante
     },
   }
 }
 
-export default function Produtos({ produto, fabricante }: HomeProps) {
+export default function Produtos({ produto, fabricante, formatos, recheios }: HomeProps) {
   const fabricanteList = [...fabricante];
+  const formatosList = [...formatos]
+  const recheiosList = [...recheios]
 
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm<Produto>();
   const onSubmit = handleSubmit(async (values) => {
     setLoading(true)
+    values.produtoRecheio = 
+    values.produtoRecheio.filter(i => {
+      if(!!i.idRecheio) return i.idRecheio
+    })
+    values.produtoFormato = 
+    values.produtoFormato.filter(i => {
+      if(!!i.idFormato) return i.idFormato
+    })
     await axios({
       method: 'PUT',
       url: `https://docedelicia.herokuapp.com/api/produto/${produto.id}`,
@@ -157,22 +196,36 @@ export default function Produtos({ produto, fabricante }: HomeProps) {
           </div>
           <div className={styles.formgroup}>
             <div className={styles.formitem}>
+              <label >Recheios:</label>
+              {recheiosList.map((recheios, i) => {
+                return (
 
-              <label >Recheio:</label>
-              <input type="text" {...register('recheio')} defaultValue={produto?.recheio} />
+                  <div key={recheios.id} className={styles.spaceBtw}>
+                    <input value={recheios.id} type="checkbox" {...register(`produtoRecheio.${i}.idRecheio`)}
+                      defaultChecked={
+                        !!produto.produtoRecheio.find(e => e.idRecheio === recheios.id)
+                      } ></input>
+                    <label > {recheios.nome}</label>
+                  </div>
+                )
+              })}
             </div>
 
             <div className={styles.formitem}>
+              <label >Formatos: </label>
+              {formatosList.map((formatos, i) => {
+                return (
+                  <div key={formatos.id} className={styles.spaceBtw}>
+                    <input value={formatos.id} type="checkbox" {...register(`produtoFormato.${i}.idFormato`)}
+                    defaultChecked={
+                      !!produto.produtoFormato.find(e => e.idFormato === formatos.id)
+                    } ></input>
+                    <label > {formatos.nome}</label>
+                  </div>
+                )
+              })}
 
-              <label >Formato: </label>
-              <select name="formato" {...register('formato')} defaultValue={produto?.formato}>
-                <option value="">-</option>
-                <option value="redondo">Redondo</option>
-                <option value="retangular">Retangular</option>
-                <option value="personalizado">Personalizado</option>
-              </select>
             </div>
-
           </div>
           <label >Fabricante: </label>
 
