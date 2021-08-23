@@ -9,23 +9,33 @@ import Link from 'next/link';
 import { useState } from 'react';
 import SyncLoader from 'react-spinners/SyncLoader';
 
-
 type Produto = {
   nome: string,
   descricao: string,
-  recheio: string,
   tipoUnidade: string,
   categoria: string,
-  formato: string,
-  fabricanteId: string,
   preco: number,
   ativo: number
+  fabricanteId: string,
+  produtoRecheio: { idRecheio: number }[],
+  produtoFormato: { idFormato: number }[],
 }
+
 type Fabricantes = {
   nome: string;
   id: number;
 }
+type Recheios = {
+  nome: string;
+  id: number;
+}
+type Formatos = {
+  nome: string;
+  id: number;
+}
 type HomeProps = {
+  formatos: Formatos[];
+  recheios: Recheios[];
   fabricantes: Fabricantes[];
 }
 
@@ -35,29 +45,58 @@ export const getServerSideProps: GetServerSideProps = async () => {
       _sort: 'nome',
       _order: 'asc',
     }
-  })
-
-  const fabricantes = data.map(fabricantes => {
+  });
+  const fabricantes = data.map(fabricante => {
     return {
-      nome: fabricantes.nome,
-      id: fabricantes.id,
+      nome: fabricante.nome,
+      id: fabricante.id,
+    }
+  });
+
+  const res = await fetch(`https://docedelicia.herokuapp.com/api/recheio/ativos`)
+  const data1 = await res.json()
+  const recheios = data1.map(recheio => {
+    return {
+      id: recheio.id,
+      nome: recheio.nome
+    }
+  });
+
+  const res1 = await fetch(`https://docedelicia.herokuapp.com/api/formato/ativos`)
+  const data2 = await res1.json()
+  const formatos = data2.map(formato => {
+    return {
+      id: formato.id,
+      nome: formato.nome
     }
   });
 
   return {
     props: {
+      formatos,
+      recheios,
       fabricantes
     }
   }
 }
 
-export default function Produtos({ fabricantes }: HomeProps) {
+export default function Produtos({ fabricantes, formatos, recheios }: HomeProps) {
   const fabricantesList = [...fabricantes]
+  const formatosList = [...formatos]
+  const recheiosList = [...recheios]
   const [loading, setLoading] = useState(false);
 
   const { register, handleSubmit } = useForm<Produto>();
   const onSubmit = handleSubmit(async (values) => {
     setLoading(true)
+    values.produtoRecheio = 
+    values.produtoRecheio.filter(i => {
+      if(!!i.idRecheio) return i.idRecheio
+    })
+    values.produtoFormato = 
+    values.produtoFormato.filter(i => {
+      if(!!i.idFormato) return i.idFormato
+    })
     await axios({
       method: 'POST',
       url: 'https://docedelicia.herokuapp.com/api/produto',
@@ -69,9 +108,9 @@ export default function Produtos({ fabricantes }: HomeProps) {
         Router.push(`/consultar/produtos/`)
       }
     })
-    .catch(function (response) {
-      alert('Produto não cadastrado!');
-    });
+      .catch(function (response) {
+        alert('Produto não cadastrado!');
+      });
     setLoading(false)
   })
 
@@ -134,49 +173,27 @@ export default function Produtos({ fabricantes }: HomeProps) {
 
             <div className={styles.formitem}>
               <label >Recheios:</label>
-              <input type="text" {...register('recheio')} />
-              {/* <div>
-                <input type="checkbox" name="nutella" {...register('recheio')} />
-                <label htmlFor="nutella" >Nutella</label>
-              </div>
-              <div>
-                <input type="checkbox" name="chocolate" {...register('recheio')} />
-                <label >Chocolate</label>
-              </div>
-              <div>
-                <input type="checkbox" name="morango" {...register('recheio')} />
-                <label >Morango</label>
-              </div>
-              <div>
-                <input type="checkbox" name="coco" {...register('recheio')} />
-                <label >Coco</label>
-              </div>
-              <div>
-                <input type="checkbox" name="amendoim" {...register('recheio')} />
-                <label >Amendoim</label>
-              </div> */}
+              {recheiosList.map((recheios, i) => {                
+                return (
+                  <div key={recheios.id} className={styles.spaceBtw}>
+                    <input value={recheios.id} type="checkbox" {...register(`produtoRecheio.${i}.idRecheio` as const)} ></input>
+                    <label > {recheios.nome}</label>
+                  </div>
+                )
+              })}
             </div>
 
             <div className={styles.formitem}>
               <label >Formatos: </label>
-              <select name="formato" {...register('formato')}>
-                <option value="">-</option>
-                <option value="redondo">redondo</option>
-                <option value="retangular">retangular</option>
-                <option value="personalizado">personalizado</option>
-              </select>
-              {/* <div>
-                <input type="checkbox" name="redondo" {...register('formato')} />
-                <label >Redondo</label>
-              </div>
-              <div>
-                <input type="checkbox" name="retangular" {...register('formato')} />
-                <label >Retangular</label>
-              </div>
-              <div>
-                <input type="checkbox" name="personalizado" {...register('formato')} />
-                <label >Personalizado</label>
-              </div> */}
+              {formatosList.map((formatos , i) => {
+                return (
+                  <div key={formatos.id} className={styles.spaceBtw}>
+                    <input value={formatos.id} type="checkbox" {...register(`produtoFormato.${i}.idFormato` as const)}></input>
+                    <label > {formatos.nome}</label>
+                  </div>
+                )
+              })}
+
             </div>
 
           </div>
@@ -188,11 +205,11 @@ export default function Produtos({ fabricantes }: HomeProps) {
             })}
           </select>
           <div className={styles.formgroup}>
-          {loading ? <SyncLoader color="#4979FF" size="11" /> :
-                <>
-              <input type="submit" value="Cadastrar" className={styles.button} />
-              <button className={styles.button}><Link href="/">Cancelar</Link></button>
-            </>
+            {loading ? <SyncLoader color="#4979FF" size="11" /> :
+              <>
+                <input type="submit" value="Cadastrar" className={styles.button} />
+                <button className={styles.button}><Link href="/">Cancelar</Link></button>
+              </>
             }
           </div>
         </form>

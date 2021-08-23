@@ -42,8 +42,8 @@ type Endereco = {
 
 
 export default function Cadastrar() {
-  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm<Cliente>();
+  const [loading, setLoading] = useState(false);
   const [tel, setTel] = useState('')
   const [cpf, setCpf] = useState('')
   const [cep, setCep] = useState('')
@@ -53,6 +53,8 @@ export default function Cadastrar() {
   const [localidade, setLocalidade] = useState('')
   const [logradouro, setLogradouro] = useState('')
   const [endereco, setEndereco] = useState<Endereco>({} as Endereco)
+  
+  
   const onSubmit = handleSubmit(async (values) => {
     setLoading(true);
     values.tCelular = !!values.tCelular ? VMasker.toPattern(values.tCelular, "99999999999") : null
