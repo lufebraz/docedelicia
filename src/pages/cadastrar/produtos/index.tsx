@@ -8,8 +8,6 @@ import { heroku } from '../../../services/api';
 import Link from 'next/link';
 import { useState } from 'react';
 import SyncLoader from 'react-spinners/SyncLoader';
-import id from 'date-fns/esm/locale/id/index.js';
-
 
 type Produto = {
   nome: string,
@@ -19,8 +17,8 @@ type Produto = {
   preco: number,
   ativo: number
   fabricanteId: string,
-  produtoRecheio: { idRecheio: string }[],
-  produtoFormato: { idFormato: string }[],
+  produtoRecheio: { idRecheio: number }[],
+  produtoFormato: { idFormato: number }[],
 }
 
 type Fabricantes = {
