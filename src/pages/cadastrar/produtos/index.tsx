@@ -165,6 +165,7 @@ export default function Produtos({ fabricantes, formatos, recheios }: HomeProps)
                 <option value="doces">Doces</option>
                 <option value="topo">Topo</option>
                 <option value="sobremesas">Sobremesas</option>
+                <option value="kit">Kit Festa</option>
               </select>
 
             </div>

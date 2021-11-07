@@ -15,7 +15,7 @@ type HomeProps = {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await heroku.get('produto')
+  const { data } = await heroku.get('produto/')
 
   const produtos = data.map(produtos => {
     return {

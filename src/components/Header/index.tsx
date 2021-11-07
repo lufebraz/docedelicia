@@ -24,8 +24,8 @@ export function Header() {
               <li><Link href="/">Home</Link></li>
               <li><Link href={`/cadastrar/clientes/`}>Cadastrar</Link>
                 <ul>
+                  <li><Link href={`/cadastrar/pedidos/`}>Pedidos</Link></li>
                   <li><Link href={`/cadastrar/clientes/`}>Clientes</Link></li>
-                  {/* <li><Link href={`/cadastrar/pedidos/pedido`}>Pedidos</Link></li> */}
                   <li><Link href={`/cadastrar/produtos/`}>Produtos</Link></li>
                   <li><Link href={`/cadastrar/fornecedores/`}>Fabricantes</Link></li>
                   {/* <li><Link href={`/cadastrar/entregadores/entregador`}>Entregador</Link></li> */}
@@ -35,8 +35,8 @@ export function Header() {
               </li>
               <li><Link href={`/consultar/clientes/`}>Consultar</Link>
                 <ul>
+                  <li><Link href={`/consultar/pedidos/`}>Pedidos</Link></li>
                   <li><Link href={`/consultar/clientes`}>Clientes</Link></li>
-                  {/* <li><Link href={`/consultar/pedidos/pedidos`}>Pedidos</Link></li> */}
                   <li><Link href={`/consultar/produtos`}>Produtos</Link></li>
                   {/* <li><Link href={`/consultar/fornecedores/fornecedores`}>Fornecedores</Link></li> */}
                   <li><Link href={`/consultar/fabricantes`}>Fabricantes</Link></li>

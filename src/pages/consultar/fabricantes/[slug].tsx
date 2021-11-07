@@ -18,7 +18,7 @@ type FabricanteProps = {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await heroku.get(`fabricante/${slug}`)
+  const { data } = await heroku.get(`fabricante/id/${slug}`)
 
   const fabricante = {
     id: data.id,
@@ -38,7 +38,7 @@ export default function Fabricante({ fabricante }: FabricanteProps) {
   const onSubmit = handleSubmit(async (values) => {
     await axios({
       method: 'PUT',
-      url: `https://docedelicia.herokuapp.com/api/fabricante/${fabricante.id}`,
+      url: `https://docedelicia.herokuapp.com/api/fabricante/id/${fabricante.id}`,
       headers: { 'Fabricante': 'dados do fabricante' },
       data: values
     })
