@@ -1,0 +1,28 @@
+{
+  "dtPrevista": "2021-11-19T01:36:15.283Z",
+  "desconto": 0,
+  "valorTotal": 0,
+  "clienteId": 0,
+  "enderecoId": 0,
+  "valorPago": 0,
+  "status": "string",
+  "itemPedido": [
+    {
+      "valorUnitario": 0,
+      "quantidade": 0,
+      "observacao": "string",
+      "idProduto": 0,
+      "status": "string",
+      "recheioItemPedido": [
+        {
+          "idRecheio": 0
+        }
+      ],
+	  "formatoItemPedido": [
+        {
+          "idFormato": 0
+        }
+      ]
+    }
+  ]
+}

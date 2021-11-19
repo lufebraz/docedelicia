@@ -7,7 +7,7 @@ import Link from 'next/link';
 type Produtos = {
   id: number,
   nome: string,
-  ativo: number, 
+  ativo: number,
 }
 
 type HomeProps = {
@@ -38,25 +38,25 @@ export default function ConsultarCliente({ produtos }: HomeProps) {
   return (
     <>
       <NavMenu1 />
-      <div>
-        <div className={styles.div}>
-          <h3>Lista de Produtos:</h3>
-          <br />
-          <div className={styles.lista}>
-            <ul>
-              {produtosList.map(produtos => {
-                return (
-                  <div key={produtos.id} className={styles.repo}>
-                    <strong>{produtos.nome}</strong>
-                    <strong className={produtos.ativo == 1 ? styles.on : styles.off}>{produtos.ativo == 1 ? '✅' : '🚫'}</strong>
-                    <Link href={`produtos/${produtos.id}`}>🔍</Link>
-                  </div>
-                )
-              })}
-            </ul>
-          </div>
+
+      <div className={styles.div}>
+        <h3>Lista de Produtos:</h3>
+        <br />
+        <div className={styles.lista}>
+          <ul>
+            {produtosList.map(produtos => {
+              return (
+                <div key={produtos.id} className={styles.repo}>
+                  <strong>{produtos.nome}</strong>
+                  <strong className={produtos.ativo == 1 ? styles.on : styles.off}>{produtos.ativo == 1 ? '✅' : '🚫'}</strong>
+                  <Link href={`produtos/${produtos.id}`}>🔍</Link>
+                </div>
+              )
+            })}
+          </ul>
         </div>
       </div>
+
     </>
   )
 }
