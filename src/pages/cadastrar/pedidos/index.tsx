@@ -3,8 +3,10 @@ import { useState } from "react";
 import Modal from "../../../components/Modal";
 import { NavMenu } from "../../../components/NavBar";
 import styles from './styles.module.scss';
-import stylesLista from '../../../components/Modal/styles.module.scss'
-import { parse } from "path";
+import { SyncLoader } from "react-spinners";
+import Link from 'next/link';
+import { useForm } from "react-hook-form";
+import  Router  from "next/router";
 
 type Cliente = {
 
@@ -56,7 +58,7 @@ type itemPedido = {
   nome: string;
   idProduto: number;
   valorUnitario: string;
-  quantidade: string;
+  quantidade: number;
   observacao: string;
   preco: number;
   recheioItemPedido: [
@@ -73,11 +75,12 @@ type itemPedido = {
 }
 
 export default function Pedido() {
+  
+  const { register, handleSubmit } = useForm<Cliente>();
   const [listagemCliente, setListagemCliente] = useState(true)
 
   const [dataCliente, setDataCliente] = useState<Cliente[]>([])
   const [dataProduto, setDataProduto] = useState<Produto[]>([])
-
 
   const [show, setShow] = useState(false)
   const [header, setHeader] = useState('');
@@ -90,8 +93,39 @@ export default function Pedido() {
   const [quantidade, setQuantidade] = useState('1')
 
   const [compra, setCompra] = useState<itemPedido>({} as itemPedido)
-  const [listaPedidos, setlistaPedidos] = useState<itemPedido[]>([])
+  const [listaPedidos, setListaPedidos] = useState<itemPedido[]>([])
 
+  const [loading, setLoading] = useState(false);
+
+
+  function enviar() {
+    setLoading(true);
+    console.log(cliente.id)
+    var pedido : Pedido = ({} as Pedido);
+    pedido.clienteId = cliente.id;
+    pedido.itemPedido = listaPedidos
+    console.log(pedido)
+    // await axios({
+    //   method: 'POST',
+    //   url: 'https://docedelicia.herokuapp.com/api/cliente',
+    //   headers: { 'Cliente': 'dados do cliente' },
+    //   data: values
+    // })
+    //   .then(function (response) {
+    //     if (response.status === 200) {
+    //       alert('Cliente cadastrado!!');
+    //       Router.push(`/consultar/clientes`)
+    //     }
+    //   })
+    //   .catch(function (response) {
+    //     console.log(response.data)
+    //     console.log(response.message)
+    //     console.log(response.status)
+    //     console.log(response)
+    //     alert('Cliente não cadastrado! Verificar campos' + response);
+    //   });
+    setLoading(false)
+  }
 
   async function buscarCliente() {
     await fetch(`https://docedelicia.herokuapp.com/api/cliente/nome/${nomeCliente}/true`)
@@ -105,7 +139,7 @@ export default function Pedido() {
       .then(data => listaProdutos(data))
       .catch(function (error) { alert('não encontrado') })
   }
-
+  
   function listaClientes(data) {
     if (data.length == 0) {
       alert('Nenhum cliente encontrado')
@@ -148,15 +182,36 @@ export default function Pedido() {
 
   function adicionarCarrinho() {
     if (produto.id != undefined) {
-      compra.idProduto = produto.id
-      compra.nome = produto.nome
-      compra.quantidade = parseInt(quantidade) < 1 ? '1' : quantidade
-      compra.preco = produto.preco
-      
-      setlistaPedidos([...listaPedidos, compra])
 
-      setCompra({} as itemPedido)
+      if (listaPedidos.find(e => e.idProduto == produto.id)) {
+        console.log("entrou")
+
+        var lista: any = []
+
+        listaPedidos.forEach((e) => {
+          if (e.idProduto == produto.id) {
+            e.quantidade += parseInt(quantidade);
+          }
+          lista.push(e)
+        })
+
+        setListaPedidos(lista)
+      } else {
+
+        compra.idProduto = produto.id
+        compra.nome = produto.nome
+        compra.quantidade = parseInt(quantidade) < 1 ? 1 : parseInt(quantidade)
+        compra.preco = produto.preco
+
+        setListaPedidos([...listaPedidos, compra])
+
+        setCompra({} as itemPedido)
+      }
     }
+  }
+
+  function removerProduto(id) {
+    setListaPedidos(listaPedidos.filter(element => element.idProduto != id))
   }
 
   return (
@@ -216,16 +271,26 @@ export default function Pedido() {
             listaPedidos.map(item => {
               return (
 
-                <div key={item.idProduto} className={stylesLista.lista}>
-                  <p>nome: {item.nome}</p>
+                <div key={item.idProduto} className={styles.lista}>
+                  <p> - {item.nome}</p>
                   <p> quantidade: {item.quantidade}</p>
-                  <p> valor: {parseInt(item.quantidade) * item.preco}</p>
+                  <p> valor: {(item.quantidade * item.preco).toFixed(2)}</p>
+                  <p onClick={() => removerProduto(item.idProduto)}>❌</p>
                 </div>
               )
 
             })
           }
+          <div className={styles.buttons}>
+              {loading ? <SyncLoader color="#4979FF" size="11" /> :
+                <>
+                  <button type="button" onClick={enviar} >Salvar</button>
+                  <Link href="/"><button>Cancelar</button></Link>
+                </>
+              }
+            </div>
         </div>
+
       </div>
     </main>
   )
