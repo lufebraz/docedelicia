@@ -68,26 +68,21 @@ type Pedido = {
 }
 type itemPedido = {
 
-  nome: string;
   idProduto: number;
   quantidade: number;
+  status: string
   observacao: string;
+
+  nome: string;
   preco: number;
-  valorUnitario: number;
   recheioItemPedido: [
     {
       idRecheio: string;
-      recheio: {
-        nome: string
-      }
     }
   ]
   formatoItemPedido: [
     {
       idFormato: string;
-      formato: {
-        nome: string
-      }
     }
   ]
 
@@ -107,7 +102,6 @@ export default function Pedido() {
   const [cliente, setCliente] = useState<Cliente>({} as Cliente)
   const [produto, setProduto] = useState<Produto>({} as Produto)
 
-  const [tipoUnidade, setTipoUnidade] = useState('')
   const [quantidade, setQuantidade] = useState('1')
 
   const [compra, setCompra] = useState<itemPedido>({} as itemPedido)
@@ -118,19 +112,21 @@ export default function Pedido() {
   const [time, setTime] = useState('')
   const [date, setDate] = useState(new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate())
 
-  const [valorPago, setValorPago] = useState('')
+  const [valorPago, setValorPago] = useState('0')
 
+  const [formato, setFormato] = useState(null)
+  const [recheio, setRecheio] = useState(null)
 
   function enviar() {
     setLoading(true);
+
     var pedido: Pedido = ({} as Pedido);
     pedido.clienteId = cliente.id;
-    pedido.itemPedido = listaPedidos
+    pedido.itemPedido = listaPedidos // fazer forEach para tirar os recheio e formatos duplicados
     pedido.dtPrevista = date + 'T' + time
     pedido.valorPago = parseFloat(valorPago)
     pedido.enderecoId = 1
-    
-  
+
     console.log(JSON.stringify(pedido))
 
     axios({
@@ -191,7 +187,6 @@ export default function Pedido() {
       setHeader("Produtos encontrados: ")
     } else {
       setProduto(data[0])
-      setTipoUnidade(data[0].tipoUnidade)
     }
   }
 
@@ -199,12 +194,11 @@ export default function Pedido() {
     setShow(false)
   }
 
-  function setData(props) {
+  async function setData(props) {
     if (listagemCliente) {
       setCliente(dataCliente.find(e => e.id == props))
     } else {
-      setProduto(dataProduto.find(e => e.id == props))
-      setTipoUnidade(produto.tipoUnidade)
+      await setProduto(dataProduto.find(e => e.id == props))
     }
   }
 
@@ -230,13 +224,17 @@ export default function Pedido() {
         compra.nome = produto.nome
         compra.quantidade = parseFloat(quantidade) < 1 ? 1 : parseFloat(quantidade)
         compra.preco = produto.preco
-        compra.formatoItemPedido = produto.produtoFormato
-        compra.recheioItemPedido = produto.produtoRecheio
-        compra.valorUnitario = 0
+
+        formato == null ? null : compra.formatoItemPedido = [{idFormato: formato}]        
+        recheio == null ? null : compra.recheioItemPedido = [{idRecheio: recheio}]
+
+        compra.status = "Confirmado"
 
         setListaPedidos([...listaPedidos, compra])
 
         setCompra({} as itemPedido)
+        setRecheio(null)
+        setFormato(null)
       }
     }
   }
@@ -245,6 +243,7 @@ export default function Pedido() {
     setListaPedidos(listaPedidos.filter(element => element.idProduto != id))
   }
 
+ 
   return (
     <main>
       <Modal header={header} show={show} clicked={() => closeModal()}
@@ -288,10 +287,39 @@ export default function Pedido() {
             <input type="text" value={produto.nome} />
             <label>descrição:</label>
             <input type="text" value={produto.descricao} />
-
-            <label>quantidade em {tipoUnidade}: </label>
+            <label >preço por {produto.tipoUnidade}: </label>
+            <input type="text" value={produto.preco} />
+            <label>quantidade em {produto.tipoUnidade}: </label>
             <input type="number" min={1} value={quantidade} onChange={e => setQuantidade(e.target.value)} />
+            {
+              produto.produtoRecheio?.length > 0 ?
+                <div>
 
+                  <label>recheio: </label>
+                  <select value={recheio} onChange={(e) => setRecheio(e.target.value)}>
+                    <option value="0"></option>
+                    {produto.produtoRecheio.map(element => {
+                      return (
+                        <option value={element.idRecheio} >{element.recheio.nome}</option>
+                      )
+                    })}
+                  </select>
+                </div> : null
+            }
+            {
+              produto.produtoFormato?.length > 0 ?
+                <div>
+                  <label>formato: </label>
+                  <select value={formato} onChange={(e) => setFormato(e.target.value)}>
+                    <option value="0"></option>
+                    {produto.produtoFormato.map(element => {
+                      return (
+                        <option value={element.idFormato} >{element.formato.nome}</option>
+                      )
+                    })}
+                  </select>
+                </div> : null
+            }
 
             <button className={styles.adicionar} onClick={adicionarCarrinho}>adicionar!</button>
           </div>
@@ -304,40 +332,22 @@ export default function Pedido() {
 
                 <div key={item.idProduto} className={styles.lista}>
                   <p> - {item.nome}</p>
-                  <p> quantidade: {item.quantidade}</p>
+                  <p> qnt: {item.quantidade}</p>
                   <p> valor: {(item.quantidade * item.preco).toFixed(2)}</p>
-                  {item.recheioItemPedido.length > 0 ?
+                  {/* {item.recheioItemPedido.length > 0 ?
                     <div>
                       <label >recheio: </label>
-                      <select>
-                        {
-                          item.recheioItemPedido.map((formato, index) => {
-                            return (
-                              <option value={item.recheioItemPedido[index].idRecheio}>{item.recheioItemPedido[index].recheio.nome}</option>
-                            )
-                          })
-                        }
-
-                      </select>
+                      <input type="text" value={item.recheioItemPedido[0].nomeRecheio} />
                     </div>
-                    : <p>-</p>
+                    : <p>recheio: -</p>
                   }
                   {item.formatoItemPedido.length > 0 ?
                     <div>
                       <label >formato: </label>
-                      <select>
-                        {
-                          item.formatoItemPedido.map((formato, index) => {
-                            return (
-                              <option value={item.formatoItemPedido[index].idFormato}>{item.formatoItemPedido[index].formato.nome}</option>
-                            )
-                          })
-                        }
-
-                      </select>
+                      <input type="text" value={item.formatoItemPedido[0].nomeFormato} />
                     </div>
-                    : <p>-</p>
-                  }
+                    : <p>formato: -</p>
+                  } */}
                   <p onClick={() => removerProduto(item.idProduto)}>❌</p>
                 </div>
               )
