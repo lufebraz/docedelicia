@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 import { SyncLoader } from "react-spinners";
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
-import  Router  from "next/router";
+import Router from "next/router";
 
 type Cliente = {
 
@@ -41,42 +41,60 @@ type Produto = {
   tipoUnidade: string,
   categoria: string,
   quantidade: string,
+  produtoRecheio: [
+    {
+      idRecheio: string;
+      recheio: {
+        nome: string
+      }
+    }
+  ]
+  produtoFormato: [
+    {
+      idFormato: string;
+      formato: {
+        nome: string
+      }
+    }
+  ]
 }
 
 type Pedido = {
   dtPrevista: string;
-  desconto: string;
-  valorTotal: number;
   clienteId: number;
-  enderecoId: 0;
-  valorPago: string;
-  status: string;
+  enderecoId: number; // so se for entrega
+  valorPago: number;
   itemPedido: itemPedido[]
 }
 type itemPedido = {
 
   nome: string;
   idProduto: number;
-  valorUnitario: string;
   quantidade: number;
   observacao: string;
   preco: number;
+  valorUnitario: number;
   recheioItemPedido: [
     {
       idRecheio: string;
+      recheio: {
+        nome: string
+      }
     }
   ]
   formatoItemPedido: [
     {
       idFormato: string;
+      formato: {
+        nome: string
+      }
     }
   ]
 
 }
 
 export default function Pedido() {
-  
-  const { register, handleSubmit } = useForm<Cliente>();
+
   const [listagemCliente, setListagemCliente] = useState(true)
 
   const [dataCliente, setDataCliente] = useState<Cliente[]>([])
@@ -97,33 +115,43 @@ export default function Pedido() {
 
   const [loading, setLoading] = useState(false);
 
+  const [time, setTime] = useState('')
+  const [date, setDate] = useState(new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate())
+
+  const [valorPago, setValorPago] = useState('')
+
 
   function enviar() {
     setLoading(true);
-    console.log(cliente.id)
-    var pedido : Pedido = ({} as Pedido);
+    var pedido: Pedido = ({} as Pedido);
     pedido.clienteId = cliente.id;
     pedido.itemPedido = listaPedidos
-    console.log(pedido)
-    // await axios({
-    //   method: 'POST',
-    //   url: 'https://docedelicia.herokuapp.com/api/cliente',
-    //   headers: { 'Cliente': 'dados do cliente' },
-    //   data: values
-    // })
-    //   .then(function (response) {
-    //     if (response.status === 200) {
-    //       alert('Cliente cadastrado!!');
-    //       Router.push(`/consultar/clientes`)
-    //     }
-    //   })
-    //   .catch(function (response) {
-    //     console.log(response.data)
-    //     console.log(response.message)
-    //     console.log(response.status)
-    //     console.log(response)
-    //     alert('Cliente não cadastrado! Verificar campos' + response);
-    //   });
+    pedido.dtPrevista = date + 'T' + time
+    pedido.valorPago = parseFloat(valorPago)
+    pedido.enderecoId = 1
+    
+  
+    console.log(JSON.stringify(pedido))
+
+    axios({
+      method: 'POST',
+      url: 'https://docedelicia.herokuapp.com/api/pedido',
+      headers: { 'pedido': 'dados do pedido' },
+      data: pedido
+    })
+      .then(function (response) {
+        if (response.status === 200) {
+          alert('pedido cadastrado!!');
+          Router.push(`/consultar/pedidos`)
+        }
+      })
+      .catch(function (response) {
+        console.log(response.data)
+        console.log(response.message)
+        console.log(response.status)
+        console.log(response)
+        alert('pedido não cadastrado! Verificar campos' + response);
+      });
     setLoading(false)
   }
 
@@ -139,7 +167,7 @@ export default function Pedido() {
       .then(data => listaProdutos(data))
       .catch(function (error) { alert('não encontrado') })
   }
-  
+
   function listaClientes(data) {
     if (data.length == 0) {
       alert('Nenhum cliente encontrado')
@@ -190,7 +218,7 @@ export default function Pedido() {
 
         listaPedidos.forEach((e) => {
           if (e.idProduto == produto.id) {
-            e.quantidade += parseInt(quantidade);
+            e.quantidade += parseFloat(quantidade);
           }
           lista.push(e)
         })
@@ -200,8 +228,11 @@ export default function Pedido() {
 
         compra.idProduto = produto.id
         compra.nome = produto.nome
-        compra.quantidade = parseInt(quantidade) < 1 ? 1 : parseInt(quantidade)
+        compra.quantidade = parseFloat(quantidade) < 1 ? 1 : parseFloat(quantidade)
         compra.preco = produto.preco
+        compra.formatoItemPedido = produto.produtoFormato
+        compra.recheioItemPedido = produto.produtoRecheio
+        compra.valorUnitario = 0
 
         setListaPedidos([...listaPedidos, compra])
 
@@ -266,7 +297,7 @@ export default function Pedido() {
           </div>
         </div>
         <div className={styles.div}>
-          <label htmlFor="">Pedido:</label>
+          <label htmlFor="">Pedido:  </label>
           {
             listaPedidos.map(item => {
               return (
@@ -275,20 +306,59 @@ export default function Pedido() {
                   <p> - {item.nome}</p>
                   <p> quantidade: {item.quantidade}</p>
                   <p> valor: {(item.quantidade * item.preco).toFixed(2)}</p>
+                  {item.recheioItemPedido.length > 0 ?
+                    <div>
+                      <label >recheio: </label>
+                      <select>
+                        {
+                          item.recheioItemPedido.map((formato, index) => {
+                            return (
+                              <option value={item.recheioItemPedido[index].idRecheio}>{item.recheioItemPedido[index].recheio.nome}</option>
+                            )
+                          })
+                        }
+
+                      </select>
+                    </div>
+                    : <p>-</p>
+                  }
+                  {item.formatoItemPedido.length > 0 ?
+                    <div>
+                      <label >formato: </label>
+                      <select>
+                        {
+                          item.formatoItemPedido.map((formato, index) => {
+                            return (
+                              <option value={item.formatoItemPedido[index].idFormato}>{item.formatoItemPedido[index].formato.nome}</option>
+                            )
+                          })
+                        }
+
+                      </select>
+                    </div>
+                    : <p>-</p>
+                  }
                   <p onClick={() => removerProduto(item.idProduto)}>❌</p>
                 </div>
               )
 
             })
           }
+          <label >data prevista para entrega</label>
+          <input type="date" min={date} value={date} onChange={e => setDate(e.target.value)} />
+          <input type="time" value={time} onChange={e => setTime(e.target.value)} />
+          <label >valor pago</label>
+          <input type="number" value={valorPago} onChange={e => setValorPago(e.target.value)} />
+          <br />
           <div className={styles.buttons}>
-              {loading ? <SyncLoader color="#4979FF" size="11" /> :
-                <>
-                  <button type="button" onClick={enviar} >Salvar</button>
-                  <Link href="/"><button>Cancelar</button></Link>
-                </>
-              }
-            </div>
+
+            {loading ? <SyncLoader color="#4979FF" size="11" /> :
+              <>
+                <button type="button" onClick={enviar} >Salvar</button>
+                <Link href="/"><button>Cancelar</button></Link>
+              </>
+            }
+          </div>
         </div>
 
       </div>

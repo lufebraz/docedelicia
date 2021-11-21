@@ -1,5 +1,5 @@
 {
-  "dtPrevista": "2021-11-19T01:36:15.283Z",
+  "dtPrevista": "2021-11-19T01:36",
   "desconto": 0,
   "valorTotal": 0,
   "clienteId": 0,
@@ -18,11 +18,36 @@
           "idRecheio": 0
         }
       ],
-	  "formatoItemPedido": [
+      "formatoItemPedido": [
         {
           "idFormato": 0
         }
       ]
     }
   ]
+}
+{
+  "clienteId": 2,
+  "itemPedido": [
+    {
+      "idProduto": 11,
+      "nome": "Torta de Frango",
+      "quantidade": 3,
+      "preco": 15,
+      "formatoItemPedido": [
+        {
+          "id": 11,
+          "ativo": 1,
+          "idFormato": 2,
+          "formato": {
+            "id": 2,
+            "nome": "Quadrado",
+            "ativo": 1
+          }
+        }
+      ]
+    }
+  ],
+  "dtPrevista": "2021-11-20T12:33",
+  "valorPago": 123
 }

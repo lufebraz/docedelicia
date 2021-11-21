@@ -30,6 +30,7 @@ type Recheios = {
 type Formatos = {
   nome: string;
   id: number;
+  ativo: number;
 }
 type Fabricantes = {
   id: number,
@@ -115,7 +116,7 @@ export default function Produtos({ produto, fabricante, formatos, recheios }: Ho
     })
     values.produtoFormato = 
     values.produtoFormato.filter(i => {
-      if(!!i.idFormato) return i.idFormato
+      if(!!i.idFormato) return (i.idFormato)
     })
     await axios({
       method: 'PUT',
