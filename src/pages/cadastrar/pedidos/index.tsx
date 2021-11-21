@@ -116,6 +116,7 @@ export default function Pedido() {
 
   const [formato, setFormato] = useState(null)
   const [recheio, setRecheio] = useState(null)
+  const [observacao, setObservacao] = useState('')
 
   function enviar() {
     setLoading(true);
@@ -229,6 +230,7 @@ export default function Pedido() {
         recheio == null ? null : compra.recheioItemPedido = [{idRecheio: recheio}]
 
         compra.status = "Confirmado"
+        compra.observacao = observacao
 
         setListaPedidos([...listaPedidos, compra])
 
@@ -291,6 +293,8 @@ export default function Pedido() {
             <input type="text" value={produto.preco} />
             <label>quantidade em {produto.tipoUnidade}: </label>
             <input type="number" min={1} value={quantidade} onChange={e => setQuantidade(e.target.value)} />
+            <label >Observações: </label>
+            <input type="text" value={observacao} onChange={e => setObservacao(e.target.value)}/>
             {
               produto.produtoRecheio?.length > 0 ?
                 <div>
@@ -348,7 +352,7 @@ export default function Pedido() {
                     </div>
                     : <p>formato: -</p>
                   } */}
-                  <p onClick={() => removerProduto(item.idProduto)}>❌</p>
+                  <p onClick={() => removerProduto(item.idProduto)}>🗑️</p>
                 </div>
               )
 
