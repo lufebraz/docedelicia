@@ -3,12 +3,13 @@ import { NavMenu1 } from "../../../components/NavBar";
 import { heroku } from "../../../services/api";
 import styles from './styles.module.scss';
 import Link from 'next/link';
+import VMasker from "vanilla-masker";
 
 type Pedido = {
   id: number,
   status: string,
   valorTotal: number,
-  dtPrevista: Date,
+  dtPrevista: string,
   cliente: {
     nome: string,
     tCelular: string,
@@ -49,26 +50,30 @@ export default function ConsultarPedidos({ pedidos }: HomeProps) {
       <div className={styles.div}>
 
         <h2>Lista de Pedidos:</h2>
-        <div className={styles.lista}>
-          {pedidosList.map(pedido => {
-            return (
-              <div key={pedido.id} className={styles.repo}>
-                <div>        
-                        
-                  <strong className={ (pedido.status === "Pagamento confirmado")? styles.on : styles.off}>Status:  {pedido.status}</strong>
-                  <strong>Nome Cliente: {pedido.cliente.nome}</strong>
-                </div>
-                <div>
+        <div >
+          <table className={styles.listagem}>
+            <th>Status: </th>
+            <th>Nome do Cliente:</th>
+            <th>Valor Total:</th>
+            <th>Telefone:</th>
+            <th>Data prevista:</th>
+            <th></th>
+            {pedidosList.map(pedido => {
+              return (
+                <tr key={pedido.id} >
+                  <td className={(pedido.status === "Pagamento confirmado") ? styles.on : styles.off}>{pedido.status}</td>
+                  <td>{pedido.cliente.nome}</td>
+                  <td>R$ {pedido.valorTotal}</td>
+                  <td>{!!pedido.cliente.tCelular ? VMasker.toPattern(pedido.cliente.tCelular, "(99) 99999-9999") : VMasker.toPattern(pedido.cliente.tFixo, "(99) 9999-9999")}</td>
+                  <td>{pedido.dtPrevista.substring(10, 8)+"/"+pedido.dtPrevista.substring(5, 7)+"/"+pedido.dtPrevista.substring(4, 0)}</td>
+                  {/* <td>qnt de itens: {pedido.itemPedido?.length}</td> */}
+                  <td><Link href={`pedidos/${pedido.id}`}>👁️</Link></td>
+                </tr>
+              )
+            })}
 
-                  <strong>Valor Total: {pedido.valorTotal}</strong>
-                  <strong>Tel: {pedido.cliente.tCelular ? pedido.cliente.tCelular : pedido.cliente.tFixo}</strong>
-                  <strong>data prevista: {pedido.dtPrevista}</strong>
-                  {/* <strong>qnt de itens: {pedido.itemPedido?.length}</strong> */}
-                  <Link href={`pedidos/${pedido.id}`}>👁️</Link>
-                </div>
-              </div>
-            )
-          })}
+          </table>
+
         </div>
       </div>
     </>
