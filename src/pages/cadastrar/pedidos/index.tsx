@@ -235,7 +235,7 @@ export default function Pedido() {
 
         compra.idProduto = produto.id
         compra.nome = produto.nome
-        compra.quantidade = parseFloat(quantidade) < 1 ? 1 : parseFloat(quantidade)
+        compra.quantidade = parseFloat(quantidade) == 0 ? 1 : parseFloat(quantidade)
         compra.preco = produto.preco
 
         formato == null ? null : compra.formatoItemPedido = [{ idFormato: formato }]
