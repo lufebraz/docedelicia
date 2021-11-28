@@ -285,10 +285,10 @@ export default function Pedido() {
             <label>Nome:</label>
             <input type="text" value={cliente.nome} />
             <label>CPF: </label>
-            <input type="text" value={VMasker.toPattern(cliente.cpf, "999.999.999-99")} />
+            <input type="text" value={cliente.cpf ? VMasker.toPattern(cliente.cpf, "999.999.999-99") : ''} />
             <label >Endereço:</label>
             <label >nome: {endereco}</label>
-            <label >cep: {VMasker.toPattern(cep, "99999-999")}</label>
+            <label >cep: {cep ? VMasker.toPattern(cep, "99999-999") : ''}</label>
             <label >número: {num}</label>
           </div>
           <div className={styles.div}>
