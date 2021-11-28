@@ -32,15 +32,34 @@
     font-weight: 200;
     margin-right: 1rem;
   }
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+}
+.conteudo {
+  label {
+    font-size: 1.5rem;
+  }
+  display: flex;
+  gap: 10rem;
+  margin-bottom: 2rem;
 }
 
 .listagem {
+  border: 1px solid black;
+  border-collapse: collapse;
   width: 100%;
   th {
     text-align: justify;
+    border: 1px solid black;
   }
   tr {
-    td {
+    td {      
+      border: 1px solid black;
       text-align: justify;
       a {
         text-decoration: none;
@@ -48,3 +67,4 @@
     }
   }
 }
+

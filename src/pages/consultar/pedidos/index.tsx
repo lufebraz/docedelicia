@@ -52,15 +52,16 @@ export default function ConsultarPedidos({ pedidos }: HomeProps) {
         <h2>Lista de Pedidos:</h2>
         <div >
           <table className={styles.listagem}>
+            <th>Nº</th>
             <th>Status: </th>
             <th>Nome do Cliente:</th>
             <th>Valor Total:</th>
             <th>Telefone:</th>
             <th>Data prevista:</th>
-            <th></th>
             {pedidosList.map(pedido => {
               return (
                 <tr key={pedido.id} >
+                  <td>{pedido.id}</td>
                   <td className={(pedido.status === "Pagamento confirmado") ? styles.on : styles.off}>{pedido.status}</td>
                   <td>{pedido.cliente.nome}</td>
                   <td>R$ {pedido.valorTotal}</td>

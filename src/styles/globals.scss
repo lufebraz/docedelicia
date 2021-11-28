@@ -55,6 +55,12 @@ h1, h2, h3, h4, h5, h6, strong, button, a ,ul, li{
 button, a {
   cursor: pointer;
 }
+button {
+  
+  border-radius: 13px;
+  background-color: var(--background-not-used);
+  font-weight: 200;
+}
 
 [disabled] {
   opacity: 0.6;

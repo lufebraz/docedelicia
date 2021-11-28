@@ -5,8 +5,8 @@ import { NavMenu } from "../../../components/NavBar";
 import styles from './styles.module.scss';
 import { SyncLoader } from "react-spinners";
 import Link from 'next/link';
-import { useForm } from "react-hook-form";
 import Router from "next/router";
+import VMasker from 'vanilla-masker';
 
 type Cliente = {
 
@@ -118,6 +118,10 @@ export default function Pedido() {
   const [recheio, setRecheio] = useState(null)
   const [observacao, setObservacao] = useState('')
 
+  const [endereco, setEndereco] = useState('')
+  const [cep, setCep] = useState('')
+  const [num, setNum] = useState(0)
+
   function enviar() {
     setLoading(true);
 
@@ -159,6 +163,8 @@ export default function Pedido() {
       .catch(function (error) { alert('não encontrado') })
   }
   async function buscarProdutos() {
+    setQuantidade('1')
+    setObservacao('')
     await fetch(`https://docedelicia.herokuapp.com/api/produto/nome/${nomeProduto}/true`)
       .then(response => response.json())
       .then(data => listaProdutos(data))
@@ -175,6 +181,9 @@ export default function Pedido() {
       setHeader("Clientes encontrados: ")
     } else {
       setCliente(data[0])
+      setEndereco(cliente.endereco[0].nome)
+      setCep(cliente.endereco[0].cep)
+      setNum(cliente.endereco[0].numero)
     }
   }
 
@@ -198,6 +207,9 @@ export default function Pedido() {
   async function setData(props) {
     if (listagemCliente) {
       setCliente(dataCliente.find(e => e.id == props))
+      setEndereco(cliente.endereco[0].nome)
+      setCep(cliente.endereco[0].cep)
+      setNum(cliente.endereco[0].numero)      
     } else {
       await setProduto(dataProduto.find(e => e.id == props))
     }
@@ -226,8 +238,8 @@ export default function Pedido() {
         compra.quantidade = parseFloat(quantidade) < 1 ? 1 : parseFloat(quantidade)
         compra.preco = produto.preco
 
-        formato == null ? null : compra.formatoItemPedido = [{idFormato: formato}]        
-        recheio == null ? null : compra.recheioItemPedido = [{idRecheio: recheio}]
+        formato == null ? null : compra.formatoItemPedido = [{ idFormato: formato }]
+        recheio == null ? null : compra.recheioItemPedido = [{ idRecheio: recheio }]
 
         compra.status = "Confirmado"
         compra.observacao = observacao
@@ -245,7 +257,7 @@ export default function Pedido() {
     setListaPedidos(listaPedidos.filter(element => element.idProduto != id))
   }
 
- 
+
   return (
     <main>
       <Modal header={header} show={show} clicked={() => closeModal()}
@@ -273,7 +285,11 @@ export default function Pedido() {
             <label>Nome:</label>
             <input type="text" value={cliente.nome} />
             <label>CPF: </label>
-            <input type="text" value={cliente.cpf} />
+            <input type="text" value={VMasker.toPattern(cliente.cpf, "999.999.999-99")} />
+            <label >Endereço:</label>
+            <label >nome: {endereco}</label>
+            <label >cep: {VMasker.toPattern(cep, "99999-999")}</label>
+            <label >número: {num}</label>
           </div>
           <div className={styles.div}>
             <h4>Produtos</h4>
@@ -294,7 +310,7 @@ export default function Pedido() {
             <label>quantidade em {produto.tipoUnidade}: </label>
             <input type="number" min={1} value={quantidade} onChange={e => setQuantidade(e.target.value)} />
             <label >Observações: </label>
-            <input type="text" value={observacao} onChange={e => setObservacao(e.target.value)}/>
+            <input type="text" value={observacao} onChange={e => setObservacao(e.target.value)} />
             {
               produto.produtoRecheio?.length > 0 ?
                 <div>
@@ -359,10 +375,12 @@ export default function Pedido() {
             })
           }
           <label >data prevista para entrega</label>
-          <input type="date" min={date} value={date} onChange={e => setDate(e.target.value)} />
-          <input type="time" value={time} onChange={e => setTime(e.target.value)} />
-          <label >valor pago</label>
-          <input type="number" value={valorPago} onChange={e => setValorPago(e.target.value)} />
+          <div className={styles.inputs}>
+            <input type="date" min={date} value={date} onChange={e => setDate(e.target.value)} />
+            <input type="time" value={time} onChange={e => setTime(e.target.value)} />
+            <label >valor pago</label>
+            <input type="number" value={valorPago} onChange={e => setValorPago(e.target.value)} />
+          </div>
           <br />
           <div className={styles.buttons}>
 
