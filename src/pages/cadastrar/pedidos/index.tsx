@@ -117,6 +117,7 @@ export default function Pedido() {
   const [formato, setFormato] = useState(null)
   const [recheio, setRecheio] = useState(null)
   const [observacao, setObservacao] = useState('')
+  const [valorTotal, setValorTotal] = useState(0)
 
   const [endereco, setEndereco] = useState('')
   const [cep, setCep] = useState('')
@@ -181,9 +182,9 @@ export default function Pedido() {
       setHeader("Clientes encontrados: ")
     } else {
       setCliente(data[0])
-      setEndereco(cliente.endereco[0].nome)
-      setCep(cliente.endereco[0].cep)
-      setNum(cliente.endereco[0].numero)
+      setEndereco(data[0].endereco[0].nome)
+      setCep(data[0].endereco[0].cep)
+      setNum(data[0].endereco[0].numero)
     }
   }
 
@@ -209,7 +210,7 @@ export default function Pedido() {
       setCliente(dataCliente.find(e => e.id == props))
       setEndereco(cliente.endereco[0].nome)
       setCep(cliente.endereco[0].cep)
-      setNum(cliente.endereco[0].numero)      
+      setNum(cliente.endereco[0].numero)
     } else {
       await setProduto(dataProduto.find(e => e.id == props))
     }
@@ -219,8 +220,6 @@ export default function Pedido() {
     if (produto.id != undefined) {
 
       if (listaPedidos.find(e => e.idProduto == produto.id)) {
-        console.log("entrou")
-
         var lista: any = []
 
         listaPedidos.forEach((e) => {
@@ -229,8 +228,11 @@ export default function Pedido() {
           }
           lista.push(e)
         })
-
+        setValorTotal(valorTotal + produto.preco * parseFloat(quantidade))
         setListaPedidos(lista)
+        setCompra({} as itemPedido)
+        setRecheio(null)
+        setFormato(null)
       } else {
 
         compra.idProduto = produto.id
@@ -243,6 +245,7 @@ export default function Pedido() {
 
         compra.status = "Confirmado"
         compra.observacao = observacao
+        setValorTotal(valorTotal + produto.preco * parseFloat(quantidade))
 
         setListaPedidos([...listaPedidos, compra])
 
@@ -378,6 +381,12 @@ export default function Pedido() {
           <div className={styles.inputs}>
             <input type="date" min={date} value={date} onChange={e => setDate(e.target.value)} />
             <input type="time" value={time} onChange={e => setTime(e.target.value)} />
+            <h4>
+            valor total: 
+              {
+                " "+valorTotal.toFixed(2)
+              }
+            </h4>
             <label >valor pago</label>
             <input type="number" value={valorPago} onChange={e => setValorPago(e.target.value)} />
           </div>

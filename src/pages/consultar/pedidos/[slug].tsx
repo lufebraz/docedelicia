@@ -2,6 +2,7 @@ import axios from "axios";
 import { GetServerSideProps } from "next"
 import Router from 'next/router'
 import { useState } from "react";
+import VMasker from "vanilla-masker";
 import { heroku } from "../../../services/api";
 import styles from './styles.module.scss'
 
@@ -17,6 +18,15 @@ type Pedido = {
   cliente: {
     nome: string
   },
+  endereco: {
+    nome: string,
+    cep: string,
+    logradouro: string,
+    numero: string,
+    bairro: string
+    cidade: string
+    estado: string
+  }
   itemPedido: item[],
   clienteId: string,
   enderecoId: string
@@ -27,9 +37,11 @@ type item = {
   nome: string,
   observacao: string,
   quantidade: number,
+  valorUnitario:string,
   produto: {
     descricao: string,
-    nome: string
+    nome: string,
+    tipoUnidade:string
   }
 
 }
@@ -54,7 +66,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     dtPrevista: data.dtPrevista,
     dtEntrega: data.dtEntrega,
     dtCompra: data.dtCompra,
-    itemPedido: data.itemPedido
+    itemPedido: data.itemPedido,
+    endereco: data.endereco
   }
   return {
     props: {
@@ -118,6 +131,16 @@ export default function Pedido({ pedido }: PedidoProps) {
 
         </div>
         <div>
+          <h3>Endereço para entrega:</h3>
+          <p> 
+            { pedido.endereco.nome + " - " +
+            pedido.endereco.logradouro + ", " + pedido.endereco.numero +
+            " - " + pedido.endereco.bairro + ", " + pedido.endereco.cidade +
+            "-" + pedido.endereco.estado +
+            ". cep: " + VMasker.toPattern(pedido.endereco.cep, "99999-999")} </p>
+        </div>
+        <div>
+          <h4>Valor total: {pedido.valorTotal}</h4>
           <h4 >Data da compra: {pedido.dtCompra.substring(10, 8) + "/" + pedido.dtCompra.substring(5, 7) + "/" + pedido.dtCompra.substring(4, 0)}</h4>
           <h4 >Data prevista para entrega: {pedido.dtPrevista.substring(10, 8) + "/" + pedido.dtPrevista.substring(5, 7) + "/" + pedido.dtPrevista.substring(4, 0)}</h4>
           {
@@ -130,8 +153,8 @@ export default function Pedido({ pedido }: PedidoProps) {
         <table className={styles.listagem}>
           <tr>
             <th>Nome do produto:</th>
-            <th>
-              Quantidade:</th>
+            <th>Quantidade:</th>
+            <th>Valor:</th>
             <th>Descricao: </th>
             <th>Observação:</th>
           </tr>
@@ -141,7 +164,8 @@ export default function Pedido({ pedido }: PedidoProps) {
               return (
                 <tr key={item.id}>
                   <td>{item.produto.nome}</td>
-                  <td>{item.quantidade}</td>
+                  <td>{"  " + item.quantidade +" "+ item.produto.tipoUnidade }</td>
+                  <td>{(item.quantidade* parseFloat(item.valorUnitario)).toFixed(2)}</td>
                   <td>{item.produto.descricao ? item.produto.descricao : "-"}</td>
                   <td>{item.observacao ? item.observacao : "-"}</td>
                 </tr>
