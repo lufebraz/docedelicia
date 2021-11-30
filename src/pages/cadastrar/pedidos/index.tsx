@@ -207,15 +207,18 @@ export default function Pedido() {
 
   async function setData(props) {
     if (listagemCliente) {
-      setCliente(dataCliente.find(e => e.id == props))
-      setEndereco(cliente.endereco[0].nome)
-      setCep(cliente.endereco[0].cep)
-      setNum(cliente.endereco[0].numero)
+      var lista: any = {}
+      lista = (dataCliente.filter(element => element.id == props))
+      console.log(lista)
+      setCliente(lista[0])
+      setEndereco(lista[0].endereco[0].nome)
+      setCep(lista[0].endereco[0].cep)
+      setNum(lista[0].endereco[0].numero)
     } else {
-      await setProduto(dataProduto.find(e => e.id == props))
+      setProduto(dataProduto.find(e => e.id == props))
     }
   }
-
+  
   function adicionarCarrinho() {
     if (produto.id != undefined) {
 
@@ -257,6 +260,9 @@ export default function Pedido() {
   }
 
   function removerProduto(id) {
+    var lista: any = {}
+    lista = (listaPedidos.filter(element => element.idProduto == id))
+    setValorTotal(valorTotal - (parseFloat(lista[0].preco) * lista[0].quantidade))
     setListaPedidos(listaPedidos.filter(element => element.idProduto != id))
   }
 
@@ -286,9 +292,9 @@ export default function Pedido() {
               <button onClick={buscarCliente} type="button" className={styles.lupa}>🔍</button>
             </div>
             <label>Nome:</label>
-            <input type="text" value={cliente.nome} />
+            <p>{cliente.nome}</p>
             <label>CPF: </label>
-            <input type="text" value={cliente.cpf ? VMasker.toPattern(cliente.cpf, "999.999.999-99") : ''} />
+            <p>{cliente.cpf ? VMasker.toPattern(cliente.cpf, "999.999.999-99") : ''}</p>
             <label >Endereço:</label>
             <label >nome: {endereco}</label>
             <label >cep: {cep ? VMasker.toPattern(cep, "99999-999") : ''}</label>
@@ -382,9 +388,9 @@ export default function Pedido() {
             <input type="date" min={date} value={date} onChange={e => setDate(e.target.value)} />
             <input type="time" value={time} onChange={e => setTime(e.target.value)} />
             <h4>
-            valor total: 
+              valor total:
               {
-                " "+valorTotal.toFixed(2)
+                " " + valorTotal.toFixed(2)
               }
             </h4>
             <label >valor pago</label>
