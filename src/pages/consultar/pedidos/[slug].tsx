@@ -158,7 +158,6 @@ export default function Pedido({ pedido }: PedidoProps) {
             <th>Descricao: </th>
             <th>Observação:</th>
           </tr>
-          {console.log(pedido.itemPedido)}
           {
             pedido.itemPedido.map(item => {
               return (

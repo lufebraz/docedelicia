@@ -3,7 +3,7 @@ import { useState } from "react";
 import Modal from "../../../components/Modal";
 import { NavMenu } from "../../../components/NavBar";
 import styles from './styles.module.scss';
-import { SyncLoader } from "react-spinners";
+import SyncLoader from 'react-spinners/SyncLoader';
 import Link from 'next/link';
 import Router from "next/router";
 import VMasker from 'vanilla-masker';
@@ -110,7 +110,7 @@ export default function Pedido() {
   const [loading, setLoading] = useState(false);
 
   const [time, setTime] = useState('')
-  const [date, setDate] = useState(new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate())
+  const [date, setDate] = useState('2021-12-02')
 
   const [valorPago, setValorPago] = useState('0')
 
@@ -122,10 +122,10 @@ export default function Pedido() {
   const [endereco, setEndereco] = useState('')
   const [cep, setCep] = useState('')
   const [num, setNum] = useState(0)
-
-  function enviar() {
-    setLoading(true);
-
+  
+  const submit = async() => { 
+    setLoading(true)
+    
     var pedido: Pedido = ({} as Pedido);
     pedido.clienteId = cliente.id;
     pedido.itemPedido = listaPedidos // fazer forEach para tirar os recheio e formatos duplicados
@@ -133,7 +133,6 @@ export default function Pedido() {
     pedido.valorPago = parseFloat(valorPago)
     pedido.enderecoId = 1
 
-    console.log(JSON.stringify(pedido))
 
     axios({
       method: 'POST',
@@ -385,7 +384,7 @@ export default function Pedido() {
           }
           <label >data prevista para entrega</label>
           <div className={styles.inputs}>
-            <input type="date" min={date} value={date} onChange={e => setDate(e.target.value)} />
+            <input type="date" min="2021-12-02" value={date} onChange={e => setDate(e.target.value)} />
             <input type="time" value={time} onChange={e => setTime(e.target.value)} />
             <h4>
               valor total:
@@ -401,7 +400,7 @@ export default function Pedido() {
 
             {loading ? <SyncLoader color="#4979FF" size="11" /> :
               <>
-                <button type="button" onClick={enviar} >Salvar</button>
+                <button type="button" onClick={submit} >Salvar</button>
                 <Link href="/"><button>Cancelar</button></Link>
               </>
             }
