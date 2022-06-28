@@ -1,0 +1,59 @@
+{
+  "clienteId": 2,
+  "itemPedido": [
+    {
+      "idProduto": 2,
+      "nome": "Bolo",
+      "quantidade": 1,
+      "preco": 69.9,
+      "formatoItemPedido": {
+        "idFormato": "1"
+      },
+      "recheioItemPedido": {
+        "idRecheio": "3"
+      },
+      "status": "Confirmado"
+    }
+  ],
+  "dtPrevista": "2021-11-21T12:04",
+  "valorPago": 0,
+  "enderecoId": 1
+}
+
+{
+  "clienteId": 2,
+  "itemPedido": [
+    {
+      "idProduto": 3,
+      "nome": "Coca cola 350ml",
+      "quantidade": 4,
+      "preco": 4.99,
+      "status": "Confirmado",
+      "observacao": ""
+    },
+    {
+      "idProduto": 2,
+      "nome": "Bolo",
+      "quantidade": 1,
+      "preco": 69.9,
+      "status": "Confirmado",
+      "observacao": ""
+    },
+    {
+      "idProduto": 6,
+      "nome": "Torta de Frango",
+      "quantidade": 2,
+      "preco": 29.99,
+      "formatoItemPedido": [
+        {
+          "idFormato": "2"
+        }
+      ],
+      "status": "Confirmado",
+      "observacao": ""
+    }
+  ],
+  "dtPrevista": "2021-11-30T12:03",
+  "valorPago": 0,
+  "enderecoId": 1
+}

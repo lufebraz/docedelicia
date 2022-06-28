@@ -6,6 +6,6 @@ export const buscarEndereco = axios.create({
 export const heroku = axios.create({
   baseURL: 'https://docedelicia.herokuapp.com/api/'
 })
-export const local = axios.create({
-  baseURL: 'http://localhost:3333/'
-})
+// export const local = axios.create({
+//   baseURL: 'http://localhost:3333/'
+// })

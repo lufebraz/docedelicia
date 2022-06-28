@@ -23,9 +23,8 @@ export default function Home() {
         </div>
         <div className={styles.mapa}>
           <h1>Ache nossa loja:</h1>
-          <iframe title="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d21709.28615634127!2d-48.03217301382333!
-          3d-15.87257432051151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xdc9d7042731a489!2sDoce%20De
-          l%C3%ADcia!5e0!3m2!1sen!2sbr!4v1617651342070!5m2!1sen!2sbr" loading="lazy" />
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3837.520257212099!2d-48.016465784643394!3d-15.881792229342782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x935a2df1da49922d%3A0x7b23979deec7d9de!2sDoce%20Del%C3%ADcia!5e0!3m2!1sen!2sbr!4v1636323678635!5m2!1sen!2sbr" 
+          width="400" height="300" loading="lazy"></iframe>
         </div>
       </main>
 

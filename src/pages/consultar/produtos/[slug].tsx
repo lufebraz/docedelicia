@@ -30,6 +30,7 @@ type Recheios = {
 type Formatos = {
   nome: string;
   id: number;
+  ativo: number;
 }
 type Fabricantes = {
   id: number,
@@ -46,7 +47,7 @@ type HomeProps = {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await heroku.get(`produto/${slug}`)
+  const { data } = await heroku.get(`produto/id/${slug}/true`)
 
   const produto = {
     id: data.id,
@@ -62,7 +63,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     produtoRecheio: data.produtoRecheio,
   }
 
-  const res = await fetch(`https://docedelicia.herokuapp.com/api/fabricante/ativos`)
+  const res = await fetch(`https://docedelicia.herokuapp.com/api/fabricante/`)
   const data1 = await res.json()
 
   const fabricante = data1.map(fabricante => {
@@ -72,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   });
 
-  const res1 = await fetch(`https://docedelicia.herokuapp.com/api/formato/ativos`)
+  const res1 = await fetch(`https://docedelicia.herokuapp.com/api/formato/`)
   const data2 = await res1.json()
   const formatos = data2.map(formato => {
     return {
@@ -81,7 +82,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   });
 
-  const res2 = await fetch(`https://docedelicia.herokuapp.com/api/recheio/ativos`)
+  const res2 = await fetch(`https://docedelicia.herokuapp.com/api/recheio/`)
   const data3 = await res2.json()
   const recheios = data3.map(recheio => {
     return {
@@ -115,11 +116,11 @@ export default function Produtos({ produto, fabricante, formatos, recheios }: Ho
     })
     values.produtoFormato = 
     values.produtoFormato.filter(i => {
-      if(!!i.idFormato) return i.idFormato
+      if(!!i.idFormato) return (i.idFormato)
     })
     await axios({
       method: 'PUT',
-      url: `https://docedelicia.herokuapp.com/api/produto/${produto.id}`,
+      url: `https://docedelicia.herokuapp.com/api/produto/id/${produto.id}`,
       data: values
     }).then(function (response) {
       if (response.status === 200) {

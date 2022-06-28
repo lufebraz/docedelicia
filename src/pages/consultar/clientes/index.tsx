@@ -17,7 +17,7 @@ type HomeProps = {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await heroku.get('cliente')
+  const { data } = await heroku.get('cliente/false')
 
   const clientes = data.map(clientes => {
     return {

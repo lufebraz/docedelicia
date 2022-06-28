@@ -45,7 +45,7 @@ type ClienteProps = {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { slug } = ctx.params;
 
-  const { data } = await heroku.get(`cliente/${slug}`)
+  const { data } = await heroku.get(`cliente/id/${slug}/true`)
 
   const cliente = {
     id: data.id,
@@ -97,7 +97,7 @@ export default function Cliente({ cliente }: ClienteProps) {
 
     await axios({
       method: 'PUT',
-      url: `https://docedelicia.herokuapp.com/api/cliente/${cliente.id}`,
+      url: `https://docedelicia.herokuapp.com/api/cliente/id/${cliente.id}`,
       headers: { 'Cliente': 'dados do cliente' },
       data: values
     }).then(function (response) {
